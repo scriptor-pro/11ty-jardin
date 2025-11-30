@@ -1,0 +1,59 @@
+---
+# Title of the note, shown on the page and used in listings
+title: "Titre de la note"
+
+# Layout used to render the note (keeps consistent header/footer/styles)
+layout: note.njk
+
+# Publish toggle: true to publish, false to keep as draft/noindex
+publish: false
+
+# Main tags for grouping and tag pages; always an array
+tags:
+  - tag-principal
+  - autre-tag
+
+# Date used by Eleventy for sorting; ISO format YYYY-MM-DD
+date: 2025-01-01
+
+# Creation date (for your own metadata/sorting)
+created: 2025-01-01
+
+# Last updated date
+updated: 2025-01-02
+
+# Status for icon display (choose: "idee", "chantier", "termine")
+status: "idee"
+
+# Optional short description (used in meta/OG if provided)
+description: "Résumé concis de la note."
+---
+
+<!--
+  H1 is part of content for flexibility; keep one H1 per page.
+  Use meaningful headings to structure the note.
+-->
+# Titre de la note
+
+<!-- Introduction or context -->
+Paragraphe d’introduction qui explique le sujet de la note et son objectif.
+
+<!-- Main sections -->
+## Section principale
+Texte, idées, explications, liens, etc.
+
+## Détails / Sous-section
+Plus de détails, exemples, références.
+
+<!-- Lists for takeaways or tasks -->
+### Points clés
+- Point important 1
+- Point important 2
+
+<!-- Backlinks or references (optional) -->
+### Références
+- [Source utile](https://exemple.com)
+
+<!-- Conclusion or next steps -->
+### Conclusion
+Résumé rapide et éventuelles pistes à explorer.

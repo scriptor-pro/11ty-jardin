@@ -1,0 +1,8 @@
+{
+  "items": [
+    { "title": "Accueil", "url": "/" },
+    { "title": "Notes", "url": "/notes/" },
+    { "title": "Tags", "url": "/tags/" },
+    { "title": "À propos", "url": "/a-propos/" }
+  ]
+}

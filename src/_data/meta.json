@@ -1,0 +1,47 @@
+{
+  "title": "Je note donc je suis",
+  "description": "Un digital garden accessible et évolutif. Un espace de réflexion ouvert où mes notes, idées et chantiers prennent forme.",
+  "author": "Baudouin Van Humbeeck",
+  "language": "fr-BE",
+
+  "site": {
+    "url": "https://jndjs.dev",
+    "name": "Je note donc je suis",
+    "favicon": "/assets/icons/favicon.png"
+  },
+
+  "social": {
+    "twitter": "@baudouin",
+    "mastodon": "https://mastodon.social/@baudouin",
+    "github": "https://github.com/scriptor-pro",
+    "codeberg": "https://codeberg.org/baudouin"
+  },
+
+  "opengraph": {
+    "type": "website",
+    "image": "/assets/og/og-image.jpg",
+    "image_alt": "Illustration typographique du digital garden « Je note donc je suis »"
+  },
+
+  "twitter": {
+    "card": "summary_large_image",
+    "image": "/assets/og/og-image.jpg"
+  },
+
+  "seo": {
+    "keywords": [
+      "digital garden",
+      "notes",
+      "typographie",
+      "Bauhaus",
+      "écriture",
+      "Eleventy",
+      "slow web",
+      "pensée",
+      "journal"
+    ],
+
+    "robots": "index, follow",
+    "canonical": "https://jndjs.dev"
+  }
+}

@@ -1,0 +1,10 @@
+---
+pagination:
+  data: collections.tagList
+  size: 1
+  alias: tagObj
+permalink: "tags/{{ tagObj.tag | safelink }}/"
+layout: tag.njk
+eleventyComputed:
+  tag: "{{ tagObj.tag }}"
+---

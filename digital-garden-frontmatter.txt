@@ -1,0 +1,13 @@
+---
+title: "Jardin Numérique ? Digital garden ? Wadezdanu ?"
+layout: note.njk
+publish: true
+tags:
+  - digital-garden
+  - jardin-numérique
+description: "Le jardin numérique de Baudouin Van Humbeeck - poussez la grille et ne faites pas attention aux mauvaises herbes"
+date: 2025-06-23
+created: 2025-06-23
+updated: 2025-09-17
+status: "chantier"
+---

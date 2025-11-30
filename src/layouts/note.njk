@@ -1,0 +1,85 @@
+{% extends "base.njk" %}
+
+{% block content %}
+
+<article class="note">
+
+  {# -----------------------------------------------------------
+     TITRE + STATUT
+     ----------------------------------------------------------- #}
+  <header class="note-header">
+
+    <h1 class="note-title">
+      {{ title }}
+      {% if status %}
+        <span class="note-status status-icon">
+          {{ status | statusIcon }}
+        </span>
+      {% endif %}
+    </h1>
+
+<p class="note-meta">
+  {% if date %}
+    <span class="note-date">
+      <strong>Créée :</strong> {{ date | formatDateBE }}
+    </span>
+  {% endif %}
+
+  {% if updated %}
+    <span class="note-updated">
+      — <strong>Modifiée :</strong> {{ updated | formatDateBE }}
+    </span>
+  {% endif %}
+</p>
+
+
+  </header>
+
+
+  {# -----------------------------------------------------------
+     CONTENU PRINCIPAL DE LA NOTE
+     ----------------------------------------------------------- #}
+  <section class="note-body">
+    {{ content | safe }}
+  </section>
+
+
+  {# -----------------------------------------------------------
+     TAGS
+     ----------------------------------------------------------- #}
+  {% if tags %}
+  <section class="note-tags">
+    <h3 class="section-title">Tags</h3>
+    <p>
+      {% for tag in tags %}
+        {% if tag != "note" %}
+          <a class="note-tag" href="/tags/{{ tag | slug }}/">{{ tag }}</a>
+        {% endif %}
+      {% endfor %}
+    </p>
+  </section>
+  {% endif %}
+
+
+  {# -----------------------------------------------------------
+     BACKLINKS
+     ----------------------------------------------------------- #}
+  {% if backlinks and backlinks.length > 0 %}
+  <section class="note-backlinks">
+    <h3 class="section-title">Backlinks</h3>
+
+    <ul>
+      {% for link in backlinks %}
+        <li>
+          <a href="/notes/{{ link.slug }}/">
+            {{ link.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+</article>
+
+{% endblock %}

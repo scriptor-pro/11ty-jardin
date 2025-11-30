@@ -1,0 +1,86 @@
+---
+title: Accueil
+layout: base.njk
+---
+
+
+<div class="home-grid">
+  <!-- =====================================================================
+       1. NOTES LES PLUS RÉCENTES
+  ===================================================================== -->
+  <section class="home-section">
+    <h2 class="section-title">🕒 + récent</h2>
+    <ul class="notes-list">
+      {% for note in collections.notes %}
+        {% if note.fileSlug != "index" and note.url != "/notes/" %}
+          <li>
+            <a href="{{ note.url }}">{{ note.data.title }}</a>
+            {% include "partials/status-icon.njk" %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+
+  <!-- =====================================================================
+       2. NOTES PAR ORDRE ALPHABÉTIQUE
+  ===================================================================== -->
+  <section class="home-section">
+    <h2 class="section-title">🔠 alphabétique</h2>
+    {# Tri A→Z sur le titre #}
+    {% set alpha = collections.notes | sort(false, false, "data.title") %}
+    <ul class="notes-list">
+      {% for note in alpha %}
+        {% if note.fileSlug != "index" and note.url != "/notes/" %}
+          <li>
+            <a href="{{ note.url }}">{{ note.data.title }}</a>
+            {% include "partials/status-icon.njk" %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+
+  <!-- =====================================================================
+       3. NOTES PAR STATUT
+  ===================================================================== -->
+  <section class="home-section">
+    <h2 class="section-title">⏳ par statut</h2>
+
+    <h3 class="status-title">💭 Idées</h3>
+    <ul class="notes-list">
+      {% for note in collections.notes %}
+        {% if note.fileSlug != "index" and note.url != "/notes/" %}
+          {% set status = note.data.status | lower %}
+          {% if status == "idee" or status == "idée" %}
+            <li><a href="{{ note.url }}">{{ note.data.title }}</a></li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+
+    <h3 class="status-title">🔧 En chantier</h3>
+    <ul class="notes-list">
+      {% for note in collections.notes %}
+        {% if note.fileSlug != "index" and note.url != "/notes/" %}
+          {% set status = note.data.status | lower %}
+          {% if status == "chantier" %}
+            <li><a href="{{ note.url }}">{{ note.data.title }}</a></li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+
+    <h3 class="status-title">✨ Terminés</h3>
+    <ul class="notes-list">
+      {% for note in collections.notes %}
+        {% if note.fileSlug != "index" and note.url != "/notes/" %}
+          {% set status = note.data.status | lower %}
+          {% if status == "termine" or status == "terminé" %}
+            <li><a href="{{ note.url }}">{{ note.data.title }}</a></li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+</div>

@@ -1,0 +1,18 @@
+---
+title: Tags
+layout: base.njk
+---
+
+<h1>Tags</h1>
+
+<p>Liste des tags utilisés dans le jardin :</p>
+
+<ul class="tags-list-page">
+  {% for item in collections.tagList %}
+    <li>
+      <a href="/tags/{{ item.tag | safelink }}/">
+        {{ item.tag }} <span class="tag-count">({{ item.count }})</span>
+      </a>
+    </li>
+  {% endfor %}
+</ul>

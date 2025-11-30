@@ -1,0 +1,17 @@
+{
+  "name": "Je note donc je suis",
+  "baseline": "Un jardin numérique en chantier perpétuel made in Bruxelles",
+  "author": "Baudouin Van Humbeeck",
+  "url": "https://jndjs.dev",
+  "opengraph": {
+    "type": "website",
+    "image": "/assets/og/og-image.jpg",
+    "image_alt": "Illustration typographique du digital garden « Je note donc je suis »"
+  },
+  "nav": [
+    { "label": "Accueil", "href": "/" },
+    { "label": "À propos", "href": "/a-propos/" },
+    { "label": "Contact", "href": "/contact/" },
+    { "label": "Liens", "href": "/liens/" }
+  ]
+}
