@@ -7,7 +7,6 @@ updated: 2025-09-04
 publish: false
 tags:
   - projet
-  - réflexion
   - photo
   - petit-chimiste
 description: "Et si j'utilisais de l'eau du canal pour révéler un film noir et blanc ? What could possibly go wrong ?"
