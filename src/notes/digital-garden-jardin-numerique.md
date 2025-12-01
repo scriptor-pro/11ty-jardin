@@ -12,7 +12,6 @@ updated: 2025-09-17
 status: "chantier"
 ---
 
-
 ## Qu'est-ce que c'est un jardin numérique  :
 
 Pas la peine de tourner vers wikipédia pour le savoir, j'ai tenté de créer [une page](https://en.wikipedia.org/wiki/User:BaudouinVH/digital-garden) à ce sujet mais les gardiens du temple du savoir semble avoir un a priori négatif à propos de ce dont ils n'ont jamais entendu parler. 

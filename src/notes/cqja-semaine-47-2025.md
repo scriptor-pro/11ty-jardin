@@ -2,6 +2,7 @@
 title: "Ce que j'ai appris - semaine 47/2025"
 slug: "ce-que-j-ai-appris-semaine-47-2025"
 layout: note.njk
+publish: true
 
 # Statut de progression : idée | chantier | terminé
 status: "chantier"
@@ -19,7 +20,6 @@ tags:
   - secte
   - privacy
 ---
-
 
 
 L'étymologie de "loustic" - vient de l'Allemand "lustig" (amusant)

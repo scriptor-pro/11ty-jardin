@@ -83,10 +83,14 @@ export default function (eleventyConfig) {
      COLLECTIONS
      ---------------------------------------------------------- */
 
+  // Helper : filtre les notes non publiées
+  const isPublished = note => note.data.publish !== false;
+
   // Toutes les notes
   eleventyConfig.addCollection("notes", function (collectionApi) {
     return collectionApi
       .getFilteredByGlob("src/notes/*.md")
+      .filter(isPublished)
       // Tri par date de création (ou date de fichier si absent), plus récent en premier
       .sort((a, b) => {
         const dateA = new Date(a.data.created || a.date);
@@ -97,7 +101,9 @@ export default function (eleventyConfig) {
 
   // Tags + fréquence
   eleventyConfig.addCollection("tagList", function (collectionApi) {
-    const notes = collectionApi.getFilteredByGlob("src/notes/*.md");
+    const notes = collectionApi
+      .getFilteredByGlob("src/notes/*.md")
+      .filter(isPublished);
     const counts = new Map();
 
     notes.forEach(note => {
@@ -119,7 +125,9 @@ export default function (eleventyConfig) {
 
   // Backlinks (version async, propre, Eleventy 3-compatible)
   eleventyConfig.addCollection("notesWithBacklinks", async function (collectionApi) {
-    const notes = collectionApi.getFilteredByGlob("src/notes/*.md");
+    const notes = collectionApi
+      .getFilteredByGlob("src/notes/*.md")
+      .filter(isPublished);
 
     // Lire le contenu de chaque note via API officielle
     const contents = {};

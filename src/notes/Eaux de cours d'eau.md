@@ -4,7 +4,7 @@ layout: note.njk
 date: 2025-09-04            # date de création (pour tri)
 created: 2025-09-04
 updated: 2025-09-04
-publish: false
+publish: true
 tags:
   - projet
   - photo
@@ -15,7 +15,6 @@ aliases:
   - Autre lien possible
 status: "chantier"
 ---
-
 
 | Type d’eau utilisée         | Qualité principale                  | Effet sur le révélateur                                | Effet sur le film                                               | Esthétique attendue                         |
 |-----------------------------|-------------------------------------|--------------------------------------------------------|-----------------------------------------------------------------|---------------------------------------------|

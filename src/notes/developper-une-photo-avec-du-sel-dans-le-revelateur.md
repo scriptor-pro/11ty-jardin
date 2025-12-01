@@ -12,7 +12,6 @@ updated: 2025-09-17
 status: "chantier"
 ---
 
-
 # Révélateur Assaisonné – Expérience Sel Iodé  
 **Film** : AgfaPhoto APX 400  
 **Révélateur** : Rodinal 1+25  

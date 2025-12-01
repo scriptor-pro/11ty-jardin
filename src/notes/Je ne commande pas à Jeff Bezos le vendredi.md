@@ -9,7 +9,6 @@ created: 2025-07-03
 status: "idée"
 ---
 
-
 # Je ne commande pas à Jeff Bezos le vendredi
 
 Je ne commande pas à Jeff Bezos le vendredi.
