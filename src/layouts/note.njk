@@ -53,7 +53,7 @@
     <p>
       {% for tag in tags %}
         {% if tag != "note" %}
-          <a class="note-tag" href="/tags/{{ tag | slug }}/">{{ tag }}</a>
+          <a class="note-tag" href="/tags/{{ tag | safelink }}/">{{ tag }}</a>
         {% endif %}
       {% endfor %}
     </p>

@@ -55,10 +55,11 @@ export default function (eleventyConfig) {
     return DateTime.fromJSDate(dateObj).toFormat(format);
   });
 
-  // Encode propre des slugs
+  // Encode/decode propre des slugs tout en conservant les accents
   eleventyConfig.addFilter("safelink", str => {
     try {
-      return encodeURI(str);
+      // encodeURI normalise, decodeURI garde les caractères lisibles (é, à, …)
+      return decodeURI(encodeURI(str));
     } catch (_) {
       return str;
     }
