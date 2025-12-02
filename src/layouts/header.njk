@@ -1,46 +1,56 @@
 <header class="site-header">
 
-  <div class="site-title-block">
-    <h1 class="site-title">
-      {{ site.name }}
-    </h1>
+  <div class="header-inner">
 
-    {% if site.baseline %}
-    <p class="site-baseline"><i>
-      {{ site.baseline }}</i>
-    </p>
+    <div class="site-title-block">
+      <h1 class="site-title">
+        {{ site.name }}
+      </h1>
 
+      {% if site.baseline %}
+      <p class="site-baseline"><i>
+        {{ site.baseline }}</i>
+      </p>
+
+      {% endif %}
+    </div>
+
+    {% if site.logo %}
+    <div class="site-logo">
+      <img src="{{ site.logo }}" alt="{{ site.name }}" />
+    </div>
     {% endif %}
-  </div>
 
-  <nav class="main-nav">
-    <ul>
-      <li>
-        <a href="/">
-          <img class="nav-icon" src="/images/home.svg" alt="" aria-hidden="true" />
-          <span>Accueil</span>
-        </a>
-      </li>
-      <li>
-        <a href="/a-propos/">
-          <img class="nav-icon" src="/images/about.svg" alt="" aria-hidden="true" />
-          <span>À propos</span>
-        </a>
-      </li>
-      <li>
-        <a href="/contact/">
-          <img class="nav-icon" src="/images/contact.svg" alt="" aria-hidden="true" />
-          <span>Contact</span>
-        </a>
-      </li>
-      <li>
-        <a href="/liens/">
-          <img class="nav-icon" src="/images/lien.svg" alt="" aria-hidden="true" />
-          <span>Liens</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
+    <nav class="main-nav">
+      <ul>
+        <li>
+          <a href="/">
+            <img class="nav-icon" src="/images/home.svg" alt="" aria-hidden="true" />
+            <span>Accueil</span>
+          </a>
+        </li>
+        <li>
+          <a href="/a-propos/">
+            <img class="nav-icon" src="/images/about.svg" alt="" aria-hidden="true" />
+            <span>À propos</span>
+          </a>
+        </li>
+        <li>
+          <a href="/contact/">
+            <img class="nav-icon" src="/images/contact.svg" alt="" aria-hidden="true" />
+            <span>Contact</span>
+          </a>
+        </li>
+        <li>
+          <a href="/liens/">
+            <img class="nav-icon" src="/images/lien.svg" alt="" aria-hidden="true" />
+            <span>Liens</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+  </div>
 
 </header>
 

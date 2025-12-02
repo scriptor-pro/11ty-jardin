@@ -2,6 +2,7 @@
   "name": "Je note donc je suis",
   "baseline": "Un jardin numérique en chantier perpétuel made in Bruxelles",
   "author": "Baudouin Van Humbeeck",
+  "logo": "/images/je-note-donc-je-suis.webp",
   "url": "https://jndjs.dev",
   "opengraph": {
     "type": "website",
