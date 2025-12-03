@@ -1,0 +1,36 @@
+name: Deploy Eleventy Digital Garden to Statichost
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: docker
+
+    container:
+      image: node:20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Eleventy
+        run: npx @11ty/eleventy
+
+      - name: Create ZIP
+        run: |
+          cd _site
+          zip -r ../site.zip .
+          cd ..
+
+      - name: Upload to Statichost
+        run: |
+          curl -X POST \
+            -F "file=@site.zip" \
+            -H "Authorization: Bearer ${{ secrets.STATICHOST_API_KEY }}" \
+            https://builder.statichost.eu/jardin-11/drop
