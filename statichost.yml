@@ -1,0 +1,32 @@
+# statichost.yml
+# Configuration de build pour statichost.eu — projet Eleventy (11ty)
+
+# Image Docker utilisée pour le build
+# Node 20 LTS — recommandée, stable et compatible Eleventy
+image: node:20
+
+# Commande de build : installation + génération du site
+command: |
+  npm ci --omit=dev
+  npx @11ty/eleventy
+
+# Répertoire contenant la version finale du site
+public: _site
+
+# (Optionnel) Nettoyage avant build
+clean: true
+
+# Headers HTTP (exemples utiles)
+headers:
+  - path: "**/*.html"
+    cache_control: "no-cache"
+  - path: "**/*.{css,js}"
+    cache_control: "public, max-age=31536000, immutable"
+  - path: "**/*.{png,jpg,jpeg,svg,webp}"
+    cache_control: "public, max-age=31536000, immutable"
+
+# (Optionnel) Redirections — vide par défaut
+redirects: []
+
+# (Optionnel) SPA mode false (pour un SSG classique)
+spa: false

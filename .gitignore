@@ -1,0 +1,78 @@
+# ─────────────────────────────────────────────
+# 11ty — Fichier .gitignore
+# Projet : 11ty-jardin
+# Emplacement : /home/Baudouin/Documents/Projets/11ty-jardin/.gitignore
+# ─────────────────────────────────────────────
+
+# Répertoire généré par Eleventy
+_site/
+
+# Build caches
+.cache/
+.eleventy-cache/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environnement
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+debug.log
+
+# Systèmes d'exploitation
+.DS_Store
+Thumbs.db
+
+# Éditeurs
+# VS Code
+.vscode/
+.history/
+
+# Vim/Neovim
+*.swp
+*.swo
+
+# JetBrains
+.idea/
+
+# Mac Finder
+.AppleDouble
+.LSOverride
+
+# Linux
+.trash-*
+
+# Export / artefacts
+dist/
+build/
+
+# Outils CI/CD
+.netlify/
+.vercel/
+
+# Coverage tests
+coverage/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Lockfiles (selon ton workflow)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# ─────────────────────────────────────────────
+# Fin du fichier
+# ─────────────────────────────────────────────

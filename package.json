@@ -2,7 +2,7 @@
   "type": "module",
 
   "name": "je-note-donc-je-suis",
-  "version": "0.2.0",
+  "version": "0.23.0",
   "description": "Un digital garden typographique, accessible et structuré avec Eleventy 3.",
 
   "scripts": {

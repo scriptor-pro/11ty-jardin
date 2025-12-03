@@ -1,5 +1,5 @@
 ---
-title: Eaux de cours d'eau
+title: Eaux de cours d'eau dans du révélateur photo
 layout: note.njk
 date: 2025-09-04            # date de création (pour tri)
 created: 2025-09-04
