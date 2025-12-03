@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" fill="none">
-  <rect x="1.5" y="1.5" width="197" height="57" rx="10" stroke="#e63946" stroke-width="3" />
-  <circle cx="40" cy="30" r="12" fill="#e63946" />
-  <rect x="60" y="18" width="22" height="24" rx="4" fill="#1d3557" />
-  <path d="M100 20 L118 40 L82 40 Z" fill="#f8dd3d" />
-  <text x="140" y="37" font-family="Arial, sans-serif" font-size="16" fill="#1d3557">JNDJS</text>
-</svg>
