@@ -1,0 +1,47 @@
+{% extends "base.njk" %}
+
+{% block content %}
+
+{% set tagName = tag or (tagObj and tagObj.tag) %}
+{% set tagNotes = collections[tagName] or [] %}
+
+<section class="tag-page">
+
+  <h1 class="tag-title">
+    Tag : <span>{{ tagName }}</span>
+  </h1>
+
+  <p class="tag-count">
+    {{ tagNotes | length }} note{% if tagNotes | length > 1 %}s{% endif %}
+  </p>
+
+  <hr class="tag-separator">
+
+  <ul class="tag-note-list">
+    {% for note in tagNotes %}
+    <li class="tag-note-item">
+      <a href="{{ note.url | safelink }}" class="tag-note-link">
+
+        <span class="tag-note-title">{{ note.data.title }}</span>
+
+        {# Statut visuel #}
+        <span class="tag-note-status">
+          {% if note.data.status == "idee" %}
+            💭 idée
+          {% elif note.data.status == "chantier" %}
+            🔧 chantier
+          {% elif note.data.status == "termine" %}
+            ✨ terminé
+          {% else %}
+            ⚪︎
+          {% endif %}
+        </span>
+
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+
+</section>
+
+{% endblock %}

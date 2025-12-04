@@ -1,0 +1,14 @@
+---
+title: Notes
+layout: base.njk
+---
+
+<h1>Toutes les notes</h1>
+
+<ul class="notes-list">
+  {% for note in collections.notesWithBacklinks | sort(attribute="data.title") %}
+    <li>
+      <a href="/notes/{{ note.fileSlug }}/">{{ note.data.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
