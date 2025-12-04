@@ -1,7 +1,7 @@
 ---
 pagination:
   data: collections.all
-  size: 1000   # largement suffisant
+  size: 1000
 permalink: /sitemap.xml
 eleventyExcludeFromCollections: true
 ---
@@ -11,11 +11,18 @@ eleventyExcludeFromCollections: true
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 {% for page in collections.all %}
-  {# On ignore les fichiers qui ne doivent pas être indexés #}
   {% if page.url and not page.data.draft %}
   <url>
     <loc>{{ meta.site.url }}{{ page.url }}</loc>
-    <lastmod>{{ page.date | date("yyyy-MM-dd") }}</lastmod>
+
+    {# lastmod = page.date ou page.data.updated si présent #}
+    <lastmod>
+      {% if page.data.updated %}
+        {{ page.data.updated | date("yyyy-MM-dd") }}
+      {% else %}
+        {{ page.date | date("yyyy-MM-dd") }}
+      {% endif %}
+    </lastmod>
   </url>
   {% endif %}
 {% endfor %}

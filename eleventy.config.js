@@ -48,6 +48,10 @@ export default function (eleventyConfig) {
     return DateTime.fromJSDate(dateObj).toFormat("dd LLL yyyy");
   });
 
+// Filtre ISO date (utilisé par sitemap.njk et XML)
+eleventyConfig.addFilter("date", (dateObj, format = "yyyy-LL-dd") => {
+  return DateTime.fromJSDate(dateObj).toFormat(format);
+});
 
   /* ----------------------------------------------------------
      Transforms

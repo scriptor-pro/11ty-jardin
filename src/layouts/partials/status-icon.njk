@@ -1,8 +1,0 @@
-{# Affiche l'icône de statut en réutilisant le filtre global #}
-{% set statusValue = status or (note and note.data and note.data.status) %}
-
-{% if statusValue %}
-  <span class="status-icon">
-    {{ statusValue | statusIcon }}
-  </span>
-{% endif %}
