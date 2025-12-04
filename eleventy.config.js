@@ -32,7 +32,7 @@ export default function (eleventyConfig) {
   // Autorise les images placées à côté des notes à être copiées telles quelles
   eleventyConfig.addPassthroughCopy("src/notes/**/*.{jpg,jpeg,png,gif,svg,webp,avif}");
   // --- Favicons (copiés directement à la racine du site) ---
-eleventyConfig.addPassthroughCopy({ "src/favicons": "/" });
+eleventyConfig.addPassthroughCopy({ "src/assets/favicons": "/" });
 
 
   /* ----------------------------------------------------------
