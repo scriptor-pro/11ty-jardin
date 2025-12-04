@@ -13,22 +13,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node
+      - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 20
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Eleventy
-        run: npx @11ty/eleventy
+      - name: Build Eleventy (with full logging)
+        run: |
+          npx @11ty/eleventy --input=src --output=_site --quiet=false
+          echo "Content of _site:"
+          ls -l _site
+
+      - name: Ensure zip is installed
+        run: sudo apt-get update && sudo apt-get install -y zip
 
       - name: Create ZIP
         run: |
           cd _site
           zip -r ../site.zip .
           cd ..
+          echo "ZIP created:"
+          ls -l site.zip
 
       - name: Upload to Statichost
         run: |
