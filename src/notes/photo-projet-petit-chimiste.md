@@ -1,6 +1,7 @@
 ---
 title: Projet photo "Petit Chimiste"
 layout: note.njk
+id: 10
 publish: true
 tags:
   - petit-chimiste

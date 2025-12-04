@@ -454,6 +454,12 @@ hr {
   color: var(--text-muted, #444);
 }
 
+.build-id {
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+  margin: 0.15rem 0 0;
+}
+
 .header-inner {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -591,6 +597,20 @@ hr {
 .note p {
   font-family: var(--font-serif);
   margin: 1rem 0;
+}
+
+.note-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  margin: 0.5rem 0 0;
+}
+
+.note-id {
+  font-weight: 700;
+  letter-spacing: 0.03em;
 }
 
 .note-header,

@@ -5,6 +5,10 @@ title: "Titre de la note"
 # Layout used to render the note (keeps consistent header/footer/styles)
 layout: note.njk
 
+# Unique incremental ID; leave it out and run `npm run assign-note-ids`
+# to populate automatically.
+# id:
+
 # Publish toggle: true to publish, false to keep as draft/noindex
 publish: false
 

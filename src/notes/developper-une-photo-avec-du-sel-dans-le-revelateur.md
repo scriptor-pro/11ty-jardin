@@ -1,6 +1,7 @@
 ---
 title: "Développer avec un révélateur assaisonné –  Sel Iodé "
 layout: note.njk
+id: 8
 publish: true
 tags:
   - photo

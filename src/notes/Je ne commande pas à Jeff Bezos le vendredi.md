@@ -1,6 +1,7 @@
 ---
 title: Je ne commande pas à Jeff Bezos le vendredi
 layout: note.njk
+id: 3
 publish: true
 tags:
   - e-commerce

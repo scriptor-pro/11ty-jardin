@@ -1,6 +1,7 @@
 ---
 title: La promptothèque
 layout: note.njk
+id: 11
 publish: true
 tags: 
   - projet

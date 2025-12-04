@@ -199,6 +199,37 @@ eleventyConfig.addFilter("formatDateBE", function(value) {
   return `${day}-${month}-${year}`;
 });
 
+  /* ============================================================
+     Filtre : unixTime — renvoie le timestamp (secondes)
+     ============================================================ */
+  eleventyConfig.addFilter("unixTime", function(value) {
+    if (!value) return "";
+    const date = value instanceof Date ? value : new Date(value);
+
+    if (isNaN(date)) {
+      console.warn("⚠️ unixTime : date invalide :", value);
+      return "";
+    }
+
+    return Math.floor(date.getTime() / 1000);
+  });
+
+  /* ============================================================
+     Filtre : randomLetters — retourne N lettres majuscules aléatoires
+     ============================================================ */
+  eleventyConfig.addFilter("randomLetters", function(input, length = 3) {
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const n = Number(length) || 3;
+    let result = "";
+
+    for (let i = 0; i < n; i += 1) {
+      const idx = Math.floor(Math.random() * alphabet.length);
+      result += alphabet[idx];
+    }
+
+    return result;
+  });
+
 
   /* ----------------------------------------------------------
      CONFIGURATION GÉNÉRALE

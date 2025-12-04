@@ -1,6 +1,7 @@
 ---
 title: Checklist déménagement Bruxelles -> Bruxelles
 layout: note.njk
+id: 7
 publish: true
 tags:
   - ia

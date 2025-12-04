@@ -19,9 +19,15 @@
     </h1>
 
 <p class="note-meta">
+  {% if id %}
+    <span class="note-id">
+      Note #{{ id }}
+    </span>
+  {% endif %}
+
   {% if date %}
     <span class="note-date">
-      <strong>Créée :</strong> {{ date | formatDateBE }}
+      {% if id %} — {% endif %}<strong>Créée :</strong> {{ date | formatDateBE }}
     </span>
   {% endif %}
 

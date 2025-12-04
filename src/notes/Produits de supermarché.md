@@ -1,6 +1,7 @@
 ---
 title: Des produits en vente dans un supermarché dans le révélateur
 layout: note.njk
+id: 4
 publish: true
 tags:
   - photo
