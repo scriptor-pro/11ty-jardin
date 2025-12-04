@@ -472,7 +472,7 @@ hr {
   grid-column: 2;
   grid-row: 1 / span 2;
   align-self: start;
-  max-width: 220px;
+  max-width: 132px;
   width: 32vw;
 }
 
