@@ -1,0 +1,32 @@
+* aad9325 (HEAD -> main, origin/main) soupir, gros soupir
+* 05a57cd fix: move layouts to Eleventy _includes directory
+* ac38115 chore: migrate to eleventy.config.js (ESM standard)
+* 366621e eleventy -> eleventy.config
+* ad8032e refactor: rename Eleventy config file for Eleventy 3 ESM compatibility
+* 6fafef2 Refactor deploy workflow for Node.js and Eleventy
+* 5df5667 favicons
+* 1db477a remove favicon
+* 61fbb2c chore: ignore site.zip
+* 83a89da cleanup: remove accidentally committed site.zip
+* 2af8b5b Fix: regenerated clean package-lock.json for Eleventy 3
+* 88e2dc8 numero de build et image logo 132
+* b87d1ca avec numero build dans footer
+* 864430a Fix runner: use ubuntu-latest instead of docker
+* 70e349d avec un seul deploy.yml
+* 8e46820 deploy.yml au bon endroit
+*   fe70362 Merge branch 'main' of codeberg.org:baudouin/11ty-jardin
+|\  
+| * 3e53015 retirer _site et site.zip
+* | 4f93ce9 ajout deploy.yml
+|/  
+* b31c192 Nettoyage: retirer _site et node_modules du dépôt
+* fb93ae2 ajout expire headers
+* 7daaca8 goatcounter
+* 3bfa2bb initial public offering
+* 9fa3dcc test lazygit
+* 716db79 toutim vers codeberg
+* 66bc383 avec publish: false possible
+* c710a9a 1er décembre
+* 3773ce3 accent dans les tags
+* ce75796 pour page
+* dba9a1d premier commit

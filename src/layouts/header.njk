@@ -3,9 +3,15 @@
   <div class="header-inner">
 
     <div class="site-title-block">
-      <h1 class="site-title">
-        <a href="/">{{ site.name }}</a>
-      </h1>
+      {% if page.url == "/" %}
+        <h1 class="site-title">
+          <a href="/">{{ site.name }}</a>
+        </h1>
+      {% else %}
+        <p class="site-title">
+          <a href="/">{{ site.name }}</a>
+        </p>
+      {% endif %}
 
       {% if site.baseline %}
       <p class="site-baseline"><i>
