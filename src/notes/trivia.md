@@ -1,7 +1,7 @@
 ---
-title: Trivia
 layout: note.njk
-id: 13
+id: 2025-11-30-tags:-12_FG7f
+title: Trivia
 publish: true
 tags:
   - trivia

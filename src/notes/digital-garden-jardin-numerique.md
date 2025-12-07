@@ -1,7 +1,7 @@
 ---
-title: "Jardin Numérique ? Digital garden ? Wadezdanu ?"
 layout: note.njk
-id: 9
+id: 2025-11-30-tags:-12_GjGs
+title: "Jardin Numérique ? Digital garden ? Wadezdanu ?"
 publish: true
 tags:
   - digital-garden

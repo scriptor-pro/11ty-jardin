@@ -1,7 +1,7 @@
 ---
-title: DNS des GitHub Pages
 layout: note.njk
-id: 12
+id: 2025-11-30-tags:-12_GznY
+title: DNS des GitHub Pages
 publish: true
 tags:
   - projet

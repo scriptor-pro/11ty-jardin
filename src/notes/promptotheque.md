@@ -1,7 +1,7 @@
 ---
-title: La promptothèque
 layout: note.njk
-id: 11
+id: 2025-11-30-tags:-12_qeM2
+title: La promptothèque
 publish: true
 tags: 
   - projet

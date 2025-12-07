@@ -1,7 +1,7 @@
 ---
-title: Des produits en vente dans un supermarché dans le révélateur
 layout: note.njk
-id: 4
+id: 2025-11-30-tags:-12_xhcM
+title: Des produits en vente dans un supermarché dans le révélateur
 publish: true
 tags:
   - photo

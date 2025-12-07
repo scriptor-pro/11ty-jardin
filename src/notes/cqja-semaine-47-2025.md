@@ -1,8 +1,8 @@
 ---
+layout: note.njk
+id: 2025-11-30-tags:-12_Pl7B
 title: "Ce que j'ai appris - semaine 47/2025"
 slug: "ce-que-j-ai-appris-semaine-47-2025"
-layout: note.njk
-id: 6
 publish: true
 
 # Statut de progression : idée | chantier | terminé

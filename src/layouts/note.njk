@@ -21,11 +21,11 @@
 <p class="note-meta">
   {# NOTE: Unique note number shown in the header (populated via front matter or utils/assign-note-ids.js).
      Temporarily hidden for now; uncomment to restore the badge. #}
-  {# {% if id %}
+  {% if id %}
     <span class="note-id">
       Note #{{ id }}
     </span>
-  {% endif %} #}
+  {% endif %} 
 
   {% if date %}
     <span class="note-date">
@@ -48,7 +48,11 @@
      CONTENU PRINCIPAL DE LA NOTE
      ----------------------------------------------------------- #}
   <section class="note-body">
-    {{ content | replace("<h1", "<h2") | replace("</h1>", "</h2>") | safe }}
+    {% set body = content
+      | stripLeadingTitle(title)
+      | replace("<h1", "<h2")
+      | replace("</h1>", "</h2") %}
+    {{ body | safe }}
   </section>
 
 

@@ -13,6 +13,9 @@ function minifyHtml(content = "") {
     .trim();
 }
 
+// Escape user-provided strings before building a RegExp
+const escapeRegExp = str => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
 /**
  * Configuration Eleventy (ESM)
  */
@@ -77,6 +80,24 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("minBy", (arr, attr) =>
     Math.min(...arr.map(item => item[attr]))
   );
+
+  // Remove the first h1/h2 matching the note title to avoid duplicate titles
+  eleventyConfig.addFilter("stripLeadingTitle", function (html, title) {
+    if (!html || !title) return html;
+
+    const escaped = escapeRegExp(String(title).trim());
+    const patterns = [
+      new RegExp(`^\\s*<h1[^>]*>\\s*${escaped}\\s*</h1>\\s*`, "i"),
+      new RegExp(`^\\s*<h2[^>]*>\\s*${escaped}\\s*</h2>\\s*`, "i")
+    ];
+
+    let cleaned = html;
+    patterns.forEach(re => {
+      cleaned = cleaned.replace(re, "");
+    });
+
+    return cleaned;
+  });
 
 
   /* ----------------------------------------------------------

@@ -1,7 +1,7 @@
 ---
-title: Je ne commande pas à Jeff Bezos le vendredi
 layout: note.njk
-id: 3
+id: 2025-11-30-tags:-12_nIXr
+title: Je ne commande pas à Jeff Bezos le vendredi
 publish: true
 tags:
   - e-commerce

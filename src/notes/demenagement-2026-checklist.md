@@ -1,7 +1,7 @@
 ---
-title: Checklist déménagement Bruxelles -> Bruxelles
 layout: note.njk
-id: 7
+id: 2025-12-03-tags:-02_msgU
+title: Checklist déménagement Bruxelles -> Bruxelles
 publish: true
 tags:
   - ia

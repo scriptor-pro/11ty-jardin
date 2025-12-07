@@ -1,7 +1,7 @@
 ---
-title: Projet photo "Petit Chimiste"
 layout: note.njk
-id: 10
+id: 2025-12-03-tags:-02_VCil
+title: Projet photo "Petit Chimiste"
 publish: true
 tags:
   - petit-chimiste

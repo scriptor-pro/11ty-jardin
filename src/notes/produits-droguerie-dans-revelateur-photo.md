@@ -1,4 +1,6 @@
 ---
+layout: note.njk
+id: 2025-11-30-tags:-12_cbQ3
 title: Des produits de droguerie dans le révélateur
 publish: true
 tags:

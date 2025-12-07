@@ -1,7 +1,7 @@
 ---
-title: Eaux de cours d'eau dans du révélateur photo
 layout: note.njk
-id: 2
+id: 2025-11-30-tags:-12_yOVA
+title: Eaux de cours d'eau dans du révélateur photo
 date: 2025-09-04            # date de création (pour tri)
 created: 2025-09-04
 updated: 2025-09-04
