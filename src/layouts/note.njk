@@ -8,12 +8,16 @@
      TITRE + STATUT
      ----------------------------------------------------------- #}
   <header class="note-header">
+    {% set effectiveStatus = status %}
+    {% if tags and ("cqja" in tags) %}
+      {% set effectiveStatus = "cqja" %}
+    {% endif %}
 
     <h1 class="note-title">
       {{ title }}
-      {% if status %}
+      {% if effectiveStatus %}
         <span class="note-status status-icon">
-          {{ status | statusIcon }}
+          {{ effectiveStatus | statusIcon }}
         </span>
       {% endif %}
     </h1>

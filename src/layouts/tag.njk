@@ -25,13 +25,18 @@
         <span class="tag-note-title">{{ note.data.title }}</span>
 
         {# Statut visuel #}
+        {% set hasCqjaTag = note.data.tags and ("cqja" in note.data.tags) %}
+        {% set statusValue = hasCqjaTag ? "cqja" : note.data.status %}
+        {% set normalizedStatus = statusValue and statusValue | lower %}
         <span class="tag-note-status">
-          {% if note.data.status == "idee" %}
+          {% if normalizedStatus == "idee" or normalizedStatus == "idée" %}
             💭 idée
-          {% elif note.data.status == "chantier" %}
+          {% elif normalizedStatus == "chantier" %}
             🔧 chantier
-          {% elif note.data.status == "termine" %}
+          {% elif normalizedStatus == "termine" or normalizedStatus == "terminé" %}
             ✨ terminé
+          {% elif normalizedStatus == "cqja" %}
+            📑 cqja
           {% else %}
             ⚪︎
           {% endif %}

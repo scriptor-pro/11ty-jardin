@@ -47,6 +47,15 @@ layout: base.njk
   <section class="home-section">
     <h2 class="section-title">⏳ par statut</h2>
 
+    <h3 class="status-title">📑 Ce que j'ai appris</h3>
+    <ul class="notes-list">
+      {% for note in collections.notes %}
+        {% if note.fileSlug != "index" and note.url != "/notes/" and note.data.tags and ("cqja" in note.data.tags) %}
+          <li><a href="{{ note.url }}">{{ note.data.title }}</a></li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+
     <h3 class="status-title">💭 Idées</h3>
     <ul class="notes-list">
       {% for note in collections.notes %}

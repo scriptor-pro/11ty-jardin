@@ -23,6 +23,8 @@ tags:
 description: "Floculer. Ce n'est pas sale. Quoique. Et d'autres découvertes pendant la 47e semaine de 2024"
 ---
 
+# Ce que j'ai appris - semaine 47/2025
+
 
 L'étymologie de "loustic" - vient de l'Allemand "lustig" (amusant)
 

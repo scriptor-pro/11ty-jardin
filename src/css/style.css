@@ -287,7 +287,7 @@ hr {
 }
 
 .main-nav a {
-  text-decoration: none;
+  text-decoration:dotted;
   font-family: var(--font-sans);
   font-size: 1rem;
   color: var(--text-color, #000);
@@ -477,8 +477,8 @@ hr {
 }
 
 .site-logo img {
-  width: 100%;
-  height: auto;
+  width: 132px;
+  height: 132px;
   display: block;
 }
 

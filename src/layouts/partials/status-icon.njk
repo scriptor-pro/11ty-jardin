@@ -1,5 +1,8 @@
 {# Affiche l'icône de statut en réutilisant le filtre global #}
 {% set statusValue = status or (note and note.data and note.data.status) %}
+{% if note and note.data and note.data.tags and ("cqja" in note.data.tags) %}
+  {% set statusValue = "cqja" %}
+{% endif %}
 
 {% if statusValue %}
   <span class="status-icon">

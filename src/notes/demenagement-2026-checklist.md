@@ -14,8 +14,7 @@ status: "chantier"        # ou "chantier", "termine"
 ---
 
 
-
-# Checklist — Déménagement Bruxelles → Bruxelles
+# Checklist déménagement Bruxelles -> Bruxelles
 
 ## 6 à 8 semaines avant
 - [ ] Informer le fournisseur **Internet/téléphonie** du changement d’adresse.

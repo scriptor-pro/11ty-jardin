@@ -1,7 +1,7 @@
 ---
 layout: note.njk
 id: 2025-11-30-tags:-12_HY8e
-title: "Développer avec un révélateur assaisonné –  Sel Iodé "
+title: "Développer avec un révélateur assaisonné – Sel Iodé"
 publish: true
 tags:
   - photo
@@ -11,9 +11,9 @@ date: 2025-06-23
 created: 2025-06-23
 updated: 2025-09-17
 status: "chantier"
----
 
-# Révélateur Assaisonné – Expérience Sel Iodé  
+---
+# Développer avec un révélateur assaisonné – Sel Iodé
 **Film** : AgfaPhoto APX 400  
 **Révélateur** : Rodinal 1+25  
 **Cuve** : 260 ml  

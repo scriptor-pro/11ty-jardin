@@ -13,7 +13,7 @@ created: 2025-09-28
 updated: 2025-09-28
 status: "chantier"
 ---
-# Produits en vente dans un supermarché dans du révélateur photo
+# Des produits en vente dans un supermarché dans le révélateur
 
 | Produits favorables (effet exploitable) | Produits défavorables (effet négatif) |
 |-----------------------------------------|----------------------------------------|

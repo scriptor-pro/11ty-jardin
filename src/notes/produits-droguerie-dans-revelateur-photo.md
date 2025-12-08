@@ -10,7 +10,8 @@ description: De l'effet de produits de droguerie sur le développement d'un film
 created: 2025-09-28
 updated:
 status: "chantier"
----# Révélateur assaisonné – Produits de droguerie
+---
+# Des produits de droguerie dans le révélateur
 
 | Produits favorables (effet exploitable) | Produits défavorables (effet négatif) |
 |-----------------------------------------|----------------------------------------|

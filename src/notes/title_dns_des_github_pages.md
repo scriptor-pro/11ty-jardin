@@ -12,7 +12,7 @@ created: 2025-07-03
 status: "termine"
 ---
 
-# Faire pointer un domaine vers une page github
+# DNS des GitHub Pages
 
 Long story short :
 

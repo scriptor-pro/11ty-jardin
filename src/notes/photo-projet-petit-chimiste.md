@@ -14,7 +14,9 @@ updated: 2025-01-02   # meta interne
 status: "chantier"        # ou "chantier", "termine"
 ---
 
-##Ce que c’est
+# Projet photo "Petit Chimiste"
+
+## Ce que c’est
 
 L’idée est de prendre des photos identiques et d’ajouter des ingrédients solides ou liquides au révélateur.
 Les photos
@@ -39,5 +41,4 @@ ma salle de bain. Lumière plafond et deux lumière miroir allumées. Les condit
 [Sel]
 
 [Eau en bouteille]
-
 

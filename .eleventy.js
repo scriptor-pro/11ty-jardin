@@ -194,6 +194,8 @@ eleventyConfig.addFilter("statusIcon", function (status) {
     case "terminé":
     case "termine":
       return "✨"; // terminé
+    case "cqja":
+      return "📑"; // pages marquées "cqja"
     default:
       return "";   // pas d'icône pour les statuts non prévus
   }

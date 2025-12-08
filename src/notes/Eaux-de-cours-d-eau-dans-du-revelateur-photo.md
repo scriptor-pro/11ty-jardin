@@ -17,6 +17,8 @@ aliases:
 status: "chantier"
 ---
 
+# Eaux de cours d'eau dans du révélateur photo
+
 | Type d’eau utilisée         | Qualité principale                  | Effet sur le révélateur                                | Effet sur le film                                               | Esthétique attendue                         |
 |-----------------------------|-------------------------------------|--------------------------------------------------------|-----------------------------------------------------------------|---------------------------------------------|
 | Eau du canal (Bruxelles)    | Stagnante, polluée, organique       | Efficacité réduite, solution instable, acidification   | Contraste affaibli, voile brun/vert, dépôts, taches, traînées   | Chaotique, accidenté, imprévisible          |
