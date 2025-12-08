@@ -13,6 +13,8 @@ status: "chantier"
 ---
 # Des produits de droguerie dans le révélateur
 
+Dans le cadre du projet Petit-Chimiste, j'envisage sereinement de glisser un peu des produits ci-dessous dans du rodinal. Qu'est-ce que ça va donner ? Let's find out !
+
 | Produits favorables (effet exploitable) | Produits défavorables (effet négatif) |
 |-----------------------------------------|----------------------------------------|
 | **Soude en cristaux (carbonate de sodium)** → boost contraste et grain | **Eau de Javel (hypochlorite)** → détruit l’image |

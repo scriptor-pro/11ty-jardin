@@ -9,13 +9,15 @@ tags: about
 Bienvenue dans **Je note donc je suis**, un jardin d’idées cultivé au fil du temps.
 
 Ce site fonctionne comme un espace vivant : les notes ne sont pas figées, elles poussent, bifurquent, se relient.  
-L’esthétique Bauhaus structure la page ; la pensée, elle, circule librement.
+L’interface suit la philosophie "pas de forme sans fonction".
+
+## Apprendre en public
 
 Je travaille ici comme on tient un carnet intime et public à la fois :  
 entre rigueur géométrique et liberté narrative, entre technique, introspection et curiosité.
 
 Ce jardin reflète un cheminement personnel :  
-celui d’un auteur geek, autiste, passionné par les formes, la typographie, les systèmes et les idées qui s’assemblent à leur propre rythme.
+celui d’un auteur geek, autiste Asperger, passionné par les formes, la typographie, les systèmes et les idées qui s’assemblent à leur propre rythme, la géopolitique, Linux, l'écriture de scénarios, 
 
 Merci d’explorer cet espace en mouvement.
 
@@ -41,20 +43,19 @@ Baudouin Van Humbeeck
 
 @somebaudy — compte Twitter créé en 2006 - en sommeil tant qu'Elon y fera son Jacques
 @somebaudy — compte Instagram
-@bvh.fyi 	- compte BlueSky parce que cfr supra
+[@bvh.fyi](https://bsky.app/profile/bvh.fyi) 	- compte BlueSky parce que cfr supra
 LinkedIn
 
 ### Forges
 
-[Github]
+[Github](https://github.com/scriptor-pro)
 [Codeberg](https://codeberg.org/baudouin)
 
 ### IA
 
-* NightCafe.studio https://creator.nightcafe.studio/?ru=BaudouinVH 
+* Je demande à des modèles IA de créer des images sur [NightCafe.studio](https://nightcafe.art/ru/BaudouinVH?refsrc=share)
 
 ### Dactylographier vite et bien
 
-* https://www.keybr.com/profile/b4rywo8 
-
+* [Sur Keybr.com](https://www.keybr.com/profile/b4rywo8) 
 

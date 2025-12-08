@@ -1,7 +1,16 @@
-import { DateTime } from "luxon";
 import eleventyNavigationPlugin from "@11ty/eleventy-navigation";
 import fs from "fs";
 import path from "path";
+import { createRequire } from "module";
+
+// Optional date-fns import with graceful fallback
+const require = createRequire(import.meta.url);
+let dateFnsFormat = null;
+try {
+  dateFnsFormat = require("date-fns/format");
+} catch (_) {
+  // date-fns not installed; fallback defined below
+}
 
 // Helper minimal HTML minification (no external deps)
 function minifyHtml(content = "") {
@@ -15,6 +24,29 @@ function minifyHtml(content = "") {
 
 // Escape user-provided strings before building a RegExp
 const escapeRegExp = str => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+// Extract the first Markdown H1 as a fallback title
+const deriveHeadingTitle = content => {
+  if (!content) return null;
+  const match = content.match(/^#\s+(.+)$/m);
+  return match ? match[1].trim() : null;
+};
+
+// Ensure a note has a title: use front matter, else fallback to first H1
+const ensureNoteTitle = note => {
+  if (note?.data?.title) return note.data.title;
+  try {
+    const content = fs.readFileSync(note.inputPath, "utf8");
+    const headingTitle = deriveHeadingTitle(content);
+    if (headingTitle) {
+      note.data.title = headingTitle;
+      return headingTitle;
+    }
+  } catch (_) {
+    // ignore read errors; Eleventy will surface issues later if needed
+  }
+  return note?.data?.title;
+};
 
 /**
  * Configuration Eleventy (ESM)
@@ -55,7 +87,20 @@ export default function (eleventyConfig) {
 
   // Filtre date Luxon
   eleventyConfig.addFilter("date", function (dateObj, format = "yyyy-MM-dd") {
-    return DateTime.fromJSDate(dateObj).toFormat(format);
+    if (!dateObj) return "";
+    const date = dateObj instanceof Date ? dateObj : new Date(dateObj);
+    if (dateFnsFormat) {
+      try {
+        return dateFnsFormat(date, format);
+      } catch (_) {
+        // ignore and fallback
+      }
+    }
+    // Minimal fallback: ISO YYYY-MM-DD
+    if (!isNaN(date)) {
+      return date.toISOString().slice(0, 10);
+    }
+    return "";
   });
 
   // Encode/decode propre des slugs tout en conservant les accents
@@ -111,6 +156,10 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("notes", function (collectionApi) {
     return collectionApi
       .getFilteredByGlob("src/notes/*.md")
+      .map(note => {
+        ensureNoteTitle(note);
+        return note;
+      })
       .filter(isPublished)
       // Tri par date de création (ou date de fichier si absent), plus récent en premier
       .sort((a, b) => {
@@ -148,6 +197,10 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("notesWithBacklinks", async function (collectionApi) {
     const notes = collectionApi
       .getFilteredByGlob("src/notes/*.md")
+      .map(note => {
+        ensureNoteTitle(note);
+        return note;
+      })
       .filter(isPublished);
 
     // Lire le contenu de chaque note via API officielle

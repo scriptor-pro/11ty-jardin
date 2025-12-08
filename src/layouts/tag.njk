@@ -26,7 +26,11 @@
 
         {# Statut visuel #}
         {% set hasCqjaTag = note.data.tags and ("cqja" in note.data.tags) %}
-        {% set statusValue = hasCqjaTag ? "cqja" : note.data.status %}
+        {% if hasCqjaTag %}
+          {% set statusValue = "cqja" %}
+        {% else %}
+          {% set statusValue = note.data.status %}
+        {% endif %}
         {% set normalizedStatus = statusValue and statusValue | lower %}
         <span class="tag-note-status">
           {% if normalizedStatus == "idee" or normalizedStatus == "idée" %}

@@ -1,5 +1,6 @@
 ---
-# Title of the note, shown on the page and used in listings
+# Title of the note, shown on the page and used in listings.
+# If you omit this field, it will be filled automatically from the first H1.
 title: "Titre de la note"
 
 # Layout used to render the note (keeps consistent header/footer/styles)
@@ -34,8 +35,8 @@ description: "Résumé concis de la note."
 ---
 
 <!--
-  H1 is part of content for flexibility; keep one H1 per page.
-  Use meaningful headings to structure the note.
+  The first H1 is the source of truth for the title (front matter falls back to it).
+  Keep one H1 per page. Use meaningful headings to structure the note.
 -->
 # Titre de la note
 
