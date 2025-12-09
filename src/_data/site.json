@@ -11,8 +11,11 @@
   },
   "nav": [
     { "label": "Accueil", "href": "/" },
+    { "label": "Notes", "href": "/notes/" },
+    { "label": "Tags", "href": "/tags/" },
     { "label": "À propos", "href": "/a-propos/" },
     { "label": "Contact", "href": "/contact/" },
-    { "label": "Liens", "href": "/liens/" }
+    { "label": "Liens", "href": "/liens/" },
+    { "label": "RSS", "href": "/feed.xml" }
   ]
 }

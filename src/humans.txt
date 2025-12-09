@@ -1,0 +1,16 @@
+/* TEAM */
+Baudouin Van Humbeeck (@somebaudy) — founder, gardener
+
+/* SITE */
+Stack: Eleventy, Nunjucks, CSS
+Location: Bruxelles, BE
+
+/* CONTACT */
+GitHub: https://github.com/scriptor-pro
+Mastodon: https://mastodon.social/@baudouinvh
+Bluesky: https://bsky.app/profile/bvh.fyi
+
+/* THANKS */
+Merci de visiter ce jardin numérique.
+J'offre un cyanotype format carte postale à la première personne qui mentionne
+« humans.txt jndjs.dev » dans un mail à bvh@scriptor.pro.

@@ -66,6 +66,7 @@ export default function (eleventyConfig) {
      ---------------------------------------------------------- */
   eleventyConfig.addPassthroughCopy({ "src/css": "css" });
   eleventyConfig.addPassthroughCopy({ "src/assets/images": "images" });
+  eleventyConfig.addPassthroughCopy({ "src/humans.txt": "humans.txt" });
   // Autorise les images placées à côté des notes à être copiées telles quelles
   eleventyConfig.addPassthroughCopy("src/notes/**/*.{jpg,jpeg,png,gif,svg,webp,avif}");
 
