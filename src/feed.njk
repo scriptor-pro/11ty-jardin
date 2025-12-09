@@ -1,0 +1,41 @@
+--- 
+permalink: /feed.xml
+eleventyExcludeFromCollections: true
+---
+{% set siteBase = site.url or "" %}
+{% if siteBase %}
+  {% set feedHref = siteBase ~ "/feed.xml" %}
+{% else %}
+  {% set feedHref = "/feed.xml" %}
+{% endif %}
+{% set items = collections.notes | slice(0, 50) %}
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ site.name }}</title>
+    <link>{{ siteBase }}</link>
+    <atom:link href="{{ feedHref }}" rel="self" type="application/rss+xml" />
+    {% if site.baseline %}<description>{{ site.baseline }}</description>{% endif %}
+    {% if items and items.length %}
+      <lastBuildDate>{{ items[0].date | rssDate }}</lastBuildDate>
+    {% endif %}
+
+    {% for item in items %}
+      {% set itemDate = item.data.created or item.date %}
+      {% if siteBase %}
+        {% set itemUrl = item.url | absoluteUrl(siteBase) %}
+      {% else %}
+        {% set itemUrl = item.url %}
+      {% endif %}
+      <item>
+        <title>{{ item.data.title | escape }}</title>
+        <link>{{ itemUrl }}</link>
+        <guid>{{ itemUrl }}</guid>
+        <pubDate>{{ itemDate | rssDate }}</pubDate>
+        <description><![CDATA[
+          {{ item.templateContent | htmlToAbsoluteUrls(itemUrl) | safe }}
+        ]]></description>
+      </item>
+    {% endfor %}
+  </channel>
+</rss>

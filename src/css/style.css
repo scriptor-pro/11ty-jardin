@@ -284,6 +284,7 @@ hr {
   list-style: none;
   display: flex;
   gap: 1.5rem;
+  justify-content: center;
 }
 
 .main-nav a {
@@ -372,11 +373,13 @@ hr {
     grid-row: 3;
     align-self: end;
     margin-top: 0.2rem;
+    justify-self: center;
   }
 
   .main-nav ul {
     flex-wrap: wrap;
     gap: 1rem;
+    justify-content: center;
   }
 
   .header-border {
@@ -497,6 +500,7 @@ hr {
   grid-column: 1;
   grid-row: 2;
   align-self: end; /* align nav bottom with logo bottom */
+  justify-self: center; /* center nav horizontally */
 }
 
 

@@ -35,17 +35,19 @@
   <meta name="twitter:description" content="{{ pageDescription }}" />
   {% if ogImage %}<meta name="twitter:image" content="{{ ogImage }}" />{% endif %}
 
+  {% if site.url %}
+    {% set feedHref = site.url ~ "/feed.xml" %}
+  {% else %}
+    {% set feedHref = "/feed.xml" %}
+  {% endif %}
+  <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ feedHref }}" />
+
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
 
   <div class="page-container">
-
-    {# ----------------------------------------------
-       SIDEBAR GAUCHE
-       ---------------------------------------------- #}
-    {% include "sidebar.njk" %}
 
     {# ----------------------------------------------
        ZONE PRINCIPALE (contenu + header)

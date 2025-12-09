@@ -1,4 +1,5 @@
 import eleventyNavigationPlugin from "@11ty/eleventy-navigation";
+import pluginRss from "@11ty/eleventy-plugin-rss";
 import fs from "fs";
 import path from "path";
 import { createRequire } from "module";
@@ -57,6 +58,7 @@ export default function (eleventyConfig) {
      Plugins
      ---------------------------------------------------------- */
   eleventyConfig.addPlugin(eleventyNavigationPlugin);
+  eleventyConfig.addPlugin(pluginRss);
 
 
   /* ----------------------------------------------------------
