@@ -1,21 +1,21 @@
 ---
-pagination:
-  data: collections.all
-  size: 1000   # largement suffisant
 permalink: /sitemap.xml
 eleventyExcludeFromCollections: true
 ---
+
+{% set siteBase = site.url or (meta.site and meta.site.url) or "http://localhost:8080" %}
+{% set pages = collections.all | rejectattr("url", "equalto", "") %}
 
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset 
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-{% for page in collections.all %}
-  {# On ignore les fichiers qui ne doivent pas être indexés #}
+{% for page in pages %}
+  {# Ignore les pages sans URL ou marquées en brouillon #}
   {% if page.url and not page.data.draft %}
   <url>
-    <loc>{{ meta.site.url }}{{ page.url }}</loc>
-    <lastmod>{{ page.date | date("yyyy-MM-dd") }}</lastmod>
+    <loc>{{ page.url | absoluteUrl(siteBase) }}</loc>
+    <lastmod>{{ (page.data.updated or page.data.created or page.date) | date("yyyy-MM-dd") }}</lastmod>
   </url>
   {% endif %}
 {% endfor %}

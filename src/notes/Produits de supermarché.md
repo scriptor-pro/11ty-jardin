@@ -7,13 +7,16 @@ tags:
   - photo
   - chimie
   - petit-chimiste
-description: Que se quand on ajoute des produits usuels dans du révélateur de film noir et blanc.
+description: Que se passe-t-il quand on ajoute des produits d'épicerie usuels dans du révélateur de film noir et blanc. Let's find out !
 date: 2025-09-28
 created: 2025-09-28
 updated: 2025-09-28
 status: "chantier"
 ---
-# Des produits en vente dans un supermarché dans le révélateur
+# Photo : mettre des produits en vente en supermarché dans le révélateur
+
+
+Ci-dessous la liste des produits que j'envisage de glisser dans du révélateur, histoire de voir à quoi ressemble une photo (mal)traitée de la sorte. 
 
 | Produits favorables (effet exploitable) | Produits défavorables (effet négatif) |
 |-----------------------------------------|----------------------------------------|

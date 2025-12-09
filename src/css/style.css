@@ -610,6 +610,18 @@ hr {
   font-family: var(--font-sans);
   font-size: 0.95rem;
   margin: 0.5rem 0 0;
+  border: #444 dotted 1px;
+  background-color:var(--white) ;
+}
+
+.note-meta-aside {
+  float: right;
+  text-align: right;
+  margin-left: 1rem;
+}
+
+.note-path {
+  font-family: var(--font-mono, monospace);
 }
 
 .note-id {

@@ -1,0 +1,29 @@
+User-agent: *
+# Autoriser uniquement les pages de contenu réel
+Allow: /notes/
+
+# Autoriser les assets nécessaires au rendu
+Allow: /css/
+Allow: /js/
+Allow: /images/
+
+# Bloquer les pages structurelles qui diluent le SEO
+Disallow: /tags/
+Disallow: /categories/
+Disallow: /archives/
+Disallow: /search/
+
+# Bloquer les répertoires internes ou privés
+Disallow: /drafts/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /sandbox/
+
+# Bloquer l’indexation des fichiers sources
+Disallow: /*.md$
+Disallow: /*.json$
+Disallow: /*.yaml$
+Disallow: /*.yml$
+
+# Indiquer explicitement le sitemap
+Sitemap: https://jndjs.dev/sitemap.xml

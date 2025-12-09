@@ -11,7 +11,7 @@ date: 2025-06-23
 created: 2025-06-23
 updated: 2025-09-17
 status: "chantier"
-
+# Front matter était orphelin (pas de fermeture) ; corrigé pour activer le layout.
 ---
 # Développer avec un révélateur assaisonné – Sel Iodé
 **Film** : AgfaPhoto APX 400  
