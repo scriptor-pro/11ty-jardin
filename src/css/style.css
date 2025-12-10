@@ -5,7 +5,7 @@
   --yellow: #f8dd3d;
   --red: #e63946;
   --blue: #1d3557;
-  --black: #000000;
+  --black: #333333;
   --white: #f1f1f1;
   --gray: #6c757d;
 
@@ -24,7 +24,7 @@
   --lh-title: 1.2;
   --space-m: 1.2rem;
 
-  --color-text: #000000;
+  --color-text: #333333;
   --color-muted: #6c757d;
   --color-strong: #1d3557;
   --color-highlight: #e63946;
@@ -300,6 +300,47 @@ hr {
   display: inline-block;
 }
 
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 2px solid var(--color-strong);
+  border-radius: 8px;
+  padding: 0.45rem 0.6rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.nav-toggle:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 3px;
+}
+
+.nav-toggle-bar {
+  display: block;
+  width: 22px;
+  height: 3px;
+  background: var(--color-strong);
+  border-radius: 2px;
+  position: relative;
+}
+
+.nav-toggle-bar + .nav-toggle-bar {
+  margin-top: 4px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
 /* Ligne rouge --------------------------------------------------- */
 .header-border {
   width: 100%;
@@ -494,6 +535,45 @@ hr {
   grid-row: 2;
   align-self: end; /* align nav bottom with logo bottom */
   justify-self: center; /* center nav horizontally */
+}
+
+/* Mobile nav */
+@media (max-width: 900px) {
+  .nav-toggle {
+    display: inline-flex;
+    margin: 0.25rem 0 0.25rem auto;
+    background: var(--white);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+
+  .main-nav {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .main-nav ul {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--color-strong);
+    border-radius: 10px;
+    background: var(--white);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  }
+
+  .main-nav.is-open ul {
+    display: flex;
+  }
+
+  .main-nav a {
+    font-size: 1.05rem;
+    width: 100%;
+  }
 }
 
 

@@ -1,5 +1,5 @@
-import { gzip } from "node:zlib";
-import { brotliCompress } from "node:zlib";
+import { gzip, brotliCompress } from "node:zlib";
+import * as zlib from "node:zlib";
 import { promisify } from "node:util";
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import path from "path";
