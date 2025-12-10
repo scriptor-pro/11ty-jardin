@@ -19,6 +19,12 @@
       </p>
 
       {% endif %}
+
+      {% if version %}
+      <p class="small build-id">
+        {{ version.version }}{% if version.sha %} ({{ version.sha }}){% endif %}
+      </p>
+      {% endif %}
     </div>
 
     {% if site.logo %}

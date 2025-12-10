@@ -4,6 +4,9 @@
   "version": "0.38.0",
   "description": "Un jardin numérique en chantier perpétuel made in Bruxelles",
   "scripts": {
+    "predev": "node utils/write-version.js",
+    "preserve": "node utils/write-version.js",
+    "prebuild": "node utils/write-version.js",
     "dev": "npx @11ty/eleventy --serve",
     "serve": "npx @11ty/eleventy --serve",
     "build": "npx @11ty/eleventy && npm run minify && npm run compress",

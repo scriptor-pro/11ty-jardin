@@ -1,13 +1,5 @@
 <footer class="site-footer">
   <p>made with ❤️ and <a href="https://www.11ty.dev/">11ty</a></p>
-  {% set latestNote = collections.notes | first %}
-  {% if latestNote %}
-    {% set latestDate = latestNote.data.updated or latestNote.data.created or latestNote.date %}
-    {% set latestUnix = latestDate | unixTime %}
-    <p class="small build-id">
-      {{ "" | randomLetters(3) }}{{ latestUnix }}
-    </p>
-  {% endif %}
 </footer>
 <script data-goatcounter="https://11ty-jardin.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
