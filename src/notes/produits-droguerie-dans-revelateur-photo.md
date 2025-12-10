@@ -6,7 +6,7 @@ publish: true
 tags:
   - photo
   - petit-chimiste
-description: De l'effet de produits de droguerie sur le développement d'un film noir et blanc
+description: De l'effet de produits de droguerie (favorable et défavorable) sur le développement d'un film noir et blanc
 created: 2025-09-28
 updated:
 status: "chantier"

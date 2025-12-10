@@ -7,6 +7,7 @@ tags:
   - petit-chimiste
   - photo
   - révélateur
+  - projet
 description: "Délibérément salir l'eau dans laquelle je dilue un révélateur photo. What could possibly go right ?"
 date: 2025-01-01      # pour le tri Eleventy
 created: 2025-01-01   # meta interne

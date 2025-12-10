@@ -14,9 +14,9 @@ status: "termine"
 
 # DNS des GitHub Pages
 
-Long story short :
+Tu veux faire pointer merveilleux-domaine.com vers un dépôt github ? Tu te demandes vers quelles adresses IP (version 4, version 6) faire pointer ? Par ici mon ami : 
 
-Enregistrements A pour example.org 
+## Enregistrements A pour example.org 
 
 
 
@@ -25,7 +25,7 @@ Enregistrements A pour example.org
 185.199.110.153
 185.199.111.153
 
-Enregistrements AAAA pour example.org 
+## Enregistrements AAAA pour example.org 
 
 2606:50c0:8000::153
 2606:50c0:8001::153

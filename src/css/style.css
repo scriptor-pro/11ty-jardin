@@ -119,13 +119,6 @@ p.intro {
   color: var(--color-text);
 }
 
-.notes-list
-{width:auto}
-
-.notes-list a {
-  text-decoration: underline dotted;
-}
-
 .small,
 .smallprint {
   font-size: var(--t--1);
@@ -288,10 +281,10 @@ hr {
 }
 
 .main-nav a {
-  text-decoration:dotted;
+  text-decoration: underline dotted;
   font-family: var(--font-sans);
   font-size: 1rem;
-  color: var(--text-color, #000);
+  color: var(--color-text);
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -445,16 +438,16 @@ hr {
 }
 
 .site-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: clamp(1.8rem, 3vw, 2.6rem);
   margin: 0;
 }
 
 .site-baseline {
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
   font-size: 0.95rem;
   margin: 0.2rem 0 0 0;
-  color: var(--text-muted, #444);
+  color: var(--color-muted);
 }
 
 .build-id {
@@ -594,8 +587,12 @@ hr {
 }
 
 .note a {
-  text-decoration: underline dotted;
   font-weight: 600;       /* slightly heavier for note links */
+}
+
+.note a,
+.notes-list a {
+  text-decoration: underline dotted;
 }
 
 .note p {
@@ -611,7 +608,11 @@ hr {
   font-size: 0.95rem;
   margin: 0.5rem 0 0;
   border: #444 dotted 1px;
-  background-color:var(--white) ;
+}
+
+.note-meta,
+.note-meta-aside {
+  background: var(--white);
 }
 
 .note-meta-aside {
@@ -621,7 +622,6 @@ hr {
   margin-bottom: 0.75rem;
   max-width: 32ch;
   padding: 0.35rem 0.5rem;
-  background: var(--white);
 }
 
 .note-path {
