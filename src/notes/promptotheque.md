@@ -1,6 +1,6 @@
 ---
 layout: note.njk
-id: 2025-11-30-tags:-12_qeM2
+id: 23062025-la-promptotheque
 title: La promptothèque
 publish: true
 tags: 

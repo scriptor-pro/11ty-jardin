@@ -1,6 +1,6 @@
 ---
 layout: note.njk
-id: 2025-11-30-tags:-12_xhcM
+id: 28092025-des-produits-en
 title: Des produits en vente dans un supermarché dans le révélateur
 publish: true
 tags:

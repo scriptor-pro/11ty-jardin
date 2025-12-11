@@ -24,12 +24,53 @@ function extractFrontMatter(raw) {
 
 const hasNoteLayout = front => /^layout:\s*note\.njk\s*$/m.test(front);
 
-const readId = front => {
-  const match = front.match(/^id:\s*(\d+)\s*$/m);
-  return match ? Number(match[1]) : null;
+const readField = (front, field) => {
+  const regex = new RegExp(`^${field}:\\s*([^\\n]+)\\s*$`, "mi");
+  const match = front.match(regex);
+  return match ? match[1].trim() : null;
 };
 
-function injectId(front, id) {
+const parseDate = iso => {
+  if (!iso) return null;
+  const m = iso.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})/);
+  if (!m) return null;
+  const [, year, month, day] = m;
+  return { day, month, year };
+};
+
+const slugify = (text, fallback) => {
+  if (!text) return fallback;
+  return text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .split("-")
+    .filter(Boolean)
+    .slice(0, 3)
+    .join("-") || fallback;
+};
+
+function computeId(front, filenameBase) {
+  const title = readField(front, "title");
+  const created = readField(front, "created") || readField(front, "date");
+  const parsed = parseDate(created);
+  const slug = slugify(title, slugify(filenameBase, "note"));
+
+  if (parsed) {
+    return `${parsed.day}${parsed.month}${parsed.year}-${slug}`;
+  }
+
+  // Fallback: no date found, keep an obvious marker
+  return `00000000-${slug}`;
+}
+
+function upsertId(front, newId) {
+  if (/^id:/m.test(front)) {
+    return front.replace(/^id:\s*.*$/m, `id: ${newId}`);
+  }
+
   const lines = front.split("\n");
   let insertAt = lines.findIndex(line =>
     /^layout:\s*note\.njk\s*$/i.test(line.trim())
@@ -40,7 +81,7 @@ function injectId(front, id) {
   }
 
   insertAt = insertAt === -1 ? lines.length : insertAt + 1;
-  lines.splice(insertAt, 0, `id: ${id}`);
+  lines.splice(insertAt, 0, `id: ${newId}`);
 
   return lines.join("\n");
 }
@@ -55,48 +96,35 @@ function assignIds() {
     .map(name => path.join(NOTES_DIR, name))
     .filter(file => fs.statSync(file).isFile() && file.endsWith(".md"));
 
-  let maxId = 0;
-  mdFiles.forEach(file => {
-    const raw = fs.readFileSync(file, "utf8");
-    const parsed = extractFrontMatter(raw);
-    if (!parsed || !hasNoteLayout(parsed.frontMatter)) return;
-
-    const id = readId(parsed.frontMatter);
-    if (id !== null) {
-      maxId = Math.max(maxId, id);
-    }
-  });
-
-  let nextId = maxId + 1;
-  let added = 0;
-  const additions = [];
+  const updates = [];
 
   mdFiles.forEach(file => {
     const raw = fs.readFileSync(file, "utf8");
     const parsed = extractFrontMatter(raw);
     if (!parsed || !hasNoteLayout(parsed.frontMatter)) return;
 
-    const existingId = readId(parsed.frontMatter);
-    if (existingId !== null) return;
+    const filenameBase = path.basename(file, ".md");
+    const newId = computeId(parsed.frontMatter, filenameBase);
+    const currentId = readField(parsed.frontMatter, "id");
 
-    const updatedFrontMatter = injectId(parsed.frontMatter, nextId);
+    if (currentId === newId) return;
+
+    const updatedFrontMatter = upsertId(parsed.frontMatter, newId);
     const updatedContent = `---\n${updatedFrontMatter}\n---\n${parsed.body}`;
     fs.writeFileSync(file, updatedContent, "utf8");
 
-    additions.push({ file, id: nextId });
-    nextId += 1;
-    added += 1;
+    updates.push({ file, newId, previous: currentId });
   });
 
-  console.log(`Highest existing ID: ${maxId || "none"}`);
-  if (added === 0) {
-    console.log("No notes needed an ID. Nothing changed.");
+  if (updates.length === 0) {
+    console.log("No notes needed an ID update. Nothing changed.");
     return;
   }
 
-  console.log(`Added IDs to ${added} note(s):`);
-  additions.forEach(({ file, id }) => {
-    console.log(`- ${path.basename(file)} -> ${id}`);
+  console.log(`Updated IDs for ${updates.length} note(s):`);
+  updates.forEach(({ file, newId, previous }) => {
+    const name = path.basename(file);
+    console.log(`- ${name}: ${previous || "none"} -> ${newId}`);
   });
 }
 

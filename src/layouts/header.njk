@@ -100,13 +100,13 @@
     function closeMenu() {
       nav.classList.remove("is-open");
       toggle.setAttribute("aria-expanded", "false");
-      list.setAttribute("aria-hidden", "true");
+      list.hidden = true;
     }
 
     function openMenu() {
       nav.classList.add("is-open");
       toggle.setAttribute("aria-expanded", "true");
-      list.removeAttribute("aria-hidden");
+      list.hidden = false;
     }
 
     toggle.addEventListener("click", () => {
@@ -120,7 +120,13 @@
 
     const mq = window.matchMedia("(min-width: 901px)");
     mq.addEventListener("change", e => {
-      if (e.matches) closeMenu();
+      if (e.matches) {
+        nav.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+        list.hidden = false;
+      } else {
+        closeMenu();
+      }
     });
 
     closeMenu();

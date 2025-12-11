@@ -1,6 +1,6 @@
 ---
 layout: note.njk
-id: 2025-11-30-tags:-12_GznY
+id: 03072025-dns-des-github
 title: DNS des GitHub Pages
 publish: true
 tags:
@@ -14,22 +14,20 @@ status: "termine"
 
 # DNS des GitHub Pages
 
-Tu veux faire pointer merveilleux-domaine.com vers un dépôt github ? Tu te demandes vers quelles adresses IP (version 4, version 6) faire pointer ? Par ici mon ami : 
+Tu veux faire pointer merveilleux-domaine.com vers un dépôt GitHub Pages ? Tu te demandes vers quelles adresses IP (version 4, version 6) faire pointer ? Par ici mon ami : 
 
-## Enregistrements A pour example.org 
+## Enregistrements A pour merveilleux-domaine.com
 
+- IPv4 A #1 : 185.199.108.153
+- IPv4 A #2 : 185.199.109.153
+- IPv4 A #3 : 185.199.110.153
+- IPv4 A #4 : 185.199.111.153
 
+## Enregistrements AAAA pour merveilleux-domaine.com
 
-185.199.108.153
-185.199.109.153
-185.199.110.153
-185.199.111.153
+- IPv6 AAAA #1 : 2606:50c0:8000::153
+- IPv6 AAAA #2 : 2606:50c0:8001::153
+- IPv6 AAAA #3 : 2606:50c0:8002::153
+- IPv6 AAAA #4 : 2606:50c0:8003::153
 
-## Enregistrements AAAA pour example.org 
-
-2606:50c0:8000::153
-2606:50c0:8001::153
-2606:50c0:8002::153
-2606:50c0:8003::153
-
-source : https://docs.github.com/fr/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site
+Source : [Documentation GitHub Pages — domaine personnalisé](https://docs.github.com/fr/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site)

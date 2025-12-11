@@ -1,6 +1,6 @@
 ---
 layout: note.njk
-id: 2025-11-30-note-01_EgY9
+id: 00000000-notes
 title: Notes
 publish: true
 status: idée

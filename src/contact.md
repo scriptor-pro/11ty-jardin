@@ -16,6 +16,8 @@ Si vous souhaitez réagir à une note, proposer une idée ou simplement dire bon
 
 Je réponds dès que possible, en fonction des saisons du jardin.
 
+> Ce formulaire ouvre votre client email. Si vous n’en avez pas, écrivez directement à [baud@baud.eu.org](mailto:baud@baud.eu.org).
+
 <form class="contact-form" action="mailto:bvh@etik.com" method="post" enctype="text/plain">
   <label for="name">Nom</label>
   <input type="text" id="name" name="name" required>

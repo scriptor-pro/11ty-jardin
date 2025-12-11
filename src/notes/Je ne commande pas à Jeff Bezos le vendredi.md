@@ -1,6 +1,6 @@
 ---
 layout: note.njk
-id: 2025-11-30-tags:-12_nIXr
+id: 03072025-je-ne-commande
 title: Je ne commande pas à Jeff Bezos le vendredi
 publish: true
 tags:

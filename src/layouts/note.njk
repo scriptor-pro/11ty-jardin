@@ -24,7 +24,7 @@
   </header>
 
   {# -----------------------------------------------------------
-     META DANS LE PREMIER PARAGRAPHE
+     META
      ----------------------------------------------------------- #}
   {% set notePath %}
     {% if page and page.url %}
@@ -37,36 +37,38 @@
   {% endset %}
   {% set notePath = notePath | trim %}
 
-  {% set metaAside %}
-    {% if id or date or updated or notePath %}
-      <aside class="note-meta note-meta-aside">
+  {% if id or date or updated or notePath %}
+    {% set metaTitleId = "note-meta-" ~ (page.fileSlug or id or "infos") %}
+    <section class="note-meta note-meta-block" aria-labelledby="{{ metaTitleId }}">
+      <h2 class="sr-only" id="{{ metaTitleId }}">Informations sur la note</h2>
+      <dl class="note-meta-list">
         {% if notePath %}
-          <span class="note-path">
-            {{ notePath }}
-          </span>
+        <div class="note-meta-item">
+          <dt>Chemin</dt>
+          <dd class="note-path">{{ notePath }}</dd>
+        </div>
         {% endif %}
-
         {% if id %}
-          <span class="note-id">
-            Note #{{ id }}
-          </span>
-        {% endif %} 
-
+        <div class="note-meta-item">
+          <dt>Identifiant</dt>
+          <dd class="note-id">Note #{{ id }}</dd>
+        </div>
+        {% endif %}
         {% if date %}
-          <span class="note-date">
-            {% if id %} — {% endif %}<strong>Créée :</strong> {{ date | formatDateBE }}
-          </span>
+        <div class="note-meta-item">
+          <dt>Créée</dt>
+          <dd class="note-date">{{ date | formatDateBE }}</dd>
+        </div>
         {% endif %}
-
         {% if updated %}
-          <span class="note-updated">
-            — <strong>Modifiée :</strong> {{ updated | formatDateBE }}
-          </span>
+        <div class="note-meta-item">
+          <dt>Modifiée</dt>
+          <dd class="note-updated">{{ updated | formatDateBE }}</dd>
+        </div>
         {% endif %}
-      </aside>
-    {% endif %}
-  {% endset %}
-  {% set metaAsideContent = metaAside | trim %}
+      </dl>
+    </section>
+  {% endif %}
 
   {# -----------------------------------------------------------
      TAGS
@@ -88,15 +90,11 @@
      CONTENU PRINCIPAL DE LA NOTE
      ----------------------------------------------------------- #}
   <section class="note-body">
-    {% set body = content
+    {{ content
       | stripLeadingTitle(title)
       | replace("<h1", "<h2")
-      | replace("</h1>", "</h2") %}
-    {% if metaAsideContent %}
-      {# Inject once, right after the first opening <p ...> tag #}
-      {% set body = body | replace(r/<p([^>]*?)>/, "<p\\1>" ~ metaAsideContent ~ " ") %}
-    {% endif %}
-    {{ body | safe }}
+      | replace("</h1>", "</h2>")
+      | safe }}
   </section>
 
 

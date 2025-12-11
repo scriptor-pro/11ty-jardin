@@ -1,6 +1,6 @@
 ---
 layout: note.njk
-id: 2025-12-03-tags:-02_VCil
+id: 01012025-projet-photo-petit
 title: Projet photo "Petit Chimiste"
 publish: true
 tags:
@@ -26,7 +26,7 @@ Les photos
 
 ma salle de bain. Lumière plafond et deux lumière miroir allumées. Les conditions d’éclairage seront a priori identiques sur toutes les photos.
 
-##Configuration
+## Configuration
 
     Film APX 400
     ouverture : 1.7
@@ -42,4 +42,3 @@ ma salle de bain. Lumière plafond et deux lumière miroir allumées. Les condit
 [Sel]
 
 [Eau en bouteille]
-

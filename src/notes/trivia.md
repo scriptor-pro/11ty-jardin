@@ -1,6 +1,6 @@
 ---
 layout: note.njk
-id: 2025-11-30-tags:-12_FG7f
+id: 29062025-trivia
 title: Trivia
 publish: true
 tags:

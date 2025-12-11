@@ -1,0 +1,40 @@
+# Nom du pipeline (facultatif, mais utile pour l'identification)
+pipeline:
+  - name: Build, Commit & Push 11ty site to Codeberg
+    image: node:18  # Utilise Node.js 18 (ajuste si ton projet nécessite une autre version)
+    steps:
+      # Étape 1 : Installer les dépendances
+      - name: Install dependencies
+        command: npm install
+
+      # Étape 2 : Construire le site 11ty
+      - name: Build 11ty site
+        command: npm run build  # Assure-toi que ce script existe dans package.json
+
+      # Étape 3 : Configurer Git pour les commits automatisés
+      - name: Configure Git
+        command: |
+          git config --global user.email "bot@example.com"  # 👈 PERSONNALISE : ton email
+          git config --global user.name "CI Bot"            # 👈 PERSONNALISE : ton nom ou alias
+
+      # Étape 4 : Ajouter les fichiers générés (ex: _site/) au commit
+      - name: Add built files to commit
+        command: |
+          git add _site/  # 👈 PERSONNALISE : le dossier de sortie de 11ty (généralement _site/ ou dist/)
+          git status       # Optionnel : affiche les fichiers ajoutés
+
+      # Étape 5 : Commit avec message dynamique
+      - name: Commit built site
+        command: |
+          git commit -m "Auto-build: $(date '+%Y-%m-%d %H:%M:%S')"  # 👈 PERSONNALISE : message si besoin
+
+      # Étape 6 : Pousser vers Codeberg (nécessite un token)
+      - name: Push to Codeberg
+        command: |
+          git remote set-url origin https://$CODEBERG_TOKEN@codeberg.org/monutilisateur/mondepot.git  # 👈 PERSONNALISE : ton URL
+          git push origin main  # 👈 PERSONNALISE : branche cible (main, master, etc.)
+
+    # Variables d'environnement sécurisées
+    environment:
+      CODEBERG_TOKEN:
+        secure: "abc123def456ghi789"  # 👈 PERSONNALISE : génère un token sur Codeberg → Settings → Personal Access Tokens

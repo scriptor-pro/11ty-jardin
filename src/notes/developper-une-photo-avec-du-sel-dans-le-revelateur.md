@@ -1,6 +1,6 @@
 ---
 layout: note.njk
-id: 2025-11-30-tags:-12_HY8e
+id: 23062025-developper-avec-un
 title: "Développer avec un révélateur assaisonné – Sel Iodé"
 publish: true
 tags:

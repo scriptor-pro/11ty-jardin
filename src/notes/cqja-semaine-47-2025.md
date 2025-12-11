@@ -1,6 +1,6 @@
 ---
 layout: note.njk
-id: 2025-11-30-tags:-12_Pl7B
+id: 29112025-ce-que-j
 title: "Ce que j'ai appris - semaine 47/2025"
 slug: "ce-que-j-ai-appris-semaine-47-2025"
 publish: true
