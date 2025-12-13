@@ -12,14 +12,12 @@ status: "idée"
 
 # Je ne commande pas à Jeff Bezos le vendredi
 
-Je ne commande pas à Jeff Bezos le vendredi.
-
 Vive les mariés ! 
 
-Je ne connais pas le budget du mariage de Jeff Bezos. Je me dis qu'avec les bénéfices sur mes commandes, il a pu se payer un ou deux confettis, ou un ou deux paquets de confettis ?
+Je ne connais pas le budget du [mariage de Jeff Bezos](https://www.lemonde.fr/economie/article/2025/06/28/mariage-fastueux-pour-jeff-bezos-et-lauren-sanchez-a-venise_6616248_3234.html) à Venise. Je me dis qu'avec les bénéfices sur mes commandes, il a pu se payer un ou deux confettis, ou un ou deux paquets de confettis ?
 
 Gars sympa, le Jeff. Tu lui fais l'amitié d'être dans ses amis en échange d'une modeste cotisation mensuelle, il te livre le lendemain. Sa camionnette et lui prennent la route même le samedi, même le dimanche. 
 
 No way, José.
 
-Je refuse qu'un McJob(*) travaille pour me livrer quoi que ce soit un jour de week-end. Si j'ai absolument besoin, de quelque chose ipso facto illico fissa, je me déplace dans un brick and mortar. Mon autisme n'est pas forcément fan, ceci dit, il approuve la démarche. 
+Je refuse qu'un [McJob](https://en.wikipedia.org/wiki/McJob) travaille pour me livrer quoi que ce soit un jour de week-end. Si j'ai absolument besoin, de quelque chose ipso facto illico fissa, je me déplace dans un brick and mortar. Mon autisme n'est pas forcément fan, ceci dit, il approuve la démarche. 

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr-BE">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="{{ eleventy.generator }}">
   <title>
     {% if title %}
@@ -12,7 +12,7 @@
     {% endif %}
   </title>
   {% set pageDescription = description or (title and (title ~ " — " ~ site.baseline)) or site.baseline %}
-  <meta name="description" content="{{ pageDescription }}" />
+  <meta name="description" content="{{ pageDescription }}">
 
   {# Open Graph / Twitter #}
   {% set pageTitle = title or site.name %}
@@ -23,27 +23,27 @@
   {% endif %}
   {% set ogImage = (opengraph and opengraph.image) or (site.opengraph and site.opengraph.image) %}
   {% set ogImageAlt = (opengraph and opengraph.image_alt) or (site.opengraph and site.opengraph.image_alt) or pageDescription %}
-  <meta property="og:title" content="{{ pageTitle }}" />
-  <meta property="og:description" content="{{ pageDescription }}" />
-  {% if pageUrl %}<meta property="og:url" content="{{ pageUrl }}" />{% endif %}
-  <meta property="og:type" content="{{ (opengraph and opengraph.type) or (site.opengraph and site.opengraph.type) or 'website' }}" />
-  {% if ogImage %}<meta property="og:image" content="{{ ogImage }}" />{% endif %}
-  {% if ogImageAlt %}<meta property="og:image:alt" content="{{ ogImageAlt }}" />{% endif %}
+  <meta property="og:title" content="{{ pageTitle }}">
+  <meta property="og:description" content="{{ pageDescription }}">
+  {% if pageUrl %}<meta property="og:url" content="{{ pageUrl }}">{% endif %}
+  <meta property="og:type" content="{{ (opengraph and opengraph.type) or (site.opengraph and site.opengraph.type) or 'website' }}">
+  {% if ogImage %}<meta property="og:image" content="{{ ogImage }}">{% endif %}
+  {% if ogImageAlt %}<meta property="og:image:alt" content="{{ ogImageAlt }}">{% endif %}
 
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="{{ pageTitle }}" />
-  <meta name="twitter:description" content="{{ pageDescription }}" />
-  {% if ogImage %}<meta name="twitter:image" content="{{ ogImage }}" />{% endif %}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ pageTitle }}">
+  <meta name="twitter:description" content="{{ pageDescription }}">
+  {% if ogImage %}<meta name="twitter:image" content="{{ ogImage }}">{% endif %}
 
   {% if site.url %}
     {% set feedHref = site.url ~ "/feed.xml" %}
   {% else %}
     {% set feedHref = "/feed.xml" %}
   {% endif %}
-  <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ feedHref }}" />
+  <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ feedHref }}">
 
   <link rel="preload" href="/css/style.css" as="style">
-  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>

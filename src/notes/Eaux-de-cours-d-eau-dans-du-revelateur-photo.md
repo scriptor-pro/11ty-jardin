@@ -24,3 +24,5 @@ status: "chantier"
 | Eau du canal (Bruxelles)    | Stagnante, polluée, organique       | Efficacité réduite, solution instable, acidification   | Contraste affaibli, voile brun/vert, dépôts, taches, traînées   | Chaotique, accidenté, imprévisible          |
 | Eau de rivière propre       | Claire, minéralisée, oxygénée       | Ralentissement léger du développement, variation pH    | Voile doux, granulation subtile, irrégularités homogènes        | Organique, poétique, “filtre naturel”       |
 | Eau de source (naturelle)   | Propre, minéralisée, peu polluée    | Comportement proche d’une eau minérale commerciale     | Développement stable, contrastes nuancés selon minéralisation   | Subtil, contrôlé, enrichi par les minéraux  |
+
+Sur le même sujet : [des produits vendus en droguerie](/notes/produits-droguerie-dans-revelateur-photo/) 

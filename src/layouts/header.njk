@@ -29,7 +29,7 @@
 
     {% if site.logo %}
     <div class="site-logo">
-      <img src="{{ site.logo }}" alt="{{ site.name }}" width="132" height="132" />
+      <img src="{{ site.logo }}" alt="{{ site.name }}" width="132" height="132">
     </div>
     {% endif %}
 
@@ -43,37 +43,37 @@
       <ul id="main-nav-list">
         <li>
           <a href="/">
-            <img class="nav-icon" src="/images/home.svg" alt="" aria-hidden="true" />
+            <img class="nav-icon" src="/images/home.svg" alt="" aria-hidden="true">
             <span>Accueil</span>
           </a>
         </li>
         <li>
           <a href="/a-propos/">
-            <img class="nav-icon" src="/images/about.svg" alt="" aria-hidden="true" />
+            <img class="nav-icon" src="/images/about.svg" alt="" aria-hidden="true">
             <span>À propos</span>
           </a>
         </li>
         <li>
           <a href="/contact/">
-            <img class="nav-icon" src="/images/contact.svg" alt="" aria-hidden="true" />
+            <img class="nav-icon" src="/images/contact.svg" alt="" aria-hidden="true">
             <span>Contact</span>
           </a>
         </li>
         <li>
           <a href="/tags/">
-            <img class="nav-icon" src="/images/tag.svg" alt="" aria-hidden="true" />
+            <img class="nav-icon" src="/images/tag.svg" alt="" aria-hidden="true">
             <span>Tous les tags</span>
           </a>
         </li>
         <li>
           <a href="/liens/">
-            <img class="nav-icon" src="/images/lien.svg" alt="" aria-hidden="true" />
+            <img class="nav-icon" src="/images/lien.svg" alt="" aria-hidden="true">
             <span>Liens</span>
           </a>
         </li>
         <li>
           <a href="/feed.xml">
-            <img class="nav-icon" src="/images/rss.svg" alt="" aria-hidden="true" />
+            <img class="nav-icon" src="/images/rss.svg" alt="" aria-hidden="true">
             <span>RSS</span>
           </a>
         </li>
@@ -119,7 +119,7 @@
     });
 
     const mq = window.matchMedia("(min-width: 901px)");
-    mq.addEventListener("change", e => {
+    const syncMenu = e => {
       if (e.matches) {
         nav.classList.remove("is-open");
         toggle.setAttribute("aria-expanded", "false");
@@ -127,8 +127,9 @@
       } else {
         closeMenu();
       }
-    });
+    };
 
-    closeMenu();
+    syncMenu(mq);
+    mq.addEventListener("change", syncMenu);
   })();
 </script>
