@@ -14,6 +14,11 @@ function minifyHtml(content = "") {
     .trim();
 }
 
+// Escape string for safe use inside RegExp
+function escapeRegExp(str = "") {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 /**
  * Configuration Eleventy (ESM)
  */
@@ -83,6 +88,31 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("minBy", (arr, attr) =>
     Math.min(...arr.map(item => item[attr]))
   );
+
+  // Supprime le premier <h1> du contenu (souvent doublon avec "title")
+  eleventyConfig.addFilter("stripLeadingTitle", function (content = "", title = "") {
+    const html = String(content);
+    if (!html.trim()) return "";
+
+    const normalizedTitle = title.trim();
+    if (normalizedTitle) {
+      const escaped = escapeRegExp(normalizedTitle);
+
+      // Match <h1>Title</h1> avec ou sans ancres automatiques
+      const exact = new RegExp(`^\\s*<h1[^>]*>\\s*${escaped}\\s*<\\/h1>\\s*`, "i");
+      const withAnchor = new RegExp(
+        `^\\s*<h1[^>]*>\\s*<a [^>]*>\\s*${escaped}\\s*<\\/a>\\s*<\\/h1>\\s*`,
+        "i"
+      );
+
+      if (exact.test(html)) return html.replace(exact, "");
+      if (withAnchor.test(html)) return html.replace(withAnchor, "");
+    }
+
+    // Fallback : retirer le premier h1 quoi qu'il contienne
+    const generic = new RegExp("^\\s*<h1[^>]*>[\\s\\S]*?<\\/h1>\\s*", "i");
+    return html.replace(generic, "");
+  });
 
 
   /* ----------------------------------------------------------
