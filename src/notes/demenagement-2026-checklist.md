@@ -1,7 +1,7 @@
 ---
-layout: note.njk
-id: 03122025-checklist-demenagement-bruxelles
 title: Checklist déménagement Bruxelles -> Bruxelles
+layout: note.njk
+id: 7
 publish: true
 tags:
   - ia
@@ -14,7 +14,8 @@ status: "chantier"        # ou "chantier", "termine"
 ---
 
 
-# Checklist déménagement Bruxelles -> Bruxelles
+
+
 
 ## 6 à 8 semaines avant
 - [ ] Informer le fournisseur **Internet/téléphonie** du changement d’adresse.

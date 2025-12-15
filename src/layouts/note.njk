@@ -24,53 +24,6 @@
   </header>
 
   {# -----------------------------------------------------------
-     META
-     ----------------------------------------------------------- #}
-  {% set notePath %}
-    {% if page and page.url %}
-      {{ page.url
-        | replace(r/^\\//, "")
-        | replace(r/\\/$/, "") }}
-    {% elseif fileSlug %}
-      notes/{{ fileSlug | safelink }}
-    {% endif %}
-  {% endset %}
-  {% set notePath = notePath | trim %}
-
-  {% if id or date or updated or notePath %}
-    {% set metaTitleId = "note-meta-" ~ (page.fileSlug or id or "infos") %}
-    <section class="note-meta note-meta-block" aria-labelledby="{{ metaTitleId }}">
-      <h2 class="sr-only" id="{{ metaTitleId }}">Informations sur la note</h2>
-      <dl class="note-meta-list">
-        {% if notePath %}
-        <div class="note-meta-item">
-          <dt>Chemin</dt>
-          <dd class="note-path">{{ notePath }}</dd>
-        </div>
-        {% endif %}
-        {% if id %}
-        <div class="note-meta-item">
-          <dt>Identifiant</dt>
-          <dd class="note-id">Note #{{ id }}</dd>
-        </div>
-        {% endif %}
-        {% if date %}
-        <div class="note-meta-item">
-          <dt>Créée</dt>
-          <dd class="note-date">{{ date | formatDateBE }}</dd>
-        </div>
-        {% endif %}
-        {% if updated %}
-        <div class="note-meta-item">
-          <dt>Modifiée</dt>
-          <dd class="note-updated">{{ updated | formatDateBE }}</dd>
-        </div>
-        {% endif %}
-      </dl>
-    </section>
-  {% endif %}
-
-  {# -----------------------------------------------------------
      TAGS
      ----------------------------------------------------------- #}
   {% if tags %}
@@ -117,6 +70,53 @@
       {% endfor %}
     </ul>
   </section>
+  {% endif %}
+
+  {# -----------------------------------------------------------
+     META (en bas de l’article)
+     ----------------------------------------------------------- #}
+  {% set notePath %}
+    {% if page and page.url %}
+      {{ page.url
+        | replace(r/^\\//, "")
+        | replace(r/\\/$/, "") }}
+    {% elseif fileSlug %}
+      notes/{{ fileSlug | safelink }}
+    {% endif %}
+  {% endset %}
+  {% set notePath = notePath | trim %}
+
+  {% if id or date or updated or notePath %}
+    {% set metaTitleId = "note-meta-" ~ (page.fileSlug or id or "infos") %}
+    <section class="note-meta note-meta-block" aria-labelledby="{{ metaTitleId }}">
+      <h2 class="sr-only" id="{{ metaTitleId }}">Informations sur la note</h2>
+      <dl class="note-meta-list">
+        {% if notePath %}
+        <div class="note-meta-item">
+          <dt>Chemin</dt>
+          <dd class="note-path">{{ notePath }}</dd>
+        </div>
+        {% endif %}
+        {% if id %}
+        <div class="note-meta-item">
+          <dt>Identifiant</dt>
+          <dd class="note-id">Note #{{ id }}</dd>
+        </div>
+        {% endif %}
+        {% if date %}
+        <div class="note-meta-item">
+          <dt>Créée</dt>
+          <dd class="note-date">{{ date | formatDateBE }}</dd>
+        </div>
+        {% endif %}
+        {% if updated %}
+        <div class="note-meta-item">
+          <dt>Modifiée</dt>
+          <dd class="note-updated">{{ updated | formatDateBE }}</dd>
+        </div>
+        {% endif %}
+      </dl>
+    </section>
   {% endif %}
 
 </article>

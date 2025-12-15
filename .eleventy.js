@@ -1,17 +1,8 @@
+import { DateTime } from "luxon";
 import eleventyNavigationPlugin from "@11ty/eleventy-navigation";
-import pluginRss from "@11ty/eleventy-plugin-rss";
 import fs from "fs";
 import path from "path";
-import { createRequire } from "module";
-
-// Optional date-fns import with graceful fallback
-const require = createRequire(import.meta.url);
-let dateFnsFormat = null;
-try {
-  dateFnsFormat = require("date-fns/format");
-} catch (_) {
-  // date-fns not installed; fallback defined below
-}
+import eleventyPluginRss from "@11ty/eleventy-plugin-rss";
 
 // Helper minimal HTML minification (no external deps)
 function minifyHtml(content = "") {
@@ -23,32 +14,6 @@ function minifyHtml(content = "") {
     .trim();
 }
 
-// Escape user-provided strings before building a RegExp
-const escapeRegExp = str => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-// Extract the first Markdown H1 as a fallback title
-const deriveHeadingTitle = content => {
-  if (!content) return null;
-  const match = content.match(/^#\s+(.+)$/m);
-  return match ? match[1].trim() : null;
-};
-
-// Ensure a note has a title: use front matter, else fallback to first H1
-const ensureNoteTitle = note => {
-  if (note?.data?.title) return note.data.title;
-  try {
-    const content = fs.readFileSync(note.inputPath, "utf8");
-    const headingTitle = deriveHeadingTitle(content);
-    if (headingTitle) {
-      note.data.title = headingTitle;
-      return headingTitle;
-    }
-  } catch (_) {
-    // ignore read errors; Eleventy will surface issues later if needed
-  }
-  return note?.data?.title;
-};
-
 /**
  * Configuration Eleventy (ESM)
  */
@@ -58,7 +23,11 @@ export default function (eleventyConfig) {
      Plugins
      ---------------------------------------------------------- */
   eleventyConfig.addPlugin(eleventyNavigationPlugin);
-  eleventyConfig.addPlugin(pluginRss);
+  eleventyConfig.addPlugin(eleventyNavigationPlugin);
+
+  /* RSS */
+
+  
 
 
   /* ----------------------------------------------------------
@@ -66,7 +35,6 @@ export default function (eleventyConfig) {
      ---------------------------------------------------------- */
   eleventyConfig.addPassthroughCopy({ "src/css": "css" });
   eleventyConfig.addPassthroughCopy({ "src/assets/images": "images" });
-  eleventyConfig.addPassthroughCopy({ "src/humans.txt": "humans.txt" });
   // Autorise les images placées à côté des notes à être copiées telles quelles
   eleventyConfig.addPassthroughCopy("src/notes/**/*.{jpg,jpeg,png,gif,svg,webp,avif}");
 
@@ -90,20 +58,7 @@ export default function (eleventyConfig) {
 
   // Filtre date Luxon
   eleventyConfig.addFilter("date", function (dateObj, format = "yyyy-MM-dd") {
-    if (!dateObj) return "";
-    const date = dateObj instanceof Date ? dateObj : new Date(dateObj);
-    if (dateFnsFormat) {
-      try {
-        return dateFnsFormat(date, format);
-      } catch (_) {
-        // ignore and fallback
-      }
-    }
-    // Minimal fallback: ISO YYYY-MM-DD
-    if (!isNaN(date)) {
-      return date.toISOString().slice(0, 10);
-    }
-    return "";
+    return DateTime.fromJSDate(dateObj).toFormat(format);
   });
 
   // Encode/decode propre des slugs tout en conservant les accents
@@ -129,24 +84,6 @@ export default function (eleventyConfig) {
     Math.min(...arr.map(item => item[attr]))
   );
 
-  // Remove the first h1/h2 matching the note title to avoid duplicate titles
-  eleventyConfig.addFilter("stripLeadingTitle", function (html, title) {
-    if (!html || !title) return html;
-
-    const escaped = escapeRegExp(String(title).trim());
-    const patterns = [
-      new RegExp(`^\\s*<h1[^>]*>\\s*${escaped}\\s*</h1>\\s*`, "i"),
-      new RegExp(`^\\s*<h2[^>]*>\\s*${escaped}\\s*</h2>\\s*`, "i")
-    ];
-
-    let cleaned = html;
-    patterns.forEach(re => {
-      cleaned = cleaned.replace(re, "");
-    });
-
-    return cleaned;
-  });
-
 
   /* ----------------------------------------------------------
      COLLECTIONS
@@ -159,10 +96,6 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("notes", function (collectionApi) {
     return collectionApi
       .getFilteredByGlob("src/notes/*.md")
-      .map(note => {
-        ensureNoteTitle(note);
-        return note;
-      })
       .filter(isPublished)
       // Tri par date de création (ou date de fichier si absent), plus récent en premier
       .sort((a, b) => {
@@ -200,10 +133,6 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("notesWithBacklinks", async function (collectionApi) {
     const notes = collectionApi
       .getFilteredByGlob("src/notes/*.md")
-      .map(note => {
-        ensureNoteTitle(note);
-        return note;
-      })
       .filter(isPublished);
 
     // Lire le contenu de chaque note via API officielle
@@ -250,8 +179,6 @@ eleventyConfig.addFilter("statusIcon", function (status) {
     case "terminé":
     case "termine":
       return "✨"; // terminé
-    case "cqja":
-      return "📑"; // pages marquées "cqja"
     default:
       return "";   // pas d'icône pour les statuts non prévus
   }

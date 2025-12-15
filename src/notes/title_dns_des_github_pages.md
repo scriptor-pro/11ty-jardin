@@ -9,7 +9,9 @@ tags:
   - nom-de-domaine
 date: 2025-07-03
 created: 2025-07-03
-status: "termine"
+status: termine
+description: Adresses IPv4 et IPv6 pour donner un nom de domaine à une page GitHub.
+slug: dns-des-github-pages
 ---
 
 # DNS des GitHub Pages
