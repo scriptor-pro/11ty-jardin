@@ -76,5 +76,32 @@
 
   </div> {# fin page-container #}
 
+  <script>
+    (function() {
+      const secret = "jardin";
+      let buffer = "";
+
+      function shouldIgnore(target) {
+        if (!target) return false;
+        const tag = target.tagName ? target.tagName.toLowerCase() : "";
+        return tag === "input" || tag === "textarea" || target.isContentEditable;
+      }
+
+      window.addEventListener("keydown", (event) => {
+        if (event.metaKey || event.ctrlKey || event.altKey || shouldIgnore(event.target)) {
+          return;
+        }
+
+        const key = event.key.toLowerCase();
+        if (key.length !== 1 || !/[a-z]/.test(key)) return;
+
+        buffer = (buffer + key).slice(-secret.length);
+        if (buffer === secret) {
+          window.location.href = "/serre/";
+        }
+      });
+    })();
+  </script>
+
 </body>
 </html>

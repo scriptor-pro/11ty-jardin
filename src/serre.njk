@@ -1,0 +1,28 @@
+---
+layout: page.njk
+title: Serre
+permalink: /serre/index.html
+eleventyExcludeFromCollections: true
+---
+
+<section class="serre">
+  <h1>Bienvenue dans la serre.</h1>
+  <p class="intro">Tu as tapé le bon mot de passe. Ici, on fait pousser les idées a l'abri du vent.</p>
+
+  <div class="serre-card">
+    <img src="/images/404-11ty-jardin.avif" alt="Labyrinthe vegetal en forme de 404" loading="lazy" width="720" height="540">
+  </div>
+
+  {% if collections and collections.notes %}
+  <section class="serre-notes">
+    <h2>Quelques pistes a explorer</h2>
+    <ul>
+      {% for note in collections.notes | slice(0, 6) %}
+      <li><a href="{{ note.url }}">{{ note.data.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <p class="smallprint">Psst. Le jardin aime les curieux.</p>
+</section>

@@ -106,13 +106,17 @@
         {% if date %}
         <div class="note-meta-item">
           <dt>Créée</dt>
-          <dd class="note-date">{{ date | formatDateBE }}</dd>
+          <dd class="note-date">
+            <time datetime="{{ date | date("yyyy-MM-dd") }}">{{ date | formatDateBE }}</time>
+          </dd>
         </div>
         {% endif %}
         {% if updated %}
         <div class="note-meta-item">
           <dt>Modifiée</dt>
-          <dd class="note-updated">{{ updated | formatDateBE }}</dd>
+          <dd class="note-updated">
+            <time datetime="{{ updated | date("yyyy-MM-dd") }}">{{ updated | formatDateBE }}</time>
+          </dd>
         </div>
         {% endif %}
       </dl>
