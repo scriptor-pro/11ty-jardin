@@ -22,7 +22,7 @@ Sa formulation exacte n'est pas définitive mais ça devrait tourner autour des 
 
 ## YearCompass : un outil de 1er janvier
 
-YearCompass c'est un livret de quelques pages à remplir pour dire sereinement adieu à une année même pourrie, avant de regarder la petite nouvelle droit dans les yeux. J'utilise la version A4 à remplir à la main. 
+[YearCompass](https://yearcompass.com/fr/) c'est un livret de quelques pages à remplir pour dire sereinement adieu à une année même pourrie, avant de regarder la petite nouvelle droit dans les yeux. J'utilise la version A4 à remplir à la main. 
 
 ## Instagram
 
