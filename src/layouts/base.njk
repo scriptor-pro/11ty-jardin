@@ -5,17 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="{{ eleventy.generator }}">
   <title>
-    {% if title %}
+    {% if seo_title %}
+      {{ seo_title }}
+    {% elif title %}
       {{ site.name }} — {{ title }} 
     {% else %}
       {{ site.name }}
     {% endif %}
   </title>
-  {% set pageDescription = description or (title and (title ~ " — " ~ site.baseline)) or site.baseline %}
+  {% set pageDescription = seo_description or description or (title and (title ~ " — " ~ site.baseline)) or site.baseline %}
   <meta name="description" content="{{ pageDescription }}">
 
   {# Open Graph / Twitter #}
-  {% set pageTitle = title or site.name %}
+  {% set pageTitle = seo_title or title or site.name %}
   {% if site.url and page.url %}
     {% set pageUrl = site.url ~ page.url %}
   {% else %}

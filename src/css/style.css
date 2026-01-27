@@ -723,9 +723,147 @@ hr {
   color: var(--gray);
 }
 
+/* ============================================================
+   PAGE D'ACCUEIL — Nouvelle version (claude.md spec)
+   ============================================================ */
+
+/* Hero */
+.home-hero {
+  max-width: var(--reading-width);
+  margin: 2rem auto 2.5rem;
+  text-align: left;
+}
+
+.home-title {
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--blue);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5rem;
+}
+
+.home-subtitle {
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+  color: var(--color-muted);
+  margin: 0;
+  font-style: italic;
+}
+
+/* Derniere note */
+.home-latest {
+  max-width: var(--reading-width);
+  margin: 0 auto 2.5rem;
+  padding: 1.25rem 1.5rem;
+  background: #f8f9fa;
+  border-left: 4px solid var(--blue);
+}
+
+.latest-note-title {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: var(--t1);
+  color: var(--color-strong);
+  margin: 0 0 0.5rem;
+}
+
+.latest-note-description {
+  font-family: var(--font-serif);
+  font-size: var(--t0);
+  line-height: 1.55;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.latest-note-link {
+  margin: 0;
+}
+
+.latest-notes {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.latest-note-link a {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: var(--t1);
+  text-decoration: underline dotted;
+  text-underline-offset: 0.16em;
+}
+
+.last-word-link {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+  color: var(--color-strong);
+}
+
+.last-word-link:hover {
+  color: var(--color-highlight);
+}
+
+/* Nuage de tags - page d'accueil */
+.home-tags {
+  max-width: var(--reading-width);
+  margin: 0 auto 2rem;
+}
+
+.tag-cloud-home {
+  padding: 0;
+}
+
+.tag-cloud-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.9rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  align-items: baseline;
+}
+
+.tag-cloud-list li {
+  margin: 0;
+  padding: 0;
+}
+
+.tag-cloud-list a {
+  text-decoration: none;
+  color: var(--color-strong);
+  transition: color 0.15s ease;
+}
+
+.tag-cloud-list a:hover {
+  color: var(--color-highlight);
+  text-decoration: underline;
+}
+
+/* Ponderation des tags (taille + graisse, pas couleur seule - WCAG) */
+.tag-weight-1 {
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+.tag-weight-2 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.tag-weight-3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.tag-weight-4 {
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
 
 /* ============================================================
-   PAGE D'ACCUEIL — 3 colonnes pleine largeur
+   PAGE D'ACCUEIL — 3 colonnes pleine largeur (ancienne version)
    ============================================================ */
 .home-grid {
   display: grid;
@@ -1037,4 +1175,73 @@ hr {
 a:focus {
   outline: 3px solid var(--yellow);
   outline-offset: 2px;
+}
+
+
+/* ============================================================
+   PAGE D'ACCUEIL — LAYOUT 2 COLONNES (claude.md)
+   ============================================================ */
+
+.home-layout {
+  display: grid;
+  grid-template-columns: 35% 65%;
+  gap: 2.5rem;
+  align-items: start;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* Colonnes */
+.home-column {
+  min-width: 0;
+}
+
+.home-column-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.home-column-right {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Image hero */
+.home-hero-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+}
+
+/* Ajustements des blocs existants */
+.home-hero,
+.home-latest,
+.home-tags {
+  max-width: none;
+  margin: 0;
+}
+
+/* Desktop large : hero légèrement sticky */
+@media (min-width: 1100px) {
+  .home-column-left {
+    position: sticky;
+    top: 2rem;
+  }
+}
+
+/* Responsive : repli mono-colonne */
+@media (max-width: 900px) {
+  .home-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .home-column-left {
+    position: static;
+  }
 }

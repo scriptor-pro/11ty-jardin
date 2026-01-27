@@ -266,6 +266,78 @@ eleventyConfig.addFilter("formatDateBE", function(value) {
     return result;
   });
 
+  /* ============================================================
+     Filtre : truncateAtPunctuation
+     Coupe le texte à la première ponctuation forte (. ; :)
+     Retourne { text, lastWord } pour permettre lastWordLink
+     ============================================================ */
+  eleventyConfig.addFilter("truncateAtPunctuation", function(text) {
+    if (!text) return { text: "", lastWord: "" };
+    
+    const str = String(text).trim();
+    
+    // Cherche la première ponctuation forte
+    const match = str.match(/^(.*?[.;:])/);
+    let truncated = match ? match[1] : str;
+    
+    // Retire la ponctuation finale pour extraire le dernier mot
+    const withoutPunctuation = truncated.replace(/[.;:]$/, "").trim();
+    const words = withoutPunctuation.split(/\s+/);
+    const lastWord = words.pop() || "";
+    const textBeforeLastWord = words.join(" ");
+    
+    return {
+      text: textBeforeLastWord,
+      lastWord: lastWord
+    };
+  });
+
+  /* ============================================================
+     Filtre : lastWordLink
+     Transforme le dernier mot en lien vers l'URL donnée
+     ============================================================ */
+  eleventyConfig.addFilter("lastWordLink", function(text, url) {
+    if (!text || !url) return text || "";
+    
+    const str = String(text).trim();
+    const words = str.split(/\s+/);
+    
+    if (words.length === 0) return "";
+    
+    const lastWord = words.pop();
+    const rest = words.join(" ");
+    
+    if (rest) {
+      return `${rest} <a href="${url}" class="last-word-link">${lastWord}</a>`;
+    }
+    return `<a href="${url}" class="last-word-link">${lastWord}</a>`;
+  });
+
+  /* ============================================================
+     Collection : tagListAlpha — tags triés alphabétiquement avec count
+     ============================================================ */
+  eleventyConfig.addCollection("tagListAlpha", function (collectionApi) {
+    const notes = collectionApi
+      .getFilteredByGlob("src/notes/*.md")
+      .filter(isPublished);
+    const counts = new Map();
+
+    notes.forEach(note => {
+      let tags = note.data.tags || [];
+      if (typeof tags === "string") tags = [tags];
+
+      tags.forEach(tag => {
+        if (tag !== "note") {
+          counts.set(tag, (counts.get(tag) || 0) + 1);
+        }
+      });
+    });
+
+    return [...counts.entries()]
+      .sort((a, b) => a[0].localeCompare(b[0], "fr")) // tri alphabétique
+      .map(([tag, count]) => ({ tag, count }));
+  });
+
 
   /* ----------------------------------------------------------
      CONFIGURATION GÉNÉRALE
