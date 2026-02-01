@@ -4,7 +4,7 @@ layout: note.njk
 id: 7
 publish: true
 tags:
-  - ia
+  - IA
   - déménagement
 description: "Check-list des démarches à effectuer pour un déménagement Bruxelles -> Bruxelles"
 date: 2025-12-03      # pour le tri Eleventy

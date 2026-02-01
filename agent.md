@@ -101,3 +101,8 @@ La dernière note apparaît **immédiatement après la hero section**.
 Pas de forme sans fonction.  
 Lisibilité avant expressivité.  
 Un jardin pousse lentement.
+
+## Numéro de version
+
+incrémente le numéro de version chaque fois que tu modifies du code,
+ en commençant par-la version 0.1.0001

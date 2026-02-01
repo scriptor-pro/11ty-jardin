@@ -11,6 +11,8 @@ tags:
 ---
 # Une app qui peut s'installer dans Windows : comment faire ? 
 
+Tu veux créer une app et tu la destines à l'écosystème Windodws. C'est ton droit. Dans d'autres écosystèmes (tousse Linux tousse) c'est nettement plus simple. Pas la même part de marché on est d'accord. 
+
 ## Checklist chronologique — Release Windows (vue opératoire)
 
 Cette checklist suit strictement l’ordre réel des actions, du code prêt à livrer jusqu’à l’installateur Windows signé et distribuable.
