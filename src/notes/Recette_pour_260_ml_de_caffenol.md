@@ -1,21 +1,18 @@
 ---
-
 title: "Recette pour 260 ml de caffenol"
-layout: note.njk
-date: "18-01-2026"
-description: "Comment fabriquer 260 ml de caffenol"
+date: 2026-02-02
 statut: chantier
+archived: false
+draft: false
+layout: "note.njk"
+description: "Comment fabriquer 260 ml de caffenol"
 tags:
   - photo
   - caffenol
   - diy
   - petit-chimiste
   - revelateur
-updated: "23-01-2026 15:56"
-archived: false
 ---
-
-
 
 Caffenol-C-M (jusqu'à 100 ISO)
 
