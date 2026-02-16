@@ -4,18 +4,33 @@ eleventyExcludeFromCollections: true
 ---
 
 {% set siteBase = site.url or (meta.site and meta.site.url) or "http://localhost:8080" %}
-{% set pages = collections.all | rejectattr("url", "equalto", "") %}
+{% set staticPages = ["/", "/notes/", "/tags/", "/a-propos/", "/contact/", "/liens/"] %}
+{% set notes = collections.notes or [] %}
+{% set tags = collections.tagList or [] %}
 
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset 
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-{% for page in pages %}
-  {# Ignore les pages sans URL ou marquées en brouillon #}
-  {% if page.url and not page.data.draft %}
+{% for url in staticPages %}
   <url>
-    <loc>{{ page.url | absoluteUrl(siteBase) }}</loc>
-    <lastmod>{{ (page.data.updated or page.data.created or page.date) | date("yyyy-MM-dd") }}</lastmod>
+    <loc>{{ siteBase }}{{ url }}</loc>
+  </url>
+{% endfor %}
+
+{% for note in notes %}
+  {% if note.url and note.url != "/notes/" and not note.data.draft %}
+  <url>
+    <loc>{{ (siteBase ~ note.url) | replace(" ", "%20") }}</loc>
+    <lastmod>{{ (note.data.updated or note.data.created or note.date) | date("yyyy-MM-dd") }}</lastmod>
+  </url>
+  {% endif %}
+{% endfor %}
+
+{% for tagObj in tags %}
+  {% if tagObj.tag %}
+  <url>
+    <loc>{{ siteBase }}/tags/{{ tagObj.tag | safelink }}/</loc>
   </url>
   {% endif %}
 {% endfor %}
