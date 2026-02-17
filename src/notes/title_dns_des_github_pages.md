@@ -18,14 +18,20 @@ slug: dns-des-github-pages
 
 Tu veux faire pointer merveilleux-domaine.com vers un dépôt GitHub Pages ? Tu te demandes vers quelles adresses IP (version 4, version 6) faire pointer ? Par ici mon ami : 
 
-## Enregistrements A pour merveilleux-domaine.com
+## Option A : CNAME
+
+Tu crées un CNAME qui pointe vers username.github.com
+
+## Option B : adresses IPv4 et IPv6
+
+### Enregistrements A pour merveilleux-domaine.com
 
 - IPv4 A #1 : 185.199.108.153
 - IPv4 A #2 : 185.199.109.153
 - IPv4 A #3 : 185.199.110.153
 - IPv4 A #4 : 185.199.111.153
 
-## Enregistrements AAAA pour merveilleux-domaine.com
+### Enregistrements AAAA pour merveilleux-domaine.com
 
 - IPv6 AAAA #1 : 2606:50c0:8000::153
 - IPv6 AAAA #2 : 2606:50c0:8001::153

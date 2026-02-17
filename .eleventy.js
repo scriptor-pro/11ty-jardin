@@ -28,7 +28,7 @@ export default function (eleventyConfig) {
      Plugins
      ---------------------------------------------------------- */
   eleventyConfig.addPlugin(eleventyNavigationPlugin);
-  eleventyConfig.addPlugin(eleventyNavigationPlugin);
+  eleventyConfig.addPlugin(eleventyPluginRss);
 
   /* RSS */
 
@@ -40,6 +40,7 @@ export default function (eleventyConfig) {
      ---------------------------------------------------------- */
   eleventyConfig.addPassthroughCopy({ "src/css": "css" });
   eleventyConfig.addPassthroughCopy({ "src/assets/images": "images" });
+  eleventyConfig.addPassthroughCopy("src/robots.txt");
   // Autorise les images placées à côté des notes à être copiées telles quelles
   eleventyConfig.addPassthroughCopy("src/notes/**/*.{jpg,jpeg,png,gif,svg,webp,avif}");
 
@@ -60,6 +61,9 @@ export default function (eleventyConfig) {
 
   // Filtre année
   eleventyConfig.addFilter("year", () => new Date().getFullYear());
+
+  // Serialize data safely for JSON-LD
+  eleventyConfig.addFilter("json", value => JSON.stringify(value));
 
   // Filtre date Luxon
   eleventyConfig.addFilter("date", function (dateObj, format = "yyyy-MM-dd") {

@@ -126,3 +126,61 @@
 </article>
 
 {% endblock %}
+
+{% block structuredData %}
+  {{ super() }}
+  {% if page and page.url and page.url != "/notes/" %}
+    {% set noteUrl = (site.url and (site.url ~ page.url)) or page.url %}
+    {% set noteDescription = seo_description or description or title %}
+    {% set noteDatePublished = date and (date | date("yyyy-MM-dd")) %}
+    {% set noteDateModified = (updated and (updated | date("yyyy-MM-dd"))) or noteDatePublished %}
+    {% set noteKeywords = tags and (tags | join(", ")) %}
+    {% set articleJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": title,
+      "description": noteDescription,
+      "author": {
+        "@type": "Person",
+        "name": site.author
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": site.author
+      },
+      "mainEntityOfPage": noteUrl,
+      "url": noteUrl,
+      "inLanguage": "fr-BE",
+      "keywords": noteKeywords,
+      "datePublished": noteDatePublished,
+      "dateModified": noteDateModified
+    } %}
+    <script type="application/ld+json">{{ articleJsonLd | json | safe }}</script>
+
+    {% set noteBreadcrumbJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": site.url ~ "/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Notes",
+          "item": site.url ~ "/notes/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": title,
+          "item": noteUrl
+        }
+      ]
+    } %}
+    <script type="application/ld+json">{{ noteBreadcrumbJsonLd | json | safe }}</script>
+  {% endif %}
+{% endblock %}

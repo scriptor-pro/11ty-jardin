@@ -4,6 +4,8 @@ id: 00000000-notes
 title: Notes
 publish: true
 status: idée
+seo_title: "Notes — Je note donc je suis"
+seo_description: "Toutes les notes du digital garden, classées par ordre chronologique."
 ---
 # Notes
 

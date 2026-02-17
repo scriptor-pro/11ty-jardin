@@ -7,4 +7,7 @@ permalink: "tags/{{ tagObj.tag | safelink }}/"
 layout: tag.njk
 eleventyComputed:
   tag: "{{ tagObj.tag }}"
+  title: "Tag : {{ tagObj.tag }}"
+  seo_title: "Tag {{ tagObj.tag }} — Je note donc je suis"
+  seo_description: "Toutes les notes du digital garden associées au tag {{ tagObj.tag }}."
 ---

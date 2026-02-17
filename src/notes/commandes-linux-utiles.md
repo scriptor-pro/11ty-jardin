@@ -14,6 +14,17 @@ tags:
 
 Les commandes que j'utilise assez souvent pour avoir envie de m'en souvenir et assez rarement pour ne pas les connaître par coeur.
 
+## AMD ou ARM
+
+Pour savoir quelle est la bonne version à télécharger :
+
+
+
+    `dpkg --print-architecture`
+
+
+
+
 ## Bureau XFCE
 
 Je n'utilise actuellement que XFCE. Autrement dit, ça ne vaus pas forcément pour les autres environnements.
@@ -28,7 +39,7 @@ Je n'utilise actuellement que XFCE. Autrement dit, ça ne vaus pas forcément po
  1. Télécharger la police. 
  2. Déplacer le terminal dans le répertoire où se trouvent les fichiers ttf ou otf 
 
-    ''cp *.ttf ~/.local/share/fonts/truetype/''
+    'cp *.ttf ~/.local/share/fonts/truetype/'
 
 ### Pour une police Open Type (.otf)
 

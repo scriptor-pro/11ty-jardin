@@ -18,6 +18,9 @@ Disallow: /drafts/
 Disallow: /admin/
 Disallow: /private/
 Disallow: /sandbox/
+Disallow: /notes/_site/
+Disallow: /notes/logseq/
+Disallow: /notes/_publish/
 
 # Bloquer l’indexation des fichiers sources
 Disallow: /*.md$

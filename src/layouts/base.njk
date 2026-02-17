@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="{{ eleventy.generator }}">
+  {% set siteBase = site.url or "" %}
+  {% set pagePath = (page and page.url) or "/" %}
+  {% set canonicalUrl = canonical_url or (siteBase and (siteBase ~ pagePath)) or pagePath %}
   <title>
     {% if seo_title %}
       {{ seo_title }}
@@ -14,28 +17,36 @@
     {% endif %}
   </title>
   {% set pageDescription = seo_description or description or (title and (title ~ " — " ~ site.baseline)) or site.baseline %}
+  {% set pageKeywords = seo_keywords or (meta and meta.seo and meta.seo.keywords) %}
+  {% set robotsValue = robots or (meta and meta.seo and meta.seo.robots) or "index, follow" %}
   <meta name="description" content="{{ pageDescription }}">
+  <meta name="robots" content="{{ robotsValue }}">
+  <link rel="canonical" href="{{ canonicalUrl }}">
+  {% if pageKeywords %}<meta name="keywords" content="{{ pageKeywords | join(', ') }}">{% endif %}
 
   {# Open Graph / Twitter #}
   {% set pageTitle = seo_title or title or site.name %}
-  {% if site.url and page.url %}
-    {% set pageUrl = site.url ~ page.url %}
-  {% else %}
-    {% set pageUrl = page.url %}
-  {% endif %}
+  {% set pageUrl = canonicalUrl %}
   {% set ogImage = (opengraph and opengraph.image) or (site.opengraph and site.opengraph.image) %}
+  {% if ogImage and siteBase and ogImage[0] == "/" %}
+    {% set ogImageUrl = siteBase ~ ogImage %}
+  {% else %}
+    {% set ogImageUrl = ogImage %}
+  {% endif %}
   {% set ogImageAlt = (opengraph and opengraph.image_alt) or (site.opengraph and site.opengraph.image_alt) or pageDescription %}
   <meta property="og:title" content="{{ pageTitle }}">
   <meta property="og:description" content="{{ pageDescription }}">
   {% if pageUrl %}<meta property="og:url" content="{{ pageUrl }}">{% endif %}
   <meta property="og:type" content="{{ (opengraph and opengraph.type) or (site.opengraph and site.opengraph.type) or 'website' }}">
-  {% if ogImage %}<meta property="og:image" content="{{ ogImage }}">{% endif %}
+  <meta property="og:locale" content="fr_BE">
+  {% if ogImageUrl %}<meta property="og:image" content="{{ ogImageUrl }}">{% endif %}
   {% if ogImageAlt %}<meta property="og:image:alt" content="{{ ogImageAlt }}">{% endif %}
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ pageTitle }}">
   <meta name="twitter:description" content="{{ pageDescription }}">
-  {% if ogImage %}<meta name="twitter:image" content="{{ ogImage }}">{% endif %}
+  {% if meta and meta.social and meta.social.twitter %}<meta name="twitter:site" content="{{ meta.social.twitter }}">{% endif %}
+  {% if ogImageUrl %}<meta name="twitter:image" content="{{ ogImageUrl }}">{% endif %}
 
   {% if site.url %}
     {% set feedHref = site.url ~ "/feed.xml" %}
@@ -43,6 +54,48 @@
     {% set feedHref = "/feed.xml" %}
   {% endif %}
   <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ feedHref }}">
+
+  {% block headExtra %}{% endblock %}
+
+  {% set webSiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": site.name,
+    "url": siteBase,
+    "inLanguage": "fr-BE"
+  } %}
+  {% set webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": pageTitle,
+    "url": canonicalUrl,
+    "description": pageDescription,
+    "inLanguage": "fr-BE"
+  } %}
+  <script type="application/ld+json">{{ webSiteJsonLd | json | safe }}</script>
+  <script type="application/ld+json">{{ webPageJsonLd | json | safe }}</script>
+  {% if pagePath != "/" and (title or seo_title) %}
+    {% set breadcrumbJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": siteBase ~ "/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": title or seo_title,
+          "item": canonicalUrl
+        }
+      ]
+    } %}
+    <script type="application/ld+json">{{ breadcrumbJsonLd | json | safe }}</script>
+  {% endif %}
+  {% block structuredData %}{% endblock %}
 
   <link rel="preload" href="/css/style.css" as="style">
   <link rel="stylesheet" href="/css/style.css">

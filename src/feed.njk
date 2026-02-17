@@ -8,7 +8,7 @@ eleventyExcludeFromCollections: true
 {% else %}
   {% set feedHref = "/feed.xml" %}
 {% endif %}
-{% set items = collections.notes | slice(0, 50) %}
+{% set items = collections.notes or [] %}
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
@@ -17,10 +17,11 @@ eleventyExcludeFromCollections: true
     <atom:link href="{{ feedHref }}" rel="self" type="application/rss+xml" />
     {% if site.baseline %}<description>{{ site.baseline }}</description>{% endif %}
     {% if items and items.length %}
-      <lastBuildDate>{{ items[0].date | rssDate }}</lastBuildDate>
+      <lastBuildDate>{{ (items[0].data.updated or items[0].data.created or items[0].date) | dateToRfc822 }}</lastBuildDate>
     {% endif %}
 
     {% for item in items %}
+      {% if loop.index <= 50 %}
       {% set itemDate = item.data.created or item.date %}
       {% if siteBase %}
         {% set itemUrl = item.url | absoluteUrl(siteBase) %}
@@ -31,11 +32,12 @@ eleventyExcludeFromCollections: true
         <title>{{ item.data.title | escape }}</title>
         <link>{{ itemUrl }}</link>
         <guid>{{ itemUrl }}</guid>
-        <pubDate>{{ itemDate | rssDate }}</pubDate>
+        <pubDate>{{ itemDate | dateToRfc822 }}</pubDate>
         <description><![CDATA[
           {{ item.templateContent | htmlToAbsoluteUrls(itemUrl) | safe }}
         ]]></description>
       </item>
+      {% endif %}
     {% endfor %}
   </channel>
 </rss>
