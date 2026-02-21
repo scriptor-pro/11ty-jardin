@@ -24,6 +24,12 @@ function escapeRegExp(str = "") {
  */
 export default function (eleventyConfig) {
 
+  const hasCqjaTag = data => {
+    let tags = data?.tags || [];
+    if (typeof tags === "string") tags = [tags];
+    return Array.isArray(tags) && tags.includes("cqja");
+  };
+
   /* ----------------------------------------------------------
      Plugins
      ---------------------------------------------------------- */
@@ -124,7 +130,16 @@ export default function (eleventyConfig) {
      ---------------------------------------------------------- */
 
   // Helper : filtre les notes non publiées
-  const isPublished = note => note.data.publish !== false;
+  const isPublished = note => note.data.publish !== false && !hasCqjaTag(note.data);
+
+  // Ne génère pas de page HTML pour les contenus taggés "cqja"
+  eleventyConfig.addGlobalData("eleventyComputed.permalink", data => {
+    if (hasCqjaTag(data)) {
+      return false;
+    }
+
+    return data?.permalink;
+  });
 
   // Toutes les notes
   eleventyConfig.addCollection("notes", function (collectionApi) {
