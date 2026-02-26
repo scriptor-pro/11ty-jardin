@@ -14,6 +14,11 @@ tags:
 
 Les commandes que j'utilise assez souvent pour avoir envie de m'en souvenir et assez rarement pour ne pas les connaître par coeur.
 
+
+## Audio 
+
+Pour vérifier le bon fonctionnement du système audio : `wpctl status && pactl list short sinks`
+
 ## AMD ou ARM
 
 Pour savoir quelle est la bonne version à télécharger :
