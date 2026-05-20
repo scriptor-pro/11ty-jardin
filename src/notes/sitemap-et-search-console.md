@@ -1,14 +1,15 @@
 ---
-draft: false
-date: 2026-05-20
 title: "Comment (ne pas) soumettre une sitemap à Google"
-tags:
-- web
-- google
-- sitemap
-- webdev
-- search-console
+layout: note.njk
+date: 2026-05-20
 description: "pour soumettre un site à Google less is more"
+statut: chantier
+tags:
+  - web
+  - google
+  - sitemap
+  - webdev
+  - search-console
 ---
 
 Qu'est-ce qu'on fait quand on a terminé un beau site comme, par exemple time2crack.eu ? On le soumet aux moteurs de recherche. Non, il n'y a pas que Google. Oui, Google est ultra dominant. 
