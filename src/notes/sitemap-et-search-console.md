@@ -1,7 +1,10 @@
 ---
 title: "Comment (ne pas) soumettre une sitemap à Google"
+publish: true
+type: note
 layout: note.njk
 date: 2026-05-20
+draft: false
 description: "pour soumettre un site à Google less is more"
 statut: chantier
 tags:
