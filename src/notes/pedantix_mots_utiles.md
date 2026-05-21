@@ -6,7 +6,9 @@ tags:
   - jeux
   - wikipedia
   - pedantix
-layout: post.njk
+layout: note.njk
+type: note
+publish: true
 permalink: /pedantix-mots-utiles/
 ---
 
