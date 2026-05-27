@@ -1,5 +1,6 @@
 ---
 title: "Dans sa fuite"
+layout: note.njk
 date: 2026-05-24
 description: "Où j'écoute du Lumumba chez Arnaud"
 tags: ["type", "encombrant"]

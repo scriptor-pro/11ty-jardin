@@ -1,5 +1,6 @@
 ---
 title: "note to self"
+layout: note.njk
 date: 2026-05-24
 description: "Fête des voisins de compost:"
 tags: ["note-to-self"]

@@ -1,5 +1,6 @@
 ---
 title: "Le mystère des polices accentuées"
+layout: note.njk
 date: 2026-05-27
 description: "J'avais un problème de caractères accentués"
 tags: ["typo", "terminal", "linux", "ptyxis"]

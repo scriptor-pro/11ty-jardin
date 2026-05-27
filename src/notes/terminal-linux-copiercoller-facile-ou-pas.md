@@ -1,5 +1,6 @@
 ---
 title: "Terminal linux : copier/coller facile ou pas ?"
+layout: note.njk
 date: 2026-05-27
 description: ""
 tags: ["linux", "terminal", "fonction"]
