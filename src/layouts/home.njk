@@ -4,7 +4,7 @@
 
   {% set shuffled = collections.notesWithBacklinks | shuffle %}
   {% set surpriseNote = shuffled[0] %}
-  {% set herbesFolles = shuffled | slice(1, 7) %}
+  {% set herbesFolles = shuffled.slice(1, 7) %}
 
   <div class="home-layout">
 
@@ -129,6 +129,29 @@
 
     </aside>
 
-  </div>
+  </div>{# fin .home-layout #}
+
+  {# ============================================================
+     SECTION PLEINE LARGEUR — HERBES FOLLES
+     ============================================================ #}
+  {% if herbesFolles and (herbesFolles | length) > 0 %}
+    <section class="herbes-folles" aria-labelledby="herbes-folles-heading">
+      <h2 id="herbes-folles-heading" class="herbes-folles-title">Herbes folles</h2>
+      <ul class="herbes-folles-grid">
+        {% for note in herbesFolles %}
+          <li class="herbes-folles-card">
+            <a href="{{ note.url }}" class="herbes-folles-card-title">{{ note.data.title }}</a>
+            {% if note.data.tags and (note.data.tags | length) > 0 %}
+              <ul class="herbes-folles-tags">
+                {% for tag in note.data.tags %}
+                  <li><a href="/tags/{{ tag | safelink }}/">{{ tag }}</a></li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
 
 {% endblock %}
