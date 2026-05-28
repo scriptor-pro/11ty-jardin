@@ -1245,3 +1245,157 @@ a:focus {
     position: static;
   }
 }
+
+/* ============================================================
+   HOME — Note surprise
+   ============================================================ */
+.home-surprise-label {
+  font-size: var(--t--1);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+  margin-bottom: 0.75rem;
+}
+
+.surprise-note {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.surprise-note-title {
+  font-family: var(--font-serif);
+  font-size: var(--t1);
+  line-height: var(--lh-title);
+}
+
+.surprise-note-title a {
+  color: var(--color-strong);
+}
+
+.surprise-note-title a:hover {
+  color: var(--color-highlight);
+}
+
+.surprise-note-description {
+  font-size: var(--t0);
+  color: var(--color-muted);
+  line-height: var(--lh-body);
+}
+
+.surprise-note-tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.surprise-note-tags li a {
+  font-family: var(--font-mono);
+  font-size: var(--t--1);
+  color: var(--color-strong);
+  background: var(--yellow);
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+}
+
+.surprise-note-tags li a:hover {
+  color: var(--color-highlight);
+}
+
+.surprise-note-backlink {
+  font-size: var(--t--1);
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+.surprise-note-backlink a {
+  color: var(--color-highlight);
+}
+
+/* ============================================================
+   HOME — Herbes folles
+   ============================================================ */
+.herbes-folles {
+  border-top: 2px solid var(--yellow);
+  background: #fffdf0;
+  padding: 2rem 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.herbes-folles-title {
+  font-size: var(--t--1);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+  margin-bottom: 1.25rem;
+}
+
+.herbes-folles-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.herbes-folles-card {
+  background: var(--white);
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.herbes-folles-card-title {
+  font-family: var(--font-serif);
+  font-size: var(--t0);
+  font-weight: 600;
+  color: var(--color-strong);
+  line-height: var(--lh-title);
+}
+
+.herbes-folles-card-title:hover {
+  color: var(--color-highlight);
+}
+
+.herbes-folles-tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.herbes-folles-tags li a {
+  font-family: var(--font-mono);
+  font-size: var(--t--1);
+  color: var(--color-strong);
+  background: var(--yellow);
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+}
+
+.herbes-folles-tags li a:hover {
+  color: var(--color-highlight);
+}
+
+/* Responsive Herbes folles */
+@media (max-width: 900px) {
+  .herbes-folles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .herbes-folles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .herbes-folles {
+    padding: 1.5rem 1rem;
+  }
+}
