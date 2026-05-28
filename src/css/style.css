@@ -1225,13 +1225,6 @@ a:focus {
   margin: 0;
 }
 
-/* Desktop large : hero légèrement sticky */
-@media (min-width: 1100px) {
-  .home-column-left {
-    position: sticky;
-    top: 2rem;
-  }
-}
 
 /* Responsive : repli mono-colonne */
 @media (max-width: 900px) {
