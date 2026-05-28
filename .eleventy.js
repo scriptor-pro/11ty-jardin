@@ -286,6 +286,20 @@ eleventyConfig.addFilter("formatDateBE", function(value) {
   });
 
   /* ============================================================
+     Filtre : shuffle
+     Mélange aléatoirement les éléments d'un tableau (Fisher-Yates)
+     ============================================================ */
+  eleventyConfig.addFilter("shuffle", function(arr) {
+    if (!Array.isArray(arr)) return arr;
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  });
+
+  /* ============================================================
      Filtre : truncateAtPunctuation
      Coupe le texte à la première ponctuation forte (. ; :)
      Retourne { text, lastWord } pour permettre lastWordLink
