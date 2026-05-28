@@ -2,6 +2,7 @@
 
 {% block content %}
 
+  {% set latestNote = collections.notes[0] %}
   {% set shuffled = collections.notesWithBacklinks | shuffle %}
   {% set surpriseNote = shuffled[0] %}
   {% set herbesFolles = shuffled.slice(1, 7) %}
@@ -21,36 +22,36 @@
         >
       </figure>
 
-      {# ---------------- Note surprise ---------------- #}
-      {% if surpriseNote %}
+      {# ---------------- Herbe fraîche (note la plus récente) ---------------- #}
+      {% if latestNote %}
         <section class="home-surprise" aria-labelledby="surprise-heading">
-          <h2 id="surprise-heading" class="home-surprise-label">Note du moment</h2>
+          <h2 id="surprise-heading" class="home-surprise-label">Herbe fraîche</h2>
           <article class="surprise-note">
             <p class="surprise-note-title">
-              <a href="{{ surpriseNote.url }}">{{ surpriseNote.data.title }}</a>
+              <a href="{{ latestNote.url }}">{{ latestNote.data.title }}</a>
             </p>
-            {% if surpriseNote.data.description %}
-              {% set truncated = surpriseNote.data.description | truncateAtPunctuation %}
+            {% if latestNote.data.description %}
+              {% set truncated = latestNote.data.description | truncateAtPunctuation %}
               <p class="surprise-note-description">
                 {{ truncated.text }}
                 {% if truncated.lastWord %}
-                  <a href="{{ surpriseNote.url }}" class="last-word-link">
+                  <a href="{{ latestNote.url }}" class="last-word-link">
                     <em>{{ truncated.lastWord }}</em>
                   </a>
                 {% endif %}
               </p>
             {% endif %}
-            {% if surpriseNote.data.tags and (surpriseNote.data.tags | length) > 0 %}
+            {% if latestNote.data.tags and (latestNote.data.tags | length) > 0 %}
               <ul class="surprise-note-tags">
-                {% for tag in surpriseNote.data.tags %}
+                {% for tag in latestNote.data.tags %}
                   <li><a href="/tags/{{ tag | safelink }}/">{{ tag }}</a></li>
                 {% endfor %}
               </ul>
             {% endif %}
-            {% if surpriseNote.data.backlinks and (surpriseNote.data.backlinks | length) > 0 %}
+            {% if latestNote.data.backlinks and (latestNote.data.backlinks | length) > 0 %}
               <p class="surprise-note-backlink">
                 ↩ lié par :
-                <a href="{{ surpriseNote.data.backlinks[0].url }}">{{ surpriseNote.data.backlinks[0].title }}</a>
+                <a href="{{ latestNote.data.backlinks[0].url }}">{{ latestNote.data.backlinks[0].title }}</a>
               </p>
             {% endif %}
           </article>
@@ -63,39 +64,32 @@
        ============================================================ #}
     <aside class="home-column home-column-right">
 
-      {# ---------------- Dernière note ---------------- #}
-      <section class="home-latest" aria-labelledby="latest-note-heading">
-        <h2 id="latest-note-heading" class="sr-only">Dernières notes publiées</h2>
-
-        {% set latestNotes = collections.notes or [] %}
-
-        {% if latestNotes and (latestNotes | length) > 0 %}
+      {# ---------------- Note au hasard ---------------- #}
+      {% if surpriseNote %}
+        <section class="home-latest" aria-labelledby="latest-note-heading">
+          <h2 id="latest-note-heading" class="sr-only">Note au hasard</h2>
           <div class="latest-notes">
-            {% for note in latestNotes %}
-              {% if loop.index <= 2 %}
-                <article class="latest-note">
-                  {% if note.data.description %}
-                    <p class="latest-note-title">{{ note.data.title }}</p>
-                    {% set truncated = note.data.description | truncateAtPunctuation %}
-                    <p class="latest-note-description">
-                      {{ truncated.text }}
-                      {% if truncated.lastWord %}
-                        <a href="{{ note.url }}" class="last-word-link">
-                          <em>{{ truncated.lastWord }}</em>
-                        </a>
-                      {% endif %}
-                    </p>
-                  {% else %}
-                    <p class="latest-note-link">
-                      <a href="{{ note.url }}">{{ note.data.title }}</a>
-                    </p>
+            <article class="latest-note">
+              {% if surpriseNote.data.description %}
+                <p class="latest-note-title">{{ surpriseNote.data.title }}</p>
+                {% set truncated = surpriseNote.data.description | truncateAtPunctuation %}
+                <p class="latest-note-description">
+                  {{ truncated.text }}
+                  {% if truncated.lastWord %}
+                    <a href="{{ surpriseNote.url }}" class="last-word-link">
+                      <em>{{ truncated.lastWord }}</em>
+                    </a>
                   {% endif %}
-                </article>
+                </p>
+              {% else %}
+                <p class="latest-note-link">
+                  <a href="{{ surpriseNote.url }}">{{ surpriseNote.data.title }}</a>
+                </p>
               {% endif %}
-            {% endfor %}
+            </article>
           </div>
-        {% endif %}
-      </section>
+        </section>
+      {% endif %}
 
       {# ---------------- Nuage de tags ---------------- #}
       <section class="home-tags" aria-labelledby="tags-heading">
