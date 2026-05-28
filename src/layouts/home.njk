@@ -2,7 +2,7 @@
 
 {% block content %}
 
-  {% set shuffled = collections.notes | shuffle %}
+  {% set shuffled = collections.notesWithBacklinks | shuffle %}
   {% set surpriseNote = shuffled[0] %}
   {% set herbesFolles = shuffled | slice(1, 7) %}
 
