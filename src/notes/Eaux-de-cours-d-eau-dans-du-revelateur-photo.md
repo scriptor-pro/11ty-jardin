@@ -25,4 +25,4 @@ status: "chantier"
 | Eau de rivière propre       | Claire, minéralisée, oxygénée       | Ralentissement léger du développement, variation pH    | Voile doux, granulation subtile, irrégularités homogènes        | Organique, poétique, “filtre naturel”       |
 | Eau de source (naturelle)   | Propre, minéralisée, peu polluée    | Comportement proche d’une eau minérale commerciale     | Développement stable, contrastes nuancés selon minéralisation   | Subtil, contrôlé, enrichi par les minéraux  |
 
-Sur le même sujet : [des produits vendus en droguerie](/notes/produits-droguerie-dans-revelateur-photo/) 
+Sur le même sujet : [des produits vendus en droguerie](/notes/produits-droguerie-dans-revelateur-photo/) · [Projet Petit Chimiste](/notes/photo-projet-petit-chimiste/) · [Recette pour 260 ml de caffenol](/notes/Recette_pour_260_ml_de_caffenol/) 

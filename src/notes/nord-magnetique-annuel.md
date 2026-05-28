@@ -26,4 +26,8 @@ Sa formulation exacte n'est pas définitive mais ça devrait tourner autour des 
 
 ## Instagram
 
-Chaque année, j'instagramme mon YearCompass. C'est pratique, en parcourant mon flux 'stagram, ça me permet de savoir quand commence/se termine ma production pour une année. 
+Chaque année, j'instagramme mon YearCompass. C'est pratique, en parcourant mon flux 'stagram, ça me permet de savoir quand commence/se termine ma production pour une année.
+
+---
+
+Voir aussi : [Checklist déménagement](/notes/demenagement-2026-checklist/) 

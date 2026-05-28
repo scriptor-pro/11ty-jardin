@@ -42,3 +42,7 @@ ma salle de bain. Lumière plafond et deux lumière miroir allumées. Les condit
 [Sel]
 
 [Eau en bouteille]
+
+---
+
+Voir aussi : [Produits de droguerie dans le révélateur](/notes/produits-droguerie-dans-revelateur-photo/) · [Eaux de cours d'eau dans du révélateur](/notes/Eaux-de-cours-d-eau-dans-du-revelateur-photo/) · [Recette pour 260 ml de caffenol](/notes/Recette_pour_260_ml_de_caffenol/) · [Développer avec du sel iodé](/notes/developper-une-photo-avec-du-sel-dans-le-revelateur/)

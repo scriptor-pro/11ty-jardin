@@ -39,3 +39,7 @@ Tu crées un CNAME qui pointe vers username.github.com
 - IPv6 AAAA #4 : 2606:50c0:8003::153
 
 Source : [Documentation GitHub Pages — domaine personnalisé](https://docs.github.com/fr/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site)
+
+---
+
+Voir aussi : [Comment (ne pas) soumettre une sitemap à Google](/notes/sitemap-et-search-console/)

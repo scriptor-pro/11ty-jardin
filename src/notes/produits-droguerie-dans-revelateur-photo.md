@@ -18,6 +18,8 @@ Dans le cadre du projet Petit-Chimiste, j'envisage sereinement de glisser un peu
 | Produits favorables (effet exploitable) | Produits défavorables (effet négatif) |
 |-----------------------------------------|----------------------------------------|
 | **Soude en cristaux (carbonate de sodium)** → boost contraste et grain | **Eau de Javel (hypochlorite)** → détruit l’image |
+Voir aussi : [Projet Petit Chimiste](/notes/photo-projet-petit-chimiste/) · [Eaux de cours d'eau dans du révélateur](/notes/Eaux-de-cours-d-eau-dans-du-revelateur-photo/) · [Recette pour 260 ml de caffenol](/notes/Recette_pour_260_ml_de_caffenol/)
+
 | **Borax** → tampon alcalin, rendu plus doux | **Décapants oxydants (percarbonate, Vanish, etc.)** → oxydation, image effacée |
 | **Ammoniaque ménager (dilué)** → accélère le développement, contraste fort | **Acide chlorhydrique / déboucheurs acides** → attaque gélatine, film détruit |
 | **Sel d’Epsom (sulfate de magnésium)** → micro-contraste, eau “dure” | **Soude caustique (hydroxyde de sodium)** → dissout l’émulsion |

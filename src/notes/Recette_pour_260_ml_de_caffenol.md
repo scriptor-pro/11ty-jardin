@@ -40,3 +40,7 @@ Caffenol C L stand dev
 10.4 café instantané 
 
 #photo #caffenol #diy #petit-chimiste #revelateur
+
+---
+
+Voir aussi : [Projet Petit Chimiste](/notes/photo-projet-petit-chimiste/) · [Produits de droguerie dans le révélateur](/notes/produits-droguerie-dans-revelateur-photo/) · [Développer avec du sel iodé](/notes/developper-une-photo-avec-du-sel-dans-le-revelateur/)

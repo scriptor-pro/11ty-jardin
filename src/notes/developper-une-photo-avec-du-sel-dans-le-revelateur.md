@@ -74,4 +74,8 @@ Observer l’effet de l’ajout de sel iodé (NaCl + iode) sur le développement
 ---
 
 ## Conclusion
-Cette expérience permet d’évaluer l’influence d’un électrolyte simple (sel iodé) sur un révélateur classique.  
+Cette expérience permet d’évaluer l’influence d’un électrolyte simple (sel iodé) sur un révélateur classique.
+
+---
+
+Voir aussi : [Projet Petit Chimiste](/notes/photo-projet-petit-chimiste/) · [Recette pour 260 ml de caffenol](/notes/Recette_pour_260_ml_de_caffenol/)  

@@ -89,3 +89,7 @@ status: "chantier"        # ou "chantier", "termine"
 
 ## Notes personnelles
 - [ ] …
+
+---
+
+Voir aussi : [Grille de conformité logement](/notes/conformité-logement/) · [Nord Magnétique 2026](/notes/nord-magnetique-annuel/)

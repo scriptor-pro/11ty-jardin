@@ -43,3 +43,7 @@ tags:
 
 ## Avertissement
 Ce document est fourni à titre informatif. Il ne remplace pas une expertise ou un contrôle officiel. Pour toute mise en location, assurez-vous de respecter les obligations légales complètes.
+
+---
+
+Voir aussi : [Checklist déménagement](/notes/demenagement-2026-checklist/)

@@ -50,3 +50,7 @@ Sélectionner du texte le place dans le presse-papiers primaire (colle avec clic
 | tabby | ~200–350 Mo | Electron (Chromium) | `Ctrl+C` en mode sélection |
 | hyper | ~200–350 Mo | Electron (Chromium) | `Ctrl+C` en mode sélection |
 | warp | ~300–500 Mo | Rust, GPU, cloud IA | Sélection + touche, interface IA par blocs |
+
+---
+
+Voir aussi : [Quelques commandes CLI utiles - Linux](/notes/commandes-linux-utiles/) · [Le mystère des polices accentuées](/notes/le-mystere-des-polices-accentuees/)

@@ -18,5 +18,9 @@ J'ai changé de police de caractères, ça n'a pas arrangé le problème.
 
 J'ai été voir si, par hasard, le problème ne venait pas de mon profil et... bingo. 
 
-Avec Caractères de largeur ambigüe sur "étroit", ça a tout de suite été beaucoup mieux.  
+Avec Caractères de largeur ambigüe sur "étroit", ça a tout de suite été beaucoup mieux.
+
+---
+
+Voir aussi : [Quelques commandes CLI utiles - Linux](/notes/commandes-linux-utiles/) · [Terminal linux : copier/coller facile ou pas ?](/notes/terminal-linux-copiercoller-facile-ou-pas/)  
 

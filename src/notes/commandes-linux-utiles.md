@@ -55,3 +55,7 @@ Je n'utilise actuellement que XFCE. Autrement dit, ça ne vaus pas forcément po
 Pas moyen de changer de passer d'une app à une autre autrement que par Alt-Tab
 
 ''xfwm4 --replace & ''
+
+---
+
+Voir aussi : [Le mystère des polices accentuées](/notes/le-mystere-des-polices-accentuees/) · [Terminal linux : copier/coller facile ou pas ?](/notes/terminal-linux-copiercoller-facile-ou-pas/)

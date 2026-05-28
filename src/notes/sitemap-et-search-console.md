@@ -22,4 +22,8 @@ Parmi ce que la search console de Google réclame comme un veilleur qui attend l
 
 Je n'ai pas compté le nombre de tentatives infructueues avant l'éclair d'inspiration. Au lieu de dire à la search console de Google que le fichier sitemap s'appelle sitemap.xml écrit en entier avec son extension de fichier...
 
-...j'ai eu l'inspiration venue de je ne sais pas où de débarbouiller le sitemap de son .xml et dire à la search console de se contenter de sitemap. Et hop ! 
+...j'ai eu l'inspiration venue de je ne sais pas où de débarbouiller le sitemap de son .xml et dire à la search console de se contenter de sitemap. Et hop !
+
+---
+
+Voir aussi : [DNS des GitHub Pages](/notes/title_dns_des_github_pages/) 
