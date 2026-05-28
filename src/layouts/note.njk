@@ -63,7 +63,7 @@
     <ul>
       {% for link in backlinks %}
         <li>
-          <a href="/notes/{{ link.slug }}/">
+          <a href="{{ link.url }}">
             {{ link.title }}
           </a>
         </li>
