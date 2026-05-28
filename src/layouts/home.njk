@@ -2,6 +2,10 @@
 
 {% block content %}
 
+  {% set shuffled = collections.notes | shuffle %}
+  {% set surpriseNote = shuffled[0] %}
+  {% set herbesFolles = shuffled | slice(1, 7) %}
+
   <div class="home-layout">
 
     {# ============================================================
@@ -16,6 +20,42 @@
           decoding="async"
         >
       </figure>
+
+      {# ---------------- Note surprise ---------------- #}
+      {% if surpriseNote %}
+        <section class="home-surprise" aria-labelledby="surprise-heading">
+          <h2 id="surprise-heading" class="home-surprise-label">Note du moment</h2>
+          <article class="surprise-note">
+            <p class="surprise-note-title">
+              <a href="{{ surpriseNote.url }}">{{ surpriseNote.data.title }}</a>
+            </p>
+            {% if surpriseNote.data.description %}
+              {% set truncated = surpriseNote.data.description | truncateAtPunctuation %}
+              <p class="surprise-note-description">
+                {{ truncated.text }}
+                {% if truncated.lastWord %}
+                  <a href="{{ surpriseNote.url }}" class="last-word-link">
+                    <em>{{ truncated.lastWord }}</em>
+                  </a>
+                {% endif %}
+              </p>
+            {% endif %}
+            {% if surpriseNote.data.tags and (surpriseNote.data.tags | length) > 0 %}
+              <ul class="surprise-note-tags">
+                {% for tag in surpriseNote.data.tags %}
+                  <li><a href="/tags/{{ tag | safelink }}/">{{ tag }}</a></li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+            {% if surpriseNote.data.backlinks and (surpriseNote.data.backlinks | length) > 0 %}
+              <p class="surprise-note-backlink">
+                ↩ lié par :
+                <a href="{{ surpriseNote.data.backlinks[0].url }}">{{ surpriseNote.data.backlinks[0].title }}</a>
+              </p>
+            {% endif %}
+          </article>
+        </section>
+      {% endif %}
     </header>
 
     {# ============================================================
