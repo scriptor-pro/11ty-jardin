@@ -36,6 +36,7 @@ Baudouin Van Humbeeck
 * [docteur-manuscrit.com](https://docteur-manuscrit.com) - Conseils, accompagnement, relecture pour auteurs débutants.
 * [scriptor.pro](https://scriptor.pro)
 * [jndjs.dev](https://jndjs.dev) (pour les plus distraits : ici même)
+* [time2crack.eu](https://time2crack.eu) Vérificateur de résistance de mot de passe qui n'a rien à te vendre, code open source, rien ne sort de ton browser. 
 
 
 
