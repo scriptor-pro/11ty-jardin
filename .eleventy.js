@@ -130,11 +130,14 @@ export default function (eleventyConfig) {
      ---------------------------------------------------------- */
 
   // Helper : filtre les notes non publiées et la page d'index elle-même
-  // (src/notes/index.md liste toutes les notes — ce n'est pas une note)
+  // (src/notes/index.md liste toutes les notes — ce n'est pas une note.
+  // Son fileSlug vaut "notes", pas "index" : Eleventy dérive le slug d'un
+  // fichier index.md du nom de son dossier parent — donc on teste le
+  // chemin d'entrée plutôt que fileSlug, sans ambiguïté possible.)
   const isPublished = note =>
     note.data.publish !== false &&
     !hasCqjaTag(note.data) &&
-    note.fileSlug !== "index";
+    note.inputPath !== "./src/notes/index.md";
 
   // Ne génère pas de page HTML pour les contenus taggés "cqja"
   eleventyConfig.addGlobalData("eleventyComputed.permalink", data => {
