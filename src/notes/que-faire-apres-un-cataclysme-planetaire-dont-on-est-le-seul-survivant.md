@@ -1,5 +1,6 @@
 ---
 title: "Que faire après un cataclysme planétaire dont on est le seul survivant ?"
+layout: note.njk
 date: 2026-08-11
 description: "C'est la fin du monde sauf pour toi ? Qu'est-ce que tu fais en premier ?"
 tags: ["cataclysme", "survie", "débrouille", "truc", "astuce"]
