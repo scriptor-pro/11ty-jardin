@@ -129,8 +129,12 @@ export default function (eleventyConfig) {
      COLLECTIONS
      ---------------------------------------------------------- */
 
-  // Helper : filtre les notes non publiées
-  const isPublished = note => note.data.publish !== false && !hasCqjaTag(note.data);
+  // Helper : filtre les notes non publiées et la page d'index elle-même
+  // (src/notes/index.md liste toutes les notes — ce n'est pas une note)
+  const isPublished = note =>
+    note.data.publish !== false &&
+    !hasCqjaTag(note.data) &&
+    note.fileSlug !== "index";
 
   // Ne génère pas de page HTML pour les contenus taggés "cqja"
   eleventyConfig.addGlobalData("eleventyComputed.permalink", data => {

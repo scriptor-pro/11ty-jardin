@@ -1,5 +1,5 @@
 ---
-layout: note.njk
+layout: notes-index.njk
 id: 00000000-notes
 title: Notes
 publish: true
