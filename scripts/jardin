@@ -30,9 +30,14 @@ gsite() { git -C "$SITE" "$@"; }
 gdraft() { git -C "$BROUILLONS" "$@"; }
 
 # Pousse ; en cas de refus, un pull --rebase puis un seul nouvel essai.
+# En cas de conflit, le rebase est annulé : le commit reste local.
 push_repo() {
   git -C "$1" push -q 2>/dev/null && return 0
-  git -C "$1" pull -q --rebase && git -C "$1" push -q
+  if ! git -C "$1" pull -q --rebase; then
+    git -C "$1" rebase --abort 2>/dev/null || true
+    return 1
+  fi
+  git -C "$1" push -q
 }
 
 # Commit (et push) d'un seul fichier dans le dépôt des brouillons.
@@ -238,6 +243,60 @@ cmd_publish() {
   info "En ligne : $URL/notes/$slug/"
 }
 
+cmd_edit() {
+  local file
+  file="$(resolve any "${1:-}")"
+  if [[ $file == "$BROUILLONS"/* ]]; then
+    edit_draft "$file"
+  else
+    edit_site_note "$file"
+  fi
+}
+
+edit_draft() {
+  local file="$1" before
+  before="$(cat "$file")"
+  edit_file "$file"
+  if [[ "$(cat "$file")" == "$before" ]]; then
+    info "Aucune modification."
+    return
+  fi
+  draft_commit "$file" "brouillon: \"$(fm get "$file" title)\""
+  info "Brouillon enregistré : $file"
+}
+
+edit_site_note() {
+  local file="$1" before errors title hidden=false
+  need_clean_site
+  site_sync
+  [[ -f $file ]] || die "« ${file##*/} » n'existe plus sur le site après synchronisation."
+  before="$(cat "$file")"
+  edit_file "$file"
+  if [[ "$(cat "$file")" == "$before" ]]; then
+    info "Aucune modification."
+    return
+  fi
+
+  local kept="La modification est conservée, non commitée : $file"
+  interactive && gsite --no-pager diff -- "$file"
+  confirm "Mettre à jour en ligne ?" || { info "$kept"; return; }
+
+  errors="$(fm validate "$file" 2>&1)" || die "Note invalide : $errors. $kept"
+  fm set "$file" updated "$TODAY"
+  control_build || die "Le build a échoué. $kept"
+
+  title="$(fm get "$file" title)"
+  [[ $(fm get "$file" publish) == false ]] && hidden=true
+  gsite add -- "$file"
+  gsite commit -q -m "content: mettre à jour \"$title\"" -- "$file"
+  if $hidden; then
+    push_repo "$SITE" || die "Le commit est fait mais le push a échoué. Résoudre puis lancer : git -C $SITE push"
+    info "Mise à jour poussée (note masquée : pas de vérification en ligne)."
+  else
+    push_site_and_wait "/notes/$(slug_of "$file")/"
+  fi
+}
+
 cmd_drafts() {
   local files=() f
   for f in "$BROUILLONS"/*.md; do
@@ -273,6 +332,7 @@ main() {
   case "$cmd" in
     new) cmd_new "$@" ;;
     drafts) cmd_drafts ;;
+    edit) cmd_edit "$@" ;;
     publish) cmd_publish "$@" ;;
     help | -h | --help) cmd_help ;;
     *) cmd_help >&2; die "Commande inconnue : $cmd" ;;

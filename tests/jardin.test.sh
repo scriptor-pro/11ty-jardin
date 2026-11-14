@@ -165,6 +165,54 @@ test_publish_recupere_les_commits_distants() {
   assert_ok && assert_file "$T/site/src/notes/jules.md" && assert_log site 'feat: publish "Mon idée"'
 }
 
+# --- tests : edit -------------------------------------------------------------
+commit_count() { git --git-dir="$T/$1.git" rev-list --count main; }
+
+test_edit_brouillon_sauvegarde() {
+  run new "Mon idée" && run edit mon-idee
+  assert_ok &&
+  [[ $(grep -c "Contenu ajouté." "$T/brouillons/mon-idee.md") -eq 2 ]] || fail "contenu non ajouté" &&
+  [[ $(commit_count brouillons) -eq 3 ]] || fail "commits brouillons : $(commit_count brouillons)"
+}
+
+test_edit_note_en_ligne_met_a_jour() {
+  run edit une-note
+  local f="$T/site/src/notes/une-note.md"
+  assert_ok &&
+  assert_contains "$f" "updated: 2026-11-14" &&
+  assert_contains "$f" "Contenu ajouté." &&
+  assert_log site 'content: mettre à jour "Une note"' &&
+  assert_clean_site
+}
+
+test_edit_note_build_en_echec_conserve_le_texte() {
+  JARDIN_BUILD_CMD=false run edit une-note
+  assert_ko && assert_output "conservée" &&
+  assert_contains "$T/site/src/notes/une-note.md" "Contenu ajouté." &&
+  assert_log site "init"
+}
+
+test_edit_sans_changement_ne_fait_rien() {
+  EDITOR=true run edit une-note
+  assert_ok && assert_output "Aucune modification" && assert_log site "init" && assert_clean_site
+}
+
+test_edit_refuse_un_site_sale() {
+  echo "modif" >> "$T/site/src/notes/masquee.md"
+  run edit une-note
+  assert_ko && assert_output "non commitées" &&
+  assert_not_contains "$T/site/src/notes/une-note.md" "Contenu ajouté."
+}
+
+test_edit_recupere_la_version_distante_avant_edition() {
+  git clone -q "$T/site.git" "$T/autre" && echo "Ajout distant." >> "$T/autre/src/notes/une-note.md" &&
+    git -C "$T/autre" commit -qam "distant" && git -C "$T/autre" push -q
+  run edit une-note
+  assert_ok &&
+  assert_contains "$T/site/src/notes/une-note.md" "Ajout distant." &&
+  assert_log site 'content: mettre à jour "Une note"'
+}
+
 # --- lanceur ----------------------------------------------------------------
 tests=("$@")
 [[ ${#tests[@]} -eq 0 ]] && mapfile -t tests < <(declare -F | awk '{print $3}' | grep '^test_')
