@@ -121,6 +121,16 @@ push_site_and_wait() {
 
 slug_of() { local n="${1##*/}"; printf '%s' "${n%.md}"; }
 
+# Refuse si src/notes/<slug>.md existe ; distingue une copie d'aperçu (non suivie par git).
+target_free() { # slug
+  local t="$NOTES/$1.md"
+  [[ -e $t ]] || return 0
+  if ! gsite ls-files --error-unmatch -- "$t" >/dev/null 2>&1; then
+    die "« $1 » : une copie d'aperçu occupe $t (aperçu en cours, ou interrompu brutalement). Arrêter l'aperçu ou supprimer ce fichier."
+  fi
+  die "Une note « $1 » existe déjà sur le site."
+}
+
 # Écrit dans $2 le brouillon $1 avec le front matter complet d'une note publiée.
 install_note() { fm complete "$1" "$2" "$TODAY"; } # brouillon cible
 
@@ -199,7 +209,7 @@ cmd_new() {
   drafts_sync
   file="$BROUILLONS/$slug.md"
   [[ -e $file ]] && die "Un brouillon « $slug » existe déjà."
-  [[ -e $NOTES/$slug.md ]] && die "Une note « $slug » existe déjà sur le site."
+  target_free "$slug"
 
   fm new "$title" "$TODAY" > "$file"
   template="$(cat "$file")"
@@ -221,14 +231,14 @@ cmd_publish() {
   title="$(fm get "$file" title)"
   errors="$(fm validate "$file" 2>&1)" || die "Brouillon « $slug » pas prêt : $errors"
   target="$NOTES/$slug.md"
-  [[ -e $target ]] && die "Une note « $slug » existe déjà sur le site."
+  target_free "$slug"
 
   interactive && need glow && glow "$file"
   confirm "Publier « $title » ?" || { info "Publication annulée."; return; }
 
   need_clean_site
   site_sync
-  [[ -e $target ]] && die "Une note « $slug » existe déjà sur le site."
+  target_free "$slug"
 
   # Le brouillon reste intact tant que la publication n'a pas abouti.
   install_note "$file" "$target"
@@ -350,12 +360,17 @@ cmd_preview() {
   slug="$(slug_of "$file")"
   # Globales : le piège EXIT s'exécute hors de cette fonction.
   PV_TARGET="$NOTES/$slug.md"
-  [[ -e $PV_TARGET ]] && die "Une note « $slug » existe déjà sur le site (ou un aperçu interrompu : $PV_TARGET)."
+  target_free "$slug"
 
   # Copie temporaire dans le site, retirée à l'arrêt quoi qu'il arrive.
   PV_STAGED="$(mktemp)"
   PV_POLLER=""
-  trap '[[ -n $PV_POLLER ]] && kill "$PV_POLLER" 2>/dev/null; rm -f "$PV_TARGET" "$PV_STAGED"' EXIT
+  # La copie d'abord ; `|| true` car la boucle peut déjà être morte (set -e couperait le piège).
+  trap 'rm -f "$PV_TARGET" "$PV_STAGED"; [[ -z $PV_POLLER ]] || kill "$PV_POLLER" 2>/dev/null || true' EXIT
+  # Sans piège explicite, bash ne lance pas EXIT sur HUP (terminal fermé) ni TERM.
+  trap 'exit 130' INT
+  trap 'exit 129' HUP
+  trap 'exit 143' TERM
   local last
   last="$(stat -c %y "$file")" # relevé avant la copie : aucune modification ne peut passer entre les deux
   install_note "$file" "$PV_STAGED" && cat "$PV_STAGED" >"$PV_TARGET"

@@ -275,6 +275,27 @@ test_preview_nettoie_aussi_en_cas_d_echec() {
   assert_no_file "$T/site/src/notes/mon-idee.md" && assert_clean_site
 }
 
+preview_arrete_par() { # signal — lance un aperçu, l'arrête par ce signal, vérifie le nettoyage
+  run new "Mon idée"
+  JARDIN_PREVIEW_CMD="sleep 30" setsid "$JARDIN" preview mon-idee </dev/null >/dev/null 2>&1 &
+  local pid=$! i
+  for i in $(seq 1 50); do [[ -f $T/site/src/notes/mon-idee.md ]] && break; sleep 0.2; done
+  assert_file "$T/site/src/notes/mon-idee.md" || return 1
+  kill -"$1" -- -"$pid"
+  for i in $(seq 1 25); do [[ -f $T/site/src/notes/mon-idee.md ]] || break; sleep 0.2; done
+  assert_no_file "$T/site/src/notes/mon-idee.md" && assert_clean_site
+}
+
+test_preview_nettoie_a_la_fermeture_du_terminal() { preview_arrete_par HUP; }
+test_preview_nettoie_sur_arret_term() { preview_arrete_par TERM; }
+
+test_publish_signale_une_copie_d_apercu_restante() {
+  run new "Mon idée"
+  cp "$T/brouillons/mon-idee.md" "$T/site/src/notes/mon-idee.md"
+  run publish mon-idee
+  assert_ko && assert_output "copie d'aperçu" && assert_file "$T/brouillons/mon-idee.md"
+}
+
 test_preview_refuse_un_slug_deja_en_ligne() {
   brouillon une-note "$(note "Une note")"
   JARDIN_PREVIEW_CMD="true" run preview une-note
