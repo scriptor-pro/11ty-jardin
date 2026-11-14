@@ -80,3 +80,4 @@ temp/
 # Fin du fichier
 # ─────────────────────────────────────────────
 .superpowers/
+src/_data/version.json

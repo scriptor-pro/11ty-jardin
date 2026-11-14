@@ -21,7 +21,8 @@
     "luxon": "^3.4.4"
   },
   "devDependencies": {
-    "html-validate": "^10.4.0"
+    "html-validate": "^10.4.0",
+    "js-yaml": "^4.3.2"
   },
   "engines": {
     "node": ">=18.0.0"
