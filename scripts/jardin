@@ -1,0 +1,282 @@
+#!/usr/bin/env bash
+# jardin — écrire, publier, modifier et dépublier les notes de jndjs.dev
+# depuis le terminal. Conception : docs/superpowers/specs/2026-11-14-jardin-cli-design.md
+set -euo pipefail
+
+SCRIPT_DIR="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+SITE="${JARDIN_SITE:-$(dirname "$SCRIPT_DIR")}"
+BROUILLONS="${JARDIN_BROUILLONS:-$HOME/Documents/jardin-brouillons}"
+URL="${JARDIN_URL:-https://jndjs.dev}"
+TODAY="${JARDIN_TODAY:-$(date +%F)}"
+BUILD_CMD="${JARDIN_BUILD_CMD:-npm run build}"
+NOTES="$SITE/src/notes"
+
+# --- utilitaires --------------------------------------------------------------
+
+fm() { node "$SCRIPT_DIR/jardin-fm.mjs" "$@"; }
+info() { printf '%s\n' "$*"; }
+warn() { printf 'jardin : %s\n' "$*" >&2; }
+die() { warn "$*"; exit 1; }
+interactive() { [[ ${JARDIN_YES:-} != 1 && -t 0 && -t 1 ]]; }
+
+confirm() {
+  [[ ${JARDIN_YES:-} == 1 ]] && return 0
+  gum confirm "$1"
+}
+
+edit_file() { ${EDITOR:-nano} "$1"; }
+
+gsite() { git -C "$SITE" "$@"; }
+gdraft() { git -C "$BROUILLONS" "$@"; }
+
+# Pousse ; en cas de refus, un pull --rebase puis un seul nouvel essai.
+push_repo() {
+  git -C "$1" push -q 2>/dev/null && return 0
+  git -C "$1" pull -q --rebase && git -C "$1" push -q
+}
+
+# Commit (et push) d'un seul fichier dans le dépôt des brouillons.
+# Un échec du push n'est pas fatal : le brouillon reste commité localement.
+draft_commit() { # fichier message
+  gdraft add -A -- "$1"
+  gdraft diff --cached --quiet -- "$1" && return 0
+  gdraft commit -q -m "$2" -- "$1"
+  push_repo "$BROUILLONS" || warn "brouillon commité mais non poussé (réessayer plus tard : git -C $BROUILLONS push)"
+}
+
+drafts_sync() { gdraft pull -q --rebase --autostash 2>/dev/null || warn "impossible de synchroniser les brouillons"; }
+
+need_clean_site() {
+  local dirty
+  dirty="$(gsite status --porcelain)"
+  [[ -z $dirty ]] || die "Le dépôt du site a des modifications non commitées :
+$dirty
+Les committer ou les annuler avant de continuer."
+}
+
+site_sync() { gsite pull -q --rebase || die "Impossible de synchroniser le dépôt du site (git pull --rebase)."; }
+
+# Build complet du site ; affiche la fin du journal en cas d'échec.
+control_build() {
+  local log
+  log="$(mktemp)"
+  info "Build de contrôle…"
+  if (cd "$SITE" && eval "$BUILD_CMD") >"$log" 2>&1; then
+    rm -f "$log"
+    return 0
+  fi
+  tail -n 20 "$log" >&2
+  rm -f "$log"
+  return 1
+}
+
+# Sha court affiché dans l'en-tête du site (.build-id)
+live_sha() {
+  curl -fsS --max-time 15 "$URL/?jardin=$RANDOM" 2>/dev/null |
+    grep -oE 'build-id">[^<]*' | grep -oE '\([0-9a-f]+\)' | tr -d '()' || true
+}
+
+# Attend que le site affiche le commit poussé (toutes les 20 s, 8 min au plus).
+wait_online() { # sha
+  [[ ${JARDIN_NO_WAIT:-} == 1 ]] && return 0
+  local start=$SECONDS live
+  trap 'echo; die "Attente interrompue : le push est fait, le site sera à jour dans quelques minutes."' INT
+  info "Poussé. Attente de la mise en ligne (4 à 6 min en général)…"
+  while ((SECONDS - start < 480)); do
+    live="$(live_sha)"
+    if [[ -n $live && $1 == "$live"* ]]; then
+      trap - INT
+      printf '\r\033[K'
+      return 0
+    fi
+    printf '\r  %d s écoulées…' $((SECONDS - start))
+    sleep 20
+  done
+  trap - INT
+  echo
+  return 1
+}
+
+# Pousse le dépôt du site puis attend la mise en ligne ; $1 = chemin d'URL à annoncer.
+push_site_and_wait() {
+  push_repo "$SITE" || die "Le commit est fait mais le push a échoué. Résoudre puis lancer : git -C $SITE push"
+  wait_online "$(gsite rev-parse HEAD)" ||
+    die "Poussé, mais pas encore en ligne après 8 min — vérifier statichost."
+  [[ -n ${1:-} ]] && info "En ligne : $URL$1"
+  return 0
+}
+
+slug_of() { local n="${1##*/}"; printf '%s' "${n%.md}"; }
+
+# --- sélection des notes ----------------------------------------------------
+
+# Lignes « chemin<TAB>étiquette<TAB>titre » des candidats d'un type (draft|site|any)
+candidates() {
+  local kind="$1" files=() f
+  if [[ $kind != site ]]; then
+    for f in "$BROUILLONS"/*.md; do
+      [[ -f $f && ${f##*/} != README.md ]] && files+=("$f")
+    done
+  fi
+  if [[ $kind != draft ]]; then
+    for f in "$NOTES"/*.md; do
+      [[ -f $f && ${f##*/} != index.md ]] && files+=("$f")
+    done
+  fi
+  [[ ${#files[@]} -eq 0 ]] && return 0
+  fm list "${files[@]}" | while IFS=$'\t' read -r path title _created _tags publish; do
+    local label="[en ligne]"
+    if [[ $path == "$BROUILLONS"/* ]]; then label="[brouillon]"
+    elif [[ $publish == false ]]; then label="[masquée]"
+    fi
+    printf '%s\t%s\t%s\n' "$path" "$label" "$title"
+  done
+}
+
+# Choisit une note : chemin .md, slug exact, filtre partiel, ou fzf sans argument.
+resolve() { # type [argument]
+  local kind="$1" arg="${2:-}" list matches
+  if [[ $arg == *.md && -f $arg ]]; then
+    readlink -f "$arg"
+    return
+  fi
+  list="$(candidates "$kind")"
+  if [[ -z $list ]]; then
+    [[ -n $arg ]] && die "Aucune note ne correspond à « $arg »."
+    die "Aucune note disponible."
+  fi
+
+  if [[ -n $arg ]]; then
+    matches="$(awk -F'\t' -v s="$arg" '{ n = $1; sub(/^.*\//, "", n); sub(/\.md$/, "", n) } n == s' <<<"$list")"
+    if [[ -z $matches ]]; then
+      local needle
+      needle="$(fm slug "$arg")"
+      matches="$(awk -F'\t' -v s="$needle" -v t="$(tr '[:upper:]' '[:lower:]' <<<"$arg")" \
+        '{ n = $1; sub(/^.*\//, "", n) } index(n, s) || index(tolower($3), t)' <<<"$list")"
+    fi
+    [[ -n $matches ]] || die "Aucune note ne correspond à « $arg »."
+    if [[ $(wc -l <<<"$matches") -eq 1 ]]; then
+      cut -f1 <<<"$matches"
+      return
+    fi
+    list="$matches"
+  fi
+
+  if ! interactive; then
+    die "Plusieurs notes correspondent à « $arg » : $(cut -f3 <<<"$list" | paste -sd ',' | sed 's/,/, /g')"
+  fi
+  local choice
+  choice="$(fzf --delimiter=$'\t' --with-nth=2,3 --query="$arg" --select-1 \
+    --preview='glow -s dark {1}' --preview-window=right,60% <<<"$list")" || die "Aucune note choisie."
+  cut -f1 <<<"$choice"
+}
+
+# --- sous-commandes -----------------------------------------------------------
+
+cmd_new() {
+  local title="${1:-}"
+  [[ -n $title ]] || die 'Usage : jardin new "Titre"'
+  local slug file template
+  slug="$(fm slug "$title")"
+  [[ -n $slug ]] || die "Titre sans caractère utilisable pour un nom de fichier."
+  drafts_sync
+  file="$BROUILLONS/$slug.md"
+  [[ -e $file ]] && die "Un brouillon « $slug » existe déjà."
+  [[ -e $NOTES/$slug.md ]] && die "Une note « $slug » existe déjà sur le site."
+
+  fm new "$title" "$TODAY" > "$file"
+  template="$(cat "$file")"
+  edit_file "$file"
+  if [[ "$(cat "$file")" == "$template" ]] && ! confirm "Le brouillon est resté vide. Le garder ?"; then
+    rm -f "$file"
+    info "Brouillon abandonné."
+    return
+  fi
+  draft_commit "$file" "brouillon: \"$(fm get "$file" title)\""
+  info "Brouillon enregistré : $file"
+}
+
+cmd_publish() {
+  local file slug title errors target
+  file="$(resolve draft "${1:-}")"
+  [[ $file == "$BROUILLONS"/* ]] || die "« ${file##*/} » n'est pas un brouillon."
+  slug="$(slug_of "$file")"
+  title="$(fm get "$file" title)"
+  errors="$(fm validate "$file" 2>&1)" || die "Brouillon « $slug » pas prêt : $errors"
+  target="$NOTES/$slug.md"
+  [[ -e $target ]] && die "Une note « $slug » existe déjà sur le site."
+
+  interactive && glow "$file"
+  confirm "Publier « $title » ?" || { info "Publication annulée."; return; }
+
+  need_clean_site
+  site_sync
+  [[ -e $target ]] && die "Une note « $slug » existe déjà sur le site."
+
+  # Le brouillon reste intact tant que la publication n'a pas abouti.
+  cp "$file" "$target"
+  [[ -n $(fm get "$target" layout) ]] || fm set "$target" layout note.njk
+  [[ -n $(fm get "$target" date) ]] || fm set "$target" date "$TODAY"
+  [[ -n $(fm get "$target" id) ]] || fm set "$target" id "$(fm id "$target")"
+  [[ $(fm get "$target" publish) == false ]] && fm del "$target" publish
+
+  if ! control_build; then
+    rm -f "$target"
+    die "Le build a échoué : rien n'a été publié, le brouillon est intact."
+  fi
+
+  gsite add -- "$target"
+  gsite commit -q -m "feat: publish \"$title\"" -- "$target"
+  push_repo "$SITE" || die "Le commit est fait mais le push a échoué. Résoudre puis lancer : git -C $SITE push"
+
+  gdraft rm -q -- "$file"
+  gdraft commit -q -m "publié: \"$title\"" -- "$file"
+  push_repo "$BROUILLONS" || warn "suppression du brouillon non poussée (git -C $BROUILLONS push)"
+
+  wait_online "$(gsite rev-parse HEAD)" ||
+    die "Poussé, mais pas encore en ligne après 8 min — vérifier statichost."
+  info "En ligne : $URL/notes/$slug/"
+}
+
+cmd_drafts() {
+  local files=() f
+  for f in "$BROUILLONS"/*.md; do
+    [[ -f $f && ${f##*/} != README.md ]] && files+=("$f")
+  done
+  if [[ ${#files[@]} -eq 0 ]]; then
+    info "Aucun brouillon."
+    return
+  fi
+  fm list "${files[@]}" | sort -t $'\t' -k3,3r |
+    awk -F'\t' '{ n = $1; sub(/^.*\//, "", n); sub(/\.md$/, "", n);
+                  printf "%-10s  %s%s  (%s)\n", $3, $2, ($4 ? "  [" $4 "]" : ""), n }'
+}
+
+cmd_help() {
+  cat <<'EOF'
+jardin — publier le jardin numérique depuis le terminal
+
+  jardin new "Titre"        crée un brouillon et l'ouvre dans l'éditeur
+  jardin drafts             liste les brouillons
+  jardin edit [note]        modifie un brouillon ou une note en ligne
+  jardin publish [note]     publie un brouillon
+  jardin unpublish [note]   ramène une note en ligne dans les brouillons
+  jardin preview            lance le serveur de développement (npm run dev)
+
+[note] : slug, partie du titre ou chemin .md ; sans argument, sélection avec fzf.
+EOF
+}
+
+main() {
+  local cmd="${1:-help}"
+  shift || true
+  case "$cmd" in
+    new) cmd_new "$@" ;;
+    drafts) cmd_drafts ;;
+    publish) cmd_publish "$@" ;;
+    help | -h | --help) cmd_help ;;
+    *) cmd_help >&2; die "Commande inconnue : $cmd" ;;
+  esac
+}
+
+main "$@"

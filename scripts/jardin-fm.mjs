@@ -46,10 +46,13 @@ export function getField(content, field) {
   return Array.isArray(value) ? value.join(",") : String(value);
 }
 
-const PLAIN_RE = /^(?:\d{4}-\d{2}-\d{2}|true|false|[A-Za-z][A-Za-z0-9._\/-]*)$/;
-const RESERVED = new Set(["null", "Null", "NULL", "yes", "no", "on", "off"]);
-const formatValue = value =>
-  PLAIN_RE.test(value) && !RESERVED.has(value) ? value : JSON.stringify(value);
+// Sans guillemets si la valeur est simple et relue à l'identique (dates, id, note.njk…)
+const formatValue = value => {
+  if (value === "true" || value === "false") return value;
+  const plain = /^[A-Za-z0-9][\w.\/-]*$/.test(value) &&
+    yaml.load(value, { schema: yaml.CORE_SCHEMA }) === value;
+  return plain ? value : JSON.stringify(value);
+};
 
 // Indices [début, fin[ des lignes du front matter (entre les deux ---)
 function frontMatterLines(content) {
@@ -135,6 +138,19 @@ function main([cmd, ...args]) {
       return fs.writeFileSync(args[0], delField(read(args[0]), args[1]));
     case "id":
       return console.log(computeId(read(args[0]), args[0].replace(/^.*\//, "").replace(/\.md$/, "")));
+    case "list":
+      // Une ligne par fichier : chemin, titre, created, tags, publish (séparés par des tabulations)
+      for (const file of args) {
+        let fields;
+        try {
+          const content = read(file);
+          fields = ["title", "created", "tags", "publish"].map(f => getField(content, f));
+        } catch {
+          fields = [file.replace(/^.*\//, ""), "", "", ""];
+        }
+        console.log([file, ...fields.map(v => v.replace(/[\t\n]/g, " "))].join("\t"));
+      }
+      return;
     case "validate": {
       const errors = validate(read(args[0]));
       if (errors.length) {

@@ -114,3 +114,12 @@ test("la CLI get/set/del/validate agit sur un fichier", async () => {
   assert.throws(() => execFileSync("node", [cli, "validate", file], { stdio: "pipe" }));
   assert.ok(yaml.load(parse(run("new", "Titre", "2026-11-14").replace(/\n$/, "")).raw));
 });
+
+test("la CLI list donne fichier, titre, created, tags, publish par ligne", async () => {
+  const { execFileSync } = await import("node:child_process");
+  const cli = path.resolve("scripts/jardin-fm.mjs");
+  const a = tmpFile(NOTE);
+  const b = tmpFile(setField(newDraft("Masquée", "2025-01-02"), "publish", "false"));
+  const out = execFileSync("node", [cli, "list", a, b], { encoding: "utf8" });
+  assert.equal(out, `${a}\tUne note\t2026-11-14\ta,b\t\n${b}\tMasquée\t2025-01-02\t\tfalse\n`);
+});
