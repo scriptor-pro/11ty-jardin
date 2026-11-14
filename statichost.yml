@@ -1,0 +1,3 @@
+image: node:18.19.0
+command: npm ci && npm run build
+public: _site
