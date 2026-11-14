@@ -139,13 +139,13 @@ export default function (eleventyConfig) {
     !hasCqjaTag(note.data) &&
     note.inputPath !== "./src/notes/index.md";
 
-  // Ne génère pas de page HTML pour les contenus taggés "cqja"
-  eleventyConfig.addGlobalData("eleventyComputed.permalink", data => {
-    if (hasCqjaTag(data)) {
+  // Exclut entièrement les notes non publiées (publish: false) :
+  // ni page HTML, ni présence dans les collections.
+  // (Les notes "cqja" portent leur propre `permalink: false`.)
+  eleventyConfig.addPreprocessor("non-publiees", "md", data => {
+    if (data.publish === false) {
       return false;
     }
-
-    return data?.permalink;
   });
 
   // Toutes les notes
