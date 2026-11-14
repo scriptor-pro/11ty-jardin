@@ -17,10 +17,16 @@ fm() { node "$SCRIPT_DIR/jardin-fm.mjs" "$@"; }
 info() { printf '%s\n' "$*"; }
 warn() { printf 'jardin : %s\n' "$*" >&2; }
 die() { warn "$*"; exit 1; }
-interactive() { [[ ${JARDIN_YES:-} != 1 && -t 0 && -t 1 ]]; }
+need() { local c; for c; do command -v "$c" >/dev/null || die "Dépendance manquante : $c"; done; }
+
+# Évalué une fois au démarrage : dans une substitution $(…), stdout n'est plus un terminal.
+INTERACTIVE=0
+[[ ${JARDIN_YES:-} != 1 && -t 0 && -t 1 ]] && INTERACTIVE=1
+interactive() { [[ $INTERACTIVE == 1 ]]; }
 
 confirm() {
   [[ ${JARDIN_YES:-} == 1 ]] && return 0
+  need gum
   gum confirm "$1"
 }
 
@@ -84,6 +90,7 @@ live_sha() {
 # Attend que le site affiche le commit poussé (toutes les 20 s, 8 min au plus).
 wait_online() { # sha
   [[ ${JARDIN_NO_WAIT:-} == 1 ]] && return 0
+  need curl
   local start=$SECONDS live
   trap 'echo; die "Attente interrompue : le push est fait, le site sera à jour dans quelques minutes."' INT
   info "Poussé. Attente de la mise en ligne (4 à 6 min en général)…"
@@ -171,6 +178,7 @@ resolve() { # type [argument]
     die "Plusieurs notes correspondent à « $arg » : $(cut -f3 <<<"$list" | paste -sd ',' | sed 's/,/, /g')"
   fi
   local choice
+  need fzf glow
   choice="$(fzf --delimiter=$'\t' --with-nth=2,3 --query="$arg" --select-1 \
     --preview='glow -s dark {1}' --preview-window=right,60% <<<"$list")" || die "Aucune note choisie."
   cut -f1 <<<"$choice"
@@ -211,7 +219,7 @@ cmd_publish() {
   target="$NOTES/$slug.md"
   [[ -e $target ]] && die "Une note « $slug » existe déjà sur le site."
 
-  interactive && glow "$file"
+  interactive && need glow && glow "$file"
   confirm "Publier « $title » ?" || { info "Publication annulée."; return; }
 
   need_clean_site
@@ -297,6 +305,46 @@ edit_site_note() {
   fi
 }
 
+cmd_unpublish() {
+  local file slug title draft hidden=false
+  file="$(resolve site "${1:-}")"
+  [[ $file == "$NOTES"/* ]] || die "« ${file##*/} » n'est pas une note du site."
+  slug="$(slug_of "$file")"
+  title="$(fm get "$file" title)"
+  draft="$BROUILLONS/$slug.md"
+  [[ -e $draft ]] && die "Un brouillon « $slug » existe déjà : le renommer ou le supprimer d'abord."
+  confirm "Dépublier « $title » ?" || { info "Dépublication annulée."; return; }
+
+  need_clean_site
+  site_sync
+  [[ -f $file ]] || die "« $slug » n'existe plus sur le site après synchronisation."
+  drafts_sync
+  [[ -e $draft ]] && die "Un brouillon « $slug » existe déjà : le renommer ou le supprimer d'abord."
+  [[ $(fm get "$file" publish) == false ]] && hidden=true
+
+  # Brouillon sauvegardé d'abord : le texte n'est jamais perdu.
+  cp "$file" "$draft"
+  draft_commit "$draft" "brouillon: dépublié \"$title\""
+
+  gsite rm -q -- "$file"
+  gsite commit -q -m "chore: unpublish \"$title\"" -- "$file"
+  if $hidden; then
+    push_repo "$SITE" || die "Le commit est fait mais le push a échoué. Résoudre puis lancer : git -C $SITE push"
+  else
+    push_site_and_wait ""
+    if [[ ${JARDIN_NO_WAIT:-} != 1 ]] &&
+      [[ $(curl -s -o /dev/null -w '%{http_code}' "$URL/notes/$slug/?jardin=$RANDOM") == 200 ]]; then
+      warn "$URL/notes/$slug/ répond encore : vérifier statichost."
+    fi
+  fi
+  info "Dépubliée : « $title » est de nouveau un brouillon ($draft)."
+}
+
+cmd_preview() {
+  need npm
+  cd "$SITE" && exec npm run dev
+}
+
 cmd_drafts() {
   local files=() f
   for f in "$BROUILLONS"/*.md; do
@@ -329,11 +377,14 @@ EOF
 main() {
   local cmd="${1:-help}"
   shift || true
+  need git node
   case "$cmd" in
     new) cmd_new "$@" ;;
     drafts) cmd_drafts ;;
     edit) cmd_edit "$@" ;;
     publish) cmd_publish "$@" ;;
+    unpublish) cmd_unpublish "$@" ;;
+    preview) cmd_preview ;;
     help | -h | --help) cmd_help ;;
     *) cmd_help >&2; die "Commande inconnue : $cmd" ;;
   esac

@@ -213,6 +213,37 @@ test_edit_recupere_la_version_distante_avant_edition() {
   assert_log site 'content: mettre à jour "Une note"'
 }
 
+# --- tests : unpublish ------------------------------------------------------
+test_unpublish_ramene_la_note_dans_les_brouillons() {
+  run new "Mon idée" && run publish mon-idee && run unpublish mon-idee
+  assert_ok &&
+  assert_no_file "$T/site/src/notes/mon-idee.md" &&
+  assert_file "$T/brouillons/mon-idee.md" &&
+  assert_contains "$T/brouillons/mon-idee.md" "id: 14112026-mon-idee" &&
+  assert_contains "$T/brouillons/mon-idee.md" "created: 2026-11-14" &&
+  assert_log site 'chore: unpublish "Mon idée"' &&
+  assert_log brouillons 'brouillon: dépublié "Mon idée"' &&
+  assert_clean_site
+}
+
+test_unpublish_puis_publish_garde_le_meme_id() {
+  run new "Mon idée" && run publish mon-idee && run unpublish mon-idee && run publish mon-idee
+  assert_ok && assert_contains "$T/site/src/notes/mon-idee.md" "id: 14112026-mon-idee" &&
+  [[ $(grep -c "^id:" "$T/site/src/notes/mon-idee.md") -eq 1 ]] || fail "id dupliqué"
+}
+
+test_unpublish_refuse_si_brouillon_du_meme_slug() {
+  brouillon une-note "$(note "Une note")"
+  run unpublish "$T/site/src/notes/une-note.md"
+  assert_ko && assert_output "existe déjà" &&
+  assert_file "$T/site/src/notes/une-note.md" && assert_log site "init"
+}
+
+test_unpublish_ne_propose_pas_index() {
+  run unpublish index
+  assert_ko && assert_output "Aucune note ne correspond à « index »"
+}
+
 # --- lanceur ----------------------------------------------------------------
 tests=("$@")
 [[ ${#tests[@]} -eq 0 ]] && mapfile -t tests < <(declare -F | awk '{print $3}' | grep '^test_')
