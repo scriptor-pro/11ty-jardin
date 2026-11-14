@@ -244,6 +244,44 @@ test_unpublish_ne_propose_pas_index() {
   assert_ko && assert_output "Aucune note ne correspond à « index »"
 }
 
+# --- tests : preview ----------------------------------------------------------
+test_preview_sans_argument_lance_le_site() {
+  JARDIN_PREVIEW_CMD="pwd > '$T/vu.txt'" run preview
+  assert_ok && assert_contains "$T/vu.txt" "$T/site" && assert_clean_site
+}
+
+test_preview_brouillon_dans_le_site_puis_nettoie() {
+  run new "Mon idée"
+  JARDIN_PREVIEW_CMD="cat src/notes/mon-idee.md > '$T/vu.txt'" run preview mon-idee
+  assert_ok && assert_output "/notes/mon-idee/" &&
+  assert_contains "$T/vu.txt" "layout: note.njk" &&
+  assert_contains "$T/vu.txt" "Contenu ajouté." &&
+  assert_no_file "$T/site/src/notes/mon-idee.md" &&
+  assert_file "$T/brouillons/mon-idee.md" &&
+  assert_not_contains "$T/brouillons/mon-idee.md" "layout:" &&
+  assert_clean_site
+}
+
+test_preview_recopie_les_modifications_du_brouillon() {
+  run new "Mon idée"
+  JARDIN_PREVIEW_CMD="echo 'Ajout pendant aperçu.' >> '$T/brouillons/mon-idee.md'; sleep 3; cat src/notes/mon-idee.md > '$T/vu.txt'" \
+    run preview mon-idee
+  assert_ok && assert_contains "$T/vu.txt" "Ajout pendant aperçu." && assert_contains "$T/vu.txt" "layout: note.njk"
+}
+
+test_preview_nettoie_aussi_en_cas_d_echec() {
+  run new "Mon idée"
+  JARDIN_PREVIEW_CMD="false" run preview mon-idee
+  assert_no_file "$T/site/src/notes/mon-idee.md" && assert_clean_site
+}
+
+test_preview_refuse_un_slug_deja_en_ligne() {
+  brouillon une-note "$(note "Une note")"
+  JARDIN_PREVIEW_CMD="true" run preview une-note
+  assert_ko && assert_output "existe déjà" &&
+  assert_contains "$T/site/src/notes/une-note.md" "Texte."
+}
+
 # --- lanceur ----------------------------------------------------------------
 tests=("$@")
 [[ ${#tests[@]} -eq 0 ]] && mapfile -t tests < <(declare -F | awk '{print $3}' | grep '^test_')

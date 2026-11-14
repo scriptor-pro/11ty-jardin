@@ -9,6 +9,7 @@ BROUILLONS="${JARDIN_BROUILLONS:-$HOME/Documents/jardin-brouillons}"
 URL="${JARDIN_URL:-https://jndjs.dev}"
 TODAY="${JARDIN_TODAY:-$(date +%F)}"
 BUILD_CMD="${JARDIN_BUILD_CMD:-npm run build}"
+PREVIEW_CMD="${JARDIN_PREVIEW_CMD:-npm run dev}"
 NOTES="$SITE/src/notes"
 
 # --- utilitaires --------------------------------------------------------------
@@ -120,6 +121,9 @@ push_site_and_wait() {
 
 slug_of() { local n="${1##*/}"; printf '%s' "${n%.md}"; }
 
+# Écrit dans $2 le brouillon $1 avec le front matter complet d'une note publiée.
+install_note() { fm complete "$1" "$2" "$TODAY"; } # brouillon cible
+
 # --- sélection des notes ----------------------------------------------------
 
 # Lignes « chemin<TAB>étiquette<TAB>titre » des candidats d'un type (draft|site|any)
@@ -227,11 +231,7 @@ cmd_publish() {
   [[ -e $target ]] && die "Une note « $slug » existe déjà sur le site."
 
   # Le brouillon reste intact tant que la publication n'a pas abouti.
-  cp "$file" "$target"
-  [[ -n $(fm get "$target" layout) ]] || fm set "$target" layout note.njk
-  [[ -n $(fm get "$target" date) ]] || fm set "$target" date "$TODAY"
-  [[ -n $(fm get "$target" id) ]] || fm set "$target" id "$(fm id "$target")"
-  [[ $(fm get "$target" publish) == false ]] && fm del "$target" publish
+  install_note "$file" "$target"
 
   if ! control_build; then
     rm -f "$target"
@@ -341,8 +341,40 @@ cmd_unpublish() {
 }
 
 cmd_preview() {
-  need npm
-  cd "$SITE" && exec npm run dev
+  if [[ -z ${1:-} ]]; then
+    cd "$SITE" && eval "exec $PREVIEW_CMD"
+  fi
+  local file slug
+  file="$(resolve draft "$1")"
+  [[ $file == "$BROUILLONS"/* ]] || die "« ${file##*/} » n'est pas un brouillon (pour une note en ligne : jardin preview)."
+  slug="$(slug_of "$file")"
+  # Globales : le piège EXIT s'exécute hors de cette fonction.
+  PV_TARGET="$NOTES/$slug.md"
+  [[ -e $PV_TARGET ]] && die "Une note « $slug » existe déjà sur le site (ou un aperçu interrompu : $PV_TARGET)."
+
+  # Copie temporaire dans le site, retirée à l'arrêt quoi qu'il arrive.
+  PV_STAGED="$(mktemp)"
+  PV_POLLER=""
+  trap '[[ -n $PV_POLLER ]] && kill "$PV_POLLER" 2>/dev/null; rm -f "$PV_TARGET" "$PV_STAGED"' EXIT
+  local last
+  last="$(stat -c %y "$file")" # relevé avant la copie : aucune modification ne peut passer entre les deux
+  install_note "$file" "$PV_STAGED" && cat "$PV_STAGED" >"$PV_TARGET"
+
+  # Recopie le brouillon à chaque modification (mtime en nanosecondes).
+  # Détachée de stdout/stderr pour ne retenir aucun tube ouvert.
+  (
+    while sleep 1; do
+      now="$(stat -c %y "$file" 2>/dev/null)" || continue
+      [[ $now == "$last" ]] && continue
+      last="$now"
+      install_note "$file" "$PV_STAGED" && cat "$PV_STAGED" >"$PV_TARGET"
+    done
+  ) >/dev/null 2>"${JARDIN_DEBUG_POLLER:-/dev/null}" &
+  PV_POLLER=$!
+
+  info "Aperçu de « $(fm get "$file" title) » : http://localhost:8080/notes/$slug/"
+  info "Les modifications du brouillon sont reprises en direct. Ctrl-C pour arrêter."
+  (cd "$SITE" && eval "$PREVIEW_CMD")
 }
 
 cmd_drafts() {
@@ -368,7 +400,7 @@ jardin — publier le jardin numérique depuis le terminal
   jardin edit [note]        modifie un brouillon ou une note en ligne
   jardin publish [note]     publie un brouillon
   jardin unpublish [note]   ramène une note en ligne dans les brouillons
-  jardin preview            lance le serveur de développement (npm run dev)
+  jardin preview [note]     aperçu local : le site, ou un brouillon dans le site
 
 [note] : slug, partie du titre ou chemin .md ; sans argument, sélection avec fzf.
 EOF
@@ -384,7 +416,7 @@ main() {
     edit) cmd_edit "$@" ;;
     publish) cmd_publish "$@" ;;
     unpublish) cmd_unpublish "$@" ;;
-    preview) cmd_preview ;;
+    preview) cmd_preview "$@" ;;
     help | -h | --help) cmd_help ;;
     *) cmd_help >&2; die "Commande inconnue : $cmd" ;;
   esac

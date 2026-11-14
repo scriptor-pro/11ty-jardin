@@ -77,7 +77,7 @@ jardin drafts             liste les brouillons : titre, created, tags
 jardin edit [note]        ouvre un brouillon ou une note en ligne ; enchaîne la sauvegarde / mise à jour
 jardin publish [note]     brouillon → en ligne
 jardin unpublish [note]   en ligne → brouillon
-jardin preview            npm run dev dans le dépôt du site
+jardin preview [note]     npm run dev ; avec un brouillon : aperçu du brouillon dans le site
 jardin help               aide (aussi sans argument)
 ```
 
@@ -146,6 +146,12 @@ Candidats : notes de `src/notes/*.md` (hors `index.md`).
 3. Copier la note dans les brouillons (refus si un brouillon du même slug existe), en conservant tout le front matter (dont `id`, `created`), commit `brouillon: dépublié "Titre"` + push brouillons.
 4. `git rm` dans le site, commit `chore: unpublish "Titre"`, push.
 5. Attendre la mise en ligne, puis vérifier que `https://jndjs.dev/notes/<slug>/` ne renvoie plus 200.
+
+### `preview [brouillon]` *(ajouté le 2026-11-14)*
+
+- Sans argument : `npm run dev` dans le dépôt du site.
+- Avec un brouillon : copie temporaire `src/notes/<slug>.md` au front matter complété (comme `publish`), recopiée à chaque modification du brouillon (contrôle de l'heure de modification chaque seconde), puis `npm run dev` ; URL annoncée `http://localhost:8080/notes/<slug>/`.
+- La copie est retirée à l'arrêt, y compris sur Ctrl-C ou erreur ; jamais commitée. Refus si `src/notes/<slug>.md` existe déjà.
 
 ### Attente de la mise en ligne
 

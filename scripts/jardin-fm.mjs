@@ -108,6 +108,17 @@ export function computeId(content, filenameBase) {
   return m ? `${m[3]}${m[2]}${m[1]}-${s}` : `00000000-${s}`;
 }
 
+// Front matter d'une note publiée : layout, date et id ajoutés s'ils manquent,
+// `publish: false` retiré. Les champs existants ne sont pas modifiés.
+export function completeNote(content, filenameBase, today) {
+  let out = content;
+  if (!getField(out, "layout")) out = setField(out, "layout", "note.njk");
+  if (!getField(out, "date")) out = setField(out, "date", today);
+  if (!getField(out, "id")) out = setField(out, "id", computeId(out, filenameBase));
+  if (getField(out, "publish") === "false") out = delField(out, "publish");
+  return out;
+}
+
 export function validate(content) {
   let parsed;
   try {
@@ -136,6 +147,11 @@ function main([cmd, ...args]) {
       return fs.writeFileSync(args[0], setField(read(args[0]), args[1], args[2]));
     case "del":
       return fs.writeFileSync(args[0], delField(read(args[0]), args[1]));
+    case "complete": // complete <brouillon> <cible> <date du jour>
+      return fs.writeFileSync(
+        args[1],
+        completeNote(read(args[0]), args[0].replace(/^.*\//, "").replace(/\.md$/, ""), args[2]),
+      );
     case "id":
       return console.log(computeId(read(args[0]), args[0].replace(/^.*\//, "").replace(/\.md$/, "")));
     case "list":

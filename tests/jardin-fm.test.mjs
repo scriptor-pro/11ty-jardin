@@ -123,3 +123,28 @@ test("la CLI list donne fichier, titre, created, tags, publish par ligne", async
   const out = execFileSync("node", [cli, "list", a, b], { encoding: "utf8" });
   assert.equal(out, `${a}\tUne note\t2026-11-14\ta,b\t\n${b}\tMasquée\t2025-01-02\t\tfalse\n`);
 });
+
+test("completeNote ajoute layout, date, id et retire publish: false", async () => {
+  const { completeNote } = await import("../scripts/jardin-fm.mjs");
+  const draft = setField(newDraft("Mon idée", "2026-11-14"), "publish", "false") + "\nTexte.\n";
+  const out = completeNote(draft, "mon-idee", "2026-11-20");
+  assert.match(out, /\nlayout: note\.njk\n/);
+  assert.match(out, /\ndate: 2026-11-20\n/);
+  assert.match(out, /\nid: 14112026-mon-idee\n/);
+  assert.doesNotMatch(out, /publish:/);
+  assert.ok(out.endsWith("\nTexte.\n"));
+});
+
+test("completeNote ne touche pas aux champs déjà présents", async () => {
+  const { completeNote } = await import("../scripts/jardin-fm.mjs");
+  assert.equal(completeNote(NOTE.replace("created:", "id: x-y\ndate: 2020-01-01\ncreated:"), "une-note", "2026-11-20"),
+    NOTE.replace("created:", "id: x-y\ndate: 2020-01-01\ncreated:"));
+});
+
+test("la CLI complete écrit la note complétée dans la cible", async () => {
+  const { execFileSync } = await import("node:child_process");
+  const src = tmpFile(newDraft("Mon idée", "2026-11-14") + "\nTexte.\n");
+  const dest = src.replace(/note\.md$/, "mon-idee.md");
+  execFileSync("node", [path.resolve("scripts/jardin-fm.mjs"), "complete", src, dest, "2026-11-20"]);
+  assert.match(fs.readFileSync(dest, "utf8"), /\nid: 14112026-mon-idee\n/);
+});
