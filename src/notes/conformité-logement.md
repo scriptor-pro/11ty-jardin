@@ -3,7 +3,7 @@ title: "Grille de Conformité – Logement pour 1 Personne"
 layout: note.njk
 date: 2025-12-23
 description: "Une grille de conformité pour savoir si tu visites un futur-logis qui reste dans les clous - région Bruxelloise - Belgique - déménagement"
-statut: chantier
+status: chantier
 tags:
   - déménagement
   - conformité

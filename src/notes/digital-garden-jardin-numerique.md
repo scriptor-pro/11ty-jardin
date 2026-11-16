@@ -47,3 +47,12 @@ Hm…. Peut-être bien un peu de ça aussi.
 Voilà ! Un digital garden, c'est surtout un work in progress. Le contenu va changer souvent. Reviens. Reviens, souvent.
 
 ## À suivre
+
+## Quelques chemins dans ce jardin
+
+Ces notes montrent à quoi ressemble le jardin quand une curiosité se ramifie :
+
+- **Expérimenter en photo** : le [projet Petit Chimiste](/notes/photo-projet-petit-chimiste/) rassemble les essais, dont une [recette de caffenol](/notes/Recette_pour_260_ml_de_caffenol/).
+- **Résoudre un petit problème Linux** : ces [commandes CLI utiles](/notes/commandes-linux-utiles/) et le [mystère des polices accentuées](/notes/le-mystere-des-polices-accentuees/) sont des notes pratiques qui se complètent.
+- **Fabriquer et publier pour le web** : voici comment j’ai réglé le [DNS des GitHub Pages](/notes/title_dns_des_github_pages/) et la [sitemap du site](/notes/sitemap-et-search-console/).
+- **Travailler avec l’IA** : la [promptothèque](/notes/promptotheque/) conserve les formulations que j’ai envie de réutiliser.

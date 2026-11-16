@@ -99,6 +99,10 @@ export default function (eleventyConfig) {
     Math.min(...arr.map(item => item[attr]))
   );
 
+  eleventyConfig.addFilter("take", (arr, count) =>
+    Array.isArray(arr) ? arr.slice(0, Math.max(0, Number(count) || 0)) : []
+  );
+
   // Supprime le premier <h1> du contenu (souvent doublon avec "title")
   eleventyConfig.addFilter("stripLeadingTitle", function (content = "", title = "") {
     const html = String(content);
@@ -205,7 +209,13 @@ export default function (eleventyConfig) {
       notes.forEach(other => {
         if (other.url !== note.url) {
           const content = contents[other.url] || "";
-          if (content.includes(note.url)) {
+          let decodedContent = content;
+          try {
+            decodedContent = decodeURI(content);
+          } catch (_) {
+            // Keep the original content if it contains a malformed escape.
+          }
+          if (content.includes(note.url) || decodedContent.includes(note.url)) {
             backlinks.push({
               url: other.url,
               title: other.data.title
@@ -305,6 +315,32 @@ eleventyConfig.addFilter("formatDateBE", function(value) {
     }
     return a;
   });
+
+  // Notes à poursuivre : privilégie celles qui partagent les sujets de la note lue.
+  eleventyConfig.addFilter("relatedNotes", function(notes, current, limit = 3) {
+    if (!Array.isArray(notes) || !current) return [];
+    const tags = current.data?.tags || [];
+    const currentTags = new Set(Array.isArray(tags) ? tags : [tags]);
+    return notes
+      .filter(note => note.url !== current.url)
+      .map(note => {
+        const noteTags = note.data?.tags || [];
+        const normalized = Array.isArray(noteTags) ? noteTags : [noteTags];
+        return { note, score: normalized.filter(tag => currentTags.has(tag) && tag !== "note").length };
+      })
+      .filter(item => item.score > 0)
+      .sort((a, b) => b.score - a.score || new Date(b.note.date) - new Date(a.note.date))
+      .slice(0, limit)
+      .map(item => item.note);
+  });
+
+  eleventyConfig.addFilter("findByUrl", (notes, url) =>
+    Array.isArray(notes) ? notes.find(note => note.url === url) || null : null
+  );
+
+  eleventyConfig.addFilter("exceptNote", (notes, excluded) =>
+    Array.isArray(notes) ? notes.filter(note => note.url !== excluded?.url) : []
+  );
 
   /* ============================================================
      Filtre : truncateAtPunctuation

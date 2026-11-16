@@ -3,7 +3,7 @@ title: "Quelques commandes CLI utiles mais pas fréquentes - Linux"
 layout: note.njk
 date: 2025-12-23
 description: "Linux : Les commandes terminal CLI qui me sauvent et que je n'emploie pas assez souvent au point de m'en souvenir par coeur. bureau XFCE"
-statut: chantier
+status: chantier
 tags:
   - linux
   - cli

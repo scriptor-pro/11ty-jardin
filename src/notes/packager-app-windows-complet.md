@@ -3,7 +3,7 @@ title: "Une app qui peut s'installer dans Windows : comment faire ?"
 layout: note.njk
 date: 2025-12-23
 description: "Alors comme ça, tu voudrais que ton app soit utilisable dans l'univers Windows ? Voici comment faire. Spoiler alert : ça n'est pas simplissime."
-statut: chantier
+status: chantier
 tags:
   - IA
   - vibe-coding

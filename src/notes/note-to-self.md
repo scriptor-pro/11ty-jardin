@@ -13,3 +13,5 @@ Auberge espagnole à partir de 18 h 30.
 
 
 Qu'on se le dise.
+
+Cette petite annonce est une graine très quotidienne du jardin. [Pourquoi appeler ce site un jardin numérique ?](/notes/digital-garden-jardin-numerique/)

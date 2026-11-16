@@ -7,6 +7,21 @@
   {% set siteBase = site.url or "" %}
   {% set pagePath = (page and page.url) or "/" %}
   {% set canonicalUrl = canonical_url or (siteBase and (siteBase ~ pagePath)) or pagePath %}
+  {% set breadcrumbParentLabel = "" %}
+  {% set breadcrumbParentUrl = "" %}
+  {% set breadcrumbCurrentLabel = title or seo_title or site.name %}
+  {% if pagePath == "/notes/" %}
+    {% set breadcrumbCurrentLabel = "Notes" %}
+  {% elif pagePath == "/tags/" %}
+    {% set breadcrumbCurrentLabel = "Tous les tags" %}
+  {% elif layout == "note.njk" %}
+    {% set breadcrumbParentLabel = "Notes" %}
+    {% set breadcrumbParentUrl = "/notes/" %}
+  {% elif layout == "tag.njk" %}
+    {% set breadcrumbParentLabel = "Tous les tags" %}
+    {% set breadcrumbParentUrl = "/tags/" %}
+    {% set breadcrumbCurrentLabel = tag or title or "Tag" %}
+  {% endif %}
   <title>
     {% if seo_title %}
       {{ seo_title }}
@@ -76,24 +91,23 @@
   } %}
   <script type="application/ld+json">{{ webSiteJsonLd | json | safe }}</script>
   <script type="application/ld+json">{{ webPageJsonLd | json | safe }}</script>
-  {% if pagePath != "/" and (title or seo_title) %}
+  {% if pagePath != "/" and breadcrumbCurrentLabel %}
+    {% if breadcrumbParentLabel %}
+      {% set breadcrumbItems = [
+        { "@type": "ListItem", "position": 1, "name": "Accueil", "item": siteBase ~ "/" },
+        { "@type": "ListItem", "position": 2, "name": breadcrumbParentLabel, "item": siteBase ~ breadcrumbParentUrl },
+        { "@type": "ListItem", "position": 3, "name": breadcrumbCurrentLabel, "item": canonicalUrl }
+      ] %}
+    {% else %}
+      {% set breadcrumbItems = [
+        { "@type": "ListItem", "position": 1, "name": "Accueil", "item": siteBase ~ "/" },
+        { "@type": "ListItem", "position": 2, "name": breadcrumbCurrentLabel, "item": canonicalUrl }
+      ] %}
+    {% endif %}
     {% set breadcrumbJsonLd = {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Accueil",
-          "item": siteBase ~ "/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": title or seo_title,
-          "item": canonicalUrl
-        }
-      ]
+      "itemListElement": breadcrumbItems
     } %}
     <script type="application/ld+json">{{ breadcrumbJsonLd | json | safe }}</script>
   {% endif %}
@@ -117,6 +131,17 @@
       {% include "header.njk" %}
 
       <main id="main" class="main-content">
+        {% if pagePath != "/" and breadcrumbCurrentLabel %}
+          <nav class="breadcrumb" aria-label="Fil d’Ariane">
+            <ol class="breadcrumb-list">
+              <li><a href="/">Accueil</a></li>
+              {% if breadcrumbParentLabel %}
+                <li><a href="{{ breadcrumbParentUrl }}">{{ breadcrumbParentLabel }}</a></li>
+              {% endif %}
+              <li aria-current="page"><span>{{ breadcrumbCurrentLabel }}</span></li>
+            </ol>
+          </nav>
+        {% endif %}
         {# 
           Par défaut, on insère le contenu généré par Eleventy.
           Si un template enfant étend base.njk, il peut surcharger ce bloc.

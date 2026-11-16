@@ -15,4 +15,6 @@ status: "chantier"
 * Les claviers sont fournis avec une garantie exprimée en millions de frappe. 50 millions de frappe est une valeur courante pour cette garantie. Me [Whatpulse](https://whatpulse.org/somebaudy) faisant foi, il m'a fallu 19 ans, 6 mois et deux jours pour atteindre la valeur de cette garantie. 
 * Amazon found every 100ms delay costs them 1% of sales. [source](https://websmith.studio/blog/website-designs-are-getting-too-complicated/)
 * SMS in Iran is unencrypted. The government can—and does—intercept, read, and store messages at will. [[source](https://zola.ink/blog/posts/a-technical-look-at-irans-internet-shutdown)]
-* Les druides méprisaient l'écrit. Pour eux la mémoire orale était le top, l'apanage des vrais, des durs et mettre ses connaissances par écrit un aveu de faiblesse. Corollaire : ils n'ont laissé aucun écrit. Oups. (source : documentaire Arte)
+* Les druides méprisaient l'écrit. Pour eux la mémoire orale était le top, l'apanage des vrais, des durs et mettre ses connaissances par écrit un aveu de faiblesse. Corollaire : ils n'ont laissé aucun écrit. Oups. (source : documentaire Arte). C’est l’exact opposé de ce [jardin numérique, où les notes restent écrites, reliées et perfectibles](/notes/digital-garden-jardin-numerique/).
+
+* Pour une curiosité qui se transforme en jeu de déduction, voici mes [dix mots utiles pour Pédantix](/pedantix-mots-utiles/).

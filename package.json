@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "je-note-donc-je-suis",
-  "version": "0.38.0",
+  "version": "0.38.1",
   "description": "Un jardin numérique en chantier perpétuel made in Bruxelles",
   "scripts": {
     "predev": "node utils/write-version.js",

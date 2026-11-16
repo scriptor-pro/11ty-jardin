@@ -1,7 +1,7 @@
 ---
 title: "Recette pour 260 ml de caffenol"
 date: 2026-02-02
-statut: chantier
+status: chantier
 archived: false
 draft: false
 layout: "note.njk"

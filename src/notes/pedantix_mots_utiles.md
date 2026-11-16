@@ -34,3 +34,5 @@ Mots à fort pouvoir discriminant pour identifier rapidement le domaine d'une pa
 1. Commence par `siècle`, `né`, `film`, `français`, `guerre` pour cerner le domaine.
 2. Une fois le domaine identifié (personne / lieu / œuvre / événement), affine avec des mots spécifiques.
 3. Évite les mots outils (le, la, de, et…) — Pédantix les ignore généralement.
+
+Pour d’autres faits courts à picorer, voir aussi [Trivia](/notes/trivia/).

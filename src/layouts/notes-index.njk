@@ -1,5 +1,7 @@
-{# Layout dédié à src/notes/index.md — identique visuellement à note.njk,
-   mais séparé pour qu'Eleventy ne le regroupe pas avec les vraies notes
-   (le partage de note.njk causait une TemplateContentPrematureUseError
-   dans feed.njk, qui accède à item.templateContent sur collections.notes). #}
-{% extends "note.njk" %}
+{% extends "base.njk" %}
+
+{% block content %}
+  <div class="notes-catalog">
+    {{ content | safe }}
+  </div>
+{% endblock %}

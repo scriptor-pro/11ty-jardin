@@ -21,3 +21,5 @@ Gars sympa, le Jeff. Tu lui fais l'amitié d'être dans ses amis en échange d'u
 No way, José.
 
 Je refuse qu'un [McJob](https://en.wikipedia.org/wiki/McJob) travaille pour me livrer quoi que ce soit un jour de week-end. Si j'ai absolument besoin, de quelque chose ipso facto illico fissa, je me déplace dans un brick and mortar. Mon autisme n'est pas forcément fan, ceci dit, il approuve la démarche. 
+
+Je me déplace aussi au supermarché pour mes expériences photo : certains produits d'épicerie finissent dans le révélateur. [Voilà ce que ça donne.](/notes/Produits%20de%20supermarché/)

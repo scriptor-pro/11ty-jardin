@@ -1,151 +1,74 @@
 {% extends "base.njk" %}
 
 {% block content %}
-
   {% set latestNote = collections.notes[0] %}
-  {% set shuffled = collections.notesWithBacklinks | shuffle %}
-  {% set surpriseNote = shuffled[0] %}
-  {% set herbesFolles = shuffled.slice(1, 7) %}
+  {% set wanderNotes = collections.notesWithBacklinks | exceptNote(latestNote) | shuffle %}
+  {% set wanderNote = wanderNotes[0] %}
 
-  <div class="home-layout">
-
-    {# ============================================================
-       COLONNE GAUCHE — HERO / IDENTITÉ
-       ============================================================ #}
-    <header class="home-column home-column-left">
-      <figure class="home-hero-image">
-        <img 
-          src="/images/jardin-numerique.webp"
-          alt="Empilement ordonné de notes et de carnets, symbolisant une pratique continue de la prise de notes."
-          loading="eager"
-          decoding="async"
-        >
+  <div class="garden-home">
+    <section class="welcome-hero" aria-labelledby="welcome-title">
+      <div class="welcome-copy">
+        <p class="home-eyebrow">Un jardin numérique · Bruxelles</p>
+        <h2 id="welcome-title">Des idées à cueillir. Des chemins à suivre.</h2>
+        <p class="welcome-description">Photo argentique, Linux, web et curiosités du quotidien : entre ici, prends ce qui t’intéresse, suis les liens et vois où ils te mènent.</p>
+        <div class="welcome-actions">
+          <a class="home-primary-link" href="/notes/">Entrer dans le jardin <span aria-hidden="true">→</span></a>
+          <a class="welcome-secondary-link" href="#sentiers">Choisir un sujet</a>
+        </div>
+      </div>
+      <figure class="welcome-image">
+        <img src="/images/jardin-numerique.webp" alt="Des notes et des carnets réunis en un jardin d’idées." width="800" height="800" loading="eager" decoding="async">
+        <figcaption>Un espace vivant, en chantier perpétuel.</figcaption>
       </figure>
-
-      {# ---------------- Herbe fraîche (note la plus récente) ---------------- #}
-      {% if latestNote %}
-        <section class="home-surprise" aria-labelledby="surprise-heading">
-          <h2 id="surprise-heading" class="home-surprise-label">Herbe fraîche</h2>
-          <article class="surprise-note">
-            <p class="surprise-note-title">
-              <a href="{{ latestNote.url }}">{{ latestNote.data.title }}</a>
-            </p>
-            {% if latestNote.data.description %}
-              {% set truncated = latestNote.data.description | truncateAtPunctuation %}
-              <p class="surprise-note-description">
-                {{ truncated.text }}
-                {% if truncated.lastWord %}
-                  <a href="{{ latestNote.url }}" class="last-word-link">
-                    <em>{{ truncated.lastWord }}</em>
-                  </a>
-                {% endif %}
-              </p>
-            {% endif %}
-            {% if latestNote.data.tags and (latestNote.data.tags | length) > 0 %}
-              <ul class="surprise-note-tags">
-                {% for tag in latestNote.data.tags %}
-                  <li><a href="/tags/{{ tag | safelink }}/">{{ tag }}</a></li>
-                {% endfor %}
-              </ul>
-            {% endif %}
-            {% if latestNote.data.backlinks and (latestNote.data.backlinks | length) > 0 %}
-              <p class="surprise-note-backlink">
-                ↩ lié par :
-                <a href="{{ latestNote.data.backlinks[0].url }}">{{ latestNote.data.backlinks[0].title }}</a>
-              </p>
-            {% endif %}
-          </article>
-        </section>
-      {% endif %}
-    </header>
-
-    {# ============================================================
-       COLONNE DROITE — VIE DU JARDIN
-       ============================================================ #}
-    <aside class="home-column home-column-right">
-
-      {# ---------------- Note au hasard ---------------- #}
-      {% if surpriseNote %}
-        <section class="home-latest" aria-labelledby="latest-note-heading">
-          <h2 id="latest-note-heading" class="sr-only">Note au hasard</h2>
-          <div class="latest-notes">
-            <article class="latest-note">
-              {% if surpriseNote.data.description %}
-                <p class="latest-note-title">{{ surpriseNote.data.title }}</p>
-                {% set truncated = surpriseNote.data.description | truncateAtPunctuation %}
-                <p class="latest-note-description">
-                  {{ truncated.text }}
-                  {% if truncated.lastWord %}
-                    <a href="{{ surpriseNote.url }}" class="last-word-link">
-                      <em>{{ truncated.lastWord }}</em>
-                    </a>
-                  {% endif %}
-                </p>
-              {% else %}
-                <p class="latest-note-link">
-                  <a href="{{ surpriseNote.url }}">{{ surpriseNote.data.title }}</a>
-                </p>
-              {% endif %}
-            </article>
-          </div>
-        </section>
-      {% endif %}
-
-      {# ---------------- Nuage de tags ---------------- #}
-      <section class="home-tags" aria-labelledby="tags-heading">
-        <h2 id="tags-heading" class="sr-only">Explorer par tags</h2>
-
-        {% set max = collections.tagListAlpha | maxBy("count") %}
-        {% set min = collections.tagListAlpha | minBy("count") %}
-
-        <nav class="tag-cloud-home" aria-label="Nuage de tags">
-          <ul class="tag-cloud-list">
-            {% for item in collections.tagListAlpha %}
-              {% set ratio = (item.count - min) / (max - min + 0.0001) %}
-              {% if ratio < 0.25 %}
-                {% set weightClass = "tag-weight-1" %}
-              {% elif ratio < 0.5 %}
-                {% set weightClass = "tag-weight-2" %}
-              {% elif ratio < 0.75 %}
-                {% set weightClass = "tag-weight-3" %}
-              {% else %}
-                {% set weightClass = "tag-weight-4" %}
-              {% endif %}
-              <li>
-                <a href="/tags/{{ item.tag | safelink }}/" class="{{ weightClass }}">
-                  {{ item.tag }}
-                </a>
-              </li>
-            {% endfor %}
-          </ul>
-        </nav>
-      </section>
-
-    </aside>
-
-  </div>{# fin .home-layout #}
-
-  {# ============================================================
-     SECTION PLEINE LARGEUR — HERBES FOLLES
-     ============================================================ #}
-  {% if herbesFolles and (herbesFolles | length) > 0 %}
-    <section class="herbes-folles" aria-labelledby="herbes-folles-heading">
-      <h2 id="herbes-folles-heading" class="herbes-folles-title">Herbes folles</h2>
-      <ul class="herbes-folles-grid">
-        {% for note in herbesFolles %}
-          <li class="herbes-folles-card">
-            <a href="{{ note.url }}" class="herbes-folles-card-title">{{ note.data.title }}</a>
-            {% if note.data.tags and (note.data.tags | length) > 0 %}
-              <ul class="herbes-folles-tags">
-                {% for tag in note.data.tags %}
-                  <li><a href="/tags/{{ tag | safelink }}/">{{ tag }}</a></li>
-                {% endfor %}
-              </ul>
-            {% endif %}
-          </li>
-        {% endfor %}
-      </ul>
     </section>
-  {% endif %}
 
+    <section class="garden-trails" id="sentiers" aria-labelledby="trails-title">
+      <div class="section-heading">
+        <p class="home-eyebrow">Pour commencer</p>
+        <h2 id="trails-title">Choisis un sentier</h2>
+        <p>Pas besoin de tout connaître du jardin. Une curiosité suffit.</p>
+      </div>
+      <div class="trail-grid">
+        <a class="trail-card trail-photo" href="/tags/photo/">
+          <span class="trail-number" aria-hidden="true">01</span>
+          <h3>Photo argentique</h3>
+          <p>Films, caffenol et expériences de petit chimiste dans la salle de bain.</p>
+          <span class="trail-action">Voir les notes <span aria-hidden="true">↗</span></span>
+        </a>
+        <a class="trail-card trail-linux" href="/tags/linux/">
+          <span class="trail-number" aria-hidden="true">02</span>
+          <h3>Linux au quotidien</h3>
+          <p>Commandes utiles, terminal et solutions aux petits problèmes concrets.</p>
+          <span class="trail-action">Voir les notes <span aria-hidden="true">↗</span></span>
+        </a>
+        <a class="trail-card trail-web" href="/tags/web/">
+          <span class="trail-number" aria-hidden="true">03</span>
+          <h3>Le web à fabriquer</h3>
+          <p>Sites, outils et jardins numériques : apprendre en construisant.</p>
+          <span class="trail-action">Voir les notes <span aria-hidden="true">↗</span></span>
+        </a>
+      </div>
+    </section>
+
+    <section class="garden-discover" aria-label="Notes à découvrir">
+      {% if latestNote %}
+        <article class="discover-feature">
+          <p class="home-eyebrow">La dernière pousse</p>
+          <h2><a href="{{ latestNote.url }}">{{ latestNote.data.title }}</a></h2>
+          {% if latestNote.data.description %}<p>{{ latestNote.data.description }}</p>{% endif %}
+          <a class="text-link" href="{{ latestNote.url }}">Lire cette note <span aria-hidden="true">→</span></a>
+        </article>
+      {% endif %}
+      {% if wanderNote %}
+        <article class="discover-wander">
+          <p class="home-eyebrow">Le détour du jour</p>
+          <h2><a href="{{ wanderNote.url }}">{{ wanderNote.data.title }}</a></h2>
+          {% if wanderNote.data.description %}<p>{{ wanderNote.data.description }}</p>{% endif %}
+          <a class="text-link" href="{{ wanderNote.url }}">Je me laisse guider <span aria-hidden="true">→</span></a>
+        </article>
+      {% endif %}
+    </section>
+
+    <p class="garden-all-notes"><a href="/notes/">Parcourir les {{ collections.notesWithBacklinks | length }} notes du jardin <span aria-hidden="true">→</span></a></p>
+  </div>
 {% endblock %}
